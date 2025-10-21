@@ -19,7 +19,7 @@ import {
   Star
 } from "lucide-react";
 import nexusLogo from "@assets/NCS11_1756704209883.jpg";
-import nexusCover from "@assets/NCS1_1756704209883.jpg";
+import nexusCover from "@assets/NCS1_1756703260455.jpg";
 
 const brands = [
   {

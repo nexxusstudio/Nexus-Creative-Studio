@@ -17,7 +17,7 @@ import {
   DollarSign
 } from "lucide-react";
 import byteStudioLogo from "@assets/BS1_1756704209882.jpg";
-import byteStudioCover from "@assets/BS_1756704209881.jpg";
+import byteStudioCover from "@assets/BS_1756703260453.jpg";
 
 const designServices = [
   {
