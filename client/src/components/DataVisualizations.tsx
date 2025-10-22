@@ -7,12 +7,12 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { TrendingUp, DollarSign, Users, Globe, BarChart3, PieChart as PieChartIcon } from "lucide-react";
 
 const revenueData = [
-  { month: 'Jan', revenue: 45000, projects: 8 },
-  { month: 'Feb', revenue: 52000, projects: 9 },
-  { month: 'Mar', revenue: 48000, projects: 7 },
-  { month: 'Apr', revenue: 61000, projects: 11 },
-  { month: 'May', revenue: 73000, projects: 13 },
-  { month: 'Jun', revenue: 68000, projects: 12 },
+  { month: 'Jan', revenue: 2500, projects: 2 },
+  { month: 'Feb', revenue: 3200, projects: 2 },
+  { month: 'Mar', revenue: 4100, projects: 3 },
+  { month: 'Apr', revenue: 3800, projects: 2 },
+  { month: 'May', revenue: 3500, projects: 3 },
+  { month: 'Jun', revenue: 3900, projects: 3 },
 ];
 
 const serviceDistribution = [
@@ -32,12 +32,12 @@ const skillRadarData = [
 ];
 
 const clientGrowth = [
-  { quarter: 'Q1 2023', clients: 12, retention: 85 },
-  { quarter: 'Q2 2023', clients: 18, retention: 89 },
-  { quarter: 'Q3 2023', clients: 24, retention: 92 },
-  { quarter: 'Q4 2023', clients: 31, retention: 95 },
-  { quarter: 'Q1 2024', clients: 42, retention: 97 },
-  { quarter: 'Q2 2024', clients: 58, retention: 98 },
+  { quarter: 'Q1 2025', clients: 3, retention: 100 },
+  { quarter: 'Q2 2025', clients: 6, retention: 100 },
+  { quarter: 'Q3 2025', clients: 9, retention: 100 },
+  { quarter: 'Q4 2025', clients: 12, retention: 100 },
+  { quarter: 'Q1 2026', clients: 15, retention: 100 },
+  { quarter: 'Q2 2026-2027', clients: 18, retention: 100 },
 ];
 
 export function DataVisualizations() {

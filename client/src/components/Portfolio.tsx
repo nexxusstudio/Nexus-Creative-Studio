@@ -11,7 +11,7 @@ const projects = [
     icon: Laptop,
     gradient: "from-blue-500 to-cyan-500",
     tags: ["Web Development", "AI Integration"],
-    year: "2024"
+    year: "2026"
   },
   {
     title: "DeFi Trading Platform",
@@ -19,7 +19,7 @@ const projects = [
     icon: Coins,
     gradient: "from-green-500 to-emerald-500",
     tags: ["Blockchain", "DeFi"],
-    year: "2024"
+    year: "2026"
   },
   {
     title: "Fintech Mobile App",
@@ -27,7 +27,7 @@ const projects = [
     icon: Smartphone,
     gradient: "from-purple-500 to-pink-500",
     tags: ["Mobile App", "MVP"],
-    year: "2023"
+    year: "2025"
   }
 ];
 

@@ -61,11 +61,18 @@ const timeline = [
     type: "growth"
   },
   {
-    year: "2024",
-    title: "Authority & Scale",
-    description: "Established thought leadership, speaking engagements, and enterprise partnerships",
+    year: "2024-2025",
+    title: "Agency Foundation",
+    description: "Built early-stage client base through marketplace positioning and service delivery",
     icon: Award,
     type: "recognition"
+  },
+  {
+    year: "2026-2027",
+    title: "Growth & Scaling",
+    description: "Scaling operations, systemizing delivery, and establishing market authority",
+    icon: Rocket,
+    type: "growth"
   }
 ];
 

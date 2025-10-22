@@ -156,7 +156,7 @@ export function Footer() {
 
         <div className="border-t border-border pt-8 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-muted-foreground text-sm" data-testid="footer-copyright">
-            © 2024 Nexus Creative Studio. All rights reserved.
+            © 2026-2027 Nexus Creative Studio. All rights reserved.
           </p>
           <div className="flex items-center space-x-6 mt-4 sm:mt-0">
             <button className="text-muted-foreground hover:text-primary text-sm theme-transition" data-testid="footer-privacy">

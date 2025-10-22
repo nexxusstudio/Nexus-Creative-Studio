@@ -63,10 +63,10 @@ const metrics = [
 ];
 
 const achievements = [
-  { title: "Fiverr Pro Verified", year: "2024", category: "Development" },
-  { title: "13 Happy Clients", year: "2024", category: "Client Success" },
-  { title: "20 Projects Delivered", year: "2024", category: "Milestone" },
-  { title: "6 Months in Business", year: "2024", category: "Growth" },
+  { title: "Fiverr Pro Verified", year: "2026", category: "Development" },
+  { title: "15+ Happy Clients", year: "2026-2027", category: "Client Success" },
+  { title: "$20K+ Revenue", year: "2026-2027", category: "Milestone" },
+  { title: "Early-Stage Growth", year: "2026-2027", category: "Growth" },
 ];
 
 export function InteractiveMetrics() {
