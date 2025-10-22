@@ -3,6 +3,8 @@ import { ParticleBackground } from "@/components/ParticleBackground";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { BRAND_SPECIFIC_METRICS } from "@/data/unified-metrics";
+import { BRAND_CONFIGS, QUICK_LINKS } from "@/data/brand-links";
 import { 
   Palette, 
   Laptop, 
@@ -14,47 +16,122 @@ import {
   ArrowRight,
   CheckCircle,
   Clock,
-  DollarSign
+  DollarSign,
+  Building2,
+  Crown,
+  Rocket,
+  Check
 } from "lucide-react";
 import byteStudioLogo from "@assets/BS1_1756704209882.jpg";
 import byteStudioCover from "@assets/BS_1756703260453.jpg";
 
-const designServices = [
+const pricingTiers = [
   {
-    title: "MVP Development",
-    description: "Rapid prototyping and MVP development to validate your ideas quickly and efficiently",
+    tier: "CORE",
+    name: "Design Excellence",
+    subtitle: "Professional design solutions for growing businesses",
+    icon: Rocket,
+    gradient: "from-blue-500 to-cyan-500",
+    priceRange: "$3,000 - $10,000",
+    popular: false,
+    features: [
+      "Professional brand identity design",
+      "Responsive website design",
+      "Basic mobile app prototyping",
+      "User research & wireframing",
+      "Design system fundamentals",
+      "30-day revision support"
+    ],
+    services: [
+      { name: "UI/UX Design", price: "$3,000 - $7,000" },
+      { name: "MVP Development", price: "$5,000 - $10,000" },
+      { name: "Mobile Solutions", price: "$6,000 - $10,000" }
+    ]
+  },
+  {
+    tier: "GROWTH",
+    name: "Product Innovation",
+    subtitle: "Advanced design systems for scaling products",
     icon: Zap,
     gradient: "from-purple-500 to-pink-500",
-    timeline: "2-4 weeks",
-    pricing: "Starting at $3,000",
-    features: ["User Research", "Wireframing", "Prototype", "Testing"]
+    priceRange: "$10,000 - $30,000",
+    popular: true,
+    features: [
+      "Comprehensive design systems",
+      "Advanced user experience research",
+      "Full-stack application development",
+      "Native mobile app development",
+      "Advanced prototyping & testing",
+      "Performance optimization",
+      "90-day extended support"
+    ],
+    services: [
+      { name: "Advanced Design Systems", price: "$10,000 - $20,000" },
+      { name: "Full-Stack Development", price: "$15,000 - $25,000" },
+      { name: "Native Mobile Apps", price: "$15,000 - $30,000" }
+    ]
   },
   {
-    title: "UI/UX Design",
-    description: "Beautiful, user-centered designs that convert visitors into customers",
+    tier: "ENTERPRISE",
+    name: "Digital Architecture",
+    subtitle: "Enterprise-grade design and development",
+    icon: Crown,
+    gradient: "from-yellow-500 to-orange-500",
+    priceRange: "$30,000 - $150,000+",
+    popular: false,
+    features: [
+      "Enterprise design systems & accessibility",
+      "Large-scale platform development",
+      "Multi-platform mobile ecosystems",
+      "Advanced analytics & optimization",
+      "White-label & partnership solutions",
+      "Dedicated design team allocation",
+      "White-glove support & SLA guarantees"
+    ],
+    services: [
+      { name: "Enterprise Design Systems", price: "$25,000 - $60,000" },
+      { name: "Platform Development", price: "$50,000 - $120,000" },
+      { name: "Mobile Ecosystems", price: "$40,000 - $150,000" }
+    ]
+  }
+];
+
+const designServices = [
+  {
+    title: "Strategic MVP Development",
+    description: "Sophisticated rapid prototyping and MVP architecture designed for market validation and investor readiness",
+    icon: Zap,
+    gradient: "from-purple-500 to-pink-500",
+    timeline: "3-6 weeks",
+    pricing: "Starting at $8,000",
+    features: ["Market Research", "User Journey Mapping", "Interactive Prototypes", "User Testing"]
+  },
+  {
+    title: "Premium UI/UX Design",
+    description: "Award-worthy user experience design that drives engagement, conversion, and brand differentiation",
     icon: Palette,
     gradient: "from-blue-500 to-cyan-500",
-    timeline: "1-3 weeks", 
-    pricing: "Starting at $2,000",
-    features: ["Design System", "Responsive Design", "User Testing", "Style Guide"]
+    timeline: "2-4 weeks", 
+    pricing: "Starting at $6,000",
+    features: ["Design Systems", "Accessibility Standards", "User Research", "Brand Integration"]
   },
   {
-    title: "Web Applications",
-    description: "Custom web applications built with modern frameworks and best practices",
+    title: "Enterprise Web Applications",
+    description: "Scalable, high-performance web applications engineered with modern architecture and enterprise security",
     icon: Laptop,
     gradient: "from-green-500 to-emerald-500",
-    timeline: "4-8 weeks",
-    pricing: "Starting at $5,000",
-    features: ["React/Next.js", "Database Design", "API Integration", "Deployment"]
+    timeline: "6-12 weeks",
+    pricing: "Starting at $15,000",
+    features: ["Modern Architecture", "Security Standards", "Performance Optimization", "Scalability Planning"]
   },
   {
-    title: "Mobile Design",
-    description: "Native and responsive mobile designs optimized for iOS and Android",
+    title: "Mobile-First Solutions",
+    description: "Native-quality mobile experiences and progressive web apps optimized for all platforms and devices",
     icon: Smartphone,
     gradient: "from-orange-500 to-red-500",
-    timeline: "3-6 weeks",
-    pricing: "Starting at $4,000",
-    features: ["iOS Guidelines", "Material Design", "Responsive", "App Store Ready"]
+    timeline: "4-8 weeks",
+    pricing: "Starting at $12,000",
+    features: ["Cross-platform Development", "App Store Optimization", "Push Notifications", "Offline Functionality"]
   }
 ];
 
@@ -154,16 +231,16 @@ export default function ByteStudio() {
                 </div>
 
                 <h2 className="text-5xl lg:text-7xl font-bold leading-tight" data-testid="byte-title">
-                  Design{" "}
+                  Innovation{" "}
                   <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent animate-glow">
-                    Meets
+                    Through
                   </span>
                   <br />
-                  Innovation
+                  Design Excellence
                 </h2>
 
                 <p className="text-xl text-muted-foreground max-w-lg leading-relaxed" data-testid="byte-description">
-                  Rapid MVP development and stunning design solutions that help startups and businesses validate ideas and scale quickly.
+                  Premium design and development studio crafting exceptional digital experiences, rapid MVP validation, and scalable software solutions that set industry standards.
                 </p>
               </div>
 
@@ -171,6 +248,7 @@ export default function ByteStudio() {
                 <Button 
                   className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 text-lg font-semibold hover:opacity-90 theme-transition btn-ripple"
                   data-testid="button-start-mvp"
+                  onClick={() => window.open(QUICK_LINKS.contactAgency, '_blank')}
                 >
                   <Zap className="mr-2" size={20} />
                   Start MVP Project
@@ -179,6 +257,7 @@ export default function ByteStudio() {
                   variant="outline"
                   className="border border-border px-8 py-4 text-lg font-semibold hover:bg-secondary theme-transition"
                   data-testid="button-design-consultation"
+                  onClick={() => window.open(QUICK_LINKS.contactAgency, '_blank')}
                 >
                   <Palette className="mr-2" size={20} />
                   Design Consultation
@@ -188,16 +267,16 @@ export default function ByteStudio() {
               {/* Quick Stats */}
               <div className="grid grid-cols-3 gap-4 pt-8">
                 <div className="text-center" data-testid="byte-stat-mvps">
-                  <div className="text-3xl font-bold text-primary animate-neon-pulse">25+</div>
-                  <div className="text-sm text-muted-foreground">MVPs Built</div>
+                  <div className="text-3xl font-bold text-primary animate-neon-pulse">{BRAND_SPECIFIC_METRICS.byte.mvpsLaunched}</div>
+                  <div className="text-sm text-muted-foreground">Products Launched</div>
                 </div>
                 <div className="text-center" data-testid="byte-stat-time">
-                  <div className="text-3xl font-bold text-primary animate-neon-pulse">2-4</div>
-                  <div className="text-sm text-muted-foreground">Weeks Avg</div>
+                  <div className="text-3xl font-bold text-primary animate-neon-pulse">{BRAND_SPECIFIC_METRICS.byte.clientSatisfaction}%</div>
+                  <div className="text-sm text-muted-foreground">Client Satisfaction</div>
                 </div>
                 <div className="text-center" data-testid="byte-stat-success">
-                  <div className="text-3xl font-bold text-primary animate-neon-pulse">92%</div>
-                  <div className="text-sm text-muted-foreground">Success Rate</div>
+                  <div className="text-3xl font-bold text-primary animate-neon-pulse">{BRAND_SPECIFIC_METRICS.byte.avgDeliveryTime}</div>
+                  <div className="text-sm text-muted-foreground">Weeks Delivery</div>
                 </div>
               </div>
             </div>
@@ -232,15 +311,133 @@ export default function ByteStudio() {
         </div>
       </section>
 
-      {/* Services */}
+      {/* Investment Tiers */}
       <section className="py-24 bg-secondary/30">
         <div className="max-w-7xl mx-auto px-6" ref={servicesRef}>
           <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-5xl font-bold mb-6" data-testid="byte-pricing-title">
+              Design & Development Investment Tiers
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto" data-testid="byte-pricing-description">
+              Three carefully crafted service tiers designed to transform your vision into exceptional digital experiences that drive results.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8 mb-16">
+            {pricingTiers.map((tier, index) => (
+              <Card 
+                key={tier.tier} 
+                className={`group hover-lift bg-card rounded-2xl border theme-transition hover:shadow-lg relative ${
+                  tier.popular ? 'border-primary scale-105 shadow-lg' : 'border-border'
+                }`}
+                data-testid={`byte-pricing-tier-${index}`}
+              >
+                {tier.popular && (
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                    <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-1">
+                      Most Popular
+                    </Badge>
+                  </div>
+                )}
+                
+                <CardContent className="p-8">
+                  <div className="text-center mb-8">
+                    <div className={`w-16 h-16 bg-gradient-to-r ${tier.gradient} rounded-2xl flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300`}>
+                      <tier.icon className="text-white" size={32} />
+                    </div>
+                    
+                    <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                      {tier.tier} TIER
+                    </div>
+                    
+                    <h3 className="text-2xl font-bold mb-2" data-testid={`byte-tier-name-${index}`}>
+                      {tier.name}
+                    </h3>
+                    
+                    <p className="text-muted-foreground text-sm mb-4">
+                      {tier.subtitle}
+                    </p>
+                    
+                    <div className="mb-6">
+                      <div className="text-primary font-bold text-2xl">{tier.priceRange}</div>
+                      <div className="text-xs text-muted-foreground">Project investment range</div>
+                    </div>
+                  </div>
+                  
+                  <ul className="space-y-3 mb-8">
+                    {tier.features.map((feature, featureIndex) => (
+                      <li 
+                        key={feature} 
+                        className="flex items-start text-sm"
+                        data-testid={`byte-tier-feature-${index}-${featureIndex}`}
+                      >
+                        <Check className="text-green-500 mr-3 flex-shrink-0 mt-0.5" size={16} />
+                        <span className="text-muted-foreground">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Button 
+                    className={`w-full transition-all duration-300 group ${
+                      tier.popular 
+                        ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:opacity-90' 
+                        : 'bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground'
+                    }`}
+                    data-testid={`byte-tier-cta-${index}`}
+                  >
+                    Start Project
+                    <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Service Details Section */}
+          <div className="bg-card/80 backdrop-blur-sm rounded-2xl p-8 border border-border">
+            <div className="text-center mb-12">
+              <h3 className="text-3xl font-bold mb-4">Service Breakdown by Tier</h3>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Each tier includes our specialized design and development services, scaled to match your project complexity and business goals.
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-8">
+              {pricingTiers.map((tier, tierIndex) => (
+                <div key={tier.tier} className="bg-background/50 rounded-xl p-6 border border-border">
+                  <div className="flex items-center mb-6">
+                    <div className={`w-12 h-12 bg-gradient-to-r ${tier.gradient} rounded-xl flex items-center justify-center mr-4`}>
+                      <tier.icon className="text-white" size={24} />
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-bold">{tier.name}</h4>
+                      <p className="text-sm text-muted-foreground">{tier.tier} Tier</p>
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    {tier.services.map((service, serviceIndex) => (
+                      <div key={service.name} className="flex justify-between items-center py-2 border-b border-border">
+                        <span className="text-sm">{service.name}</span>
+                        <span className="text-sm font-semibold text-primary">{service.price}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Legacy Services Section for backward compatibility */}
+      <section className="py-24 bg-muted/30">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-bold mb-6" data-testid="byte-services-title">
-              Design & Development Services
+              Specialized Design Capabilities
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto" data-testid="byte-services-description">
-              From initial concept to fully functional MVP - we handle the entire design and development journey.
+              Four core design and development competencies that power our comprehensive service offerings across all investment tiers.
             </p>
           </div>
 

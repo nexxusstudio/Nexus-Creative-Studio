@@ -3,12 +3,21 @@ import { ParticleBackground } from "./ParticleBackground";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { useSupabase } from "@/hooks/useSupabase";
+import { EARLY_STAGE_METRICS } from "@/data/unified-metrics";
 import founderHeroImage from "@assets/JH1_1756704209882.png";
 import nexusStudioCover from "@assets/NCS1_1756703260455.jpg";
 
 export function Hero() {
   const heroRef = useScrollAnimation();
   const { metrics } = useSupabase();
+
+  // Use unified metrics with database fallback
+  const displayMetrics = {
+    projects: metrics?.projects_total || EARLY_STAGE_METRICS.projects.total,
+    clients: metrics?.clients_total || EARLY_STAGE_METRICS.clients.total,
+    satisfaction: metrics?.satisfaction_pct || EARLY_STAGE_METRICS.satisfaction.percentage,
+    revenue: metrics?.revenue_total || EARLY_STAGE_METRICS.revenue.total
+  };
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -40,20 +49,22 @@ export function Hero() {
             <div className="space-y-6">
               <div className="inline-flex items-center space-x-2 bg-card/80 backdrop-blur-sm px-4 py-2 rounded-full border border-border">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" data-testid="status-indicator"></div>
-                <span className="text-sm text-muted-foreground">Now Accepting Projects (2026-2027)</span>
+                <span className="text-sm text-muted-foreground">{EARLY_STAGE_METRICS.timeline.stage} • {EARLY_STAGE_METRICS.timeline.range}</span>
               </div>
 
               <h1 className="text-5xl lg:text-8xl font-bold leading-tight" data-testid="hero-title">
-                Building{" "}
+                Where{" "}
                 <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent animate-glow">
-                  World-Class
+                  Vision
                 </span>
                 <br />
-                Digital Systems
+                Meets Innovation
+                <br />
+                <span className="text-3xl lg:text-4xl text-muted-foreground">Building Digital Excellence</span>
               </h1>
 
               <p className="text-xl text-muted-foreground max-w-lg leading-relaxed" data-testid="hero-description">
-                Early-stage agency delivering AI-powered MVPs, modern web applications, and automation systems. From idea to launch - lean, fast, and focused on your growth.
+                <strong>Nexus Creative Studio</strong> - The creative technology agency for ambitious startups and forward-thinking businesses. We architect AI-powered solutions, conversion-optimized experiences, and scalable automation systems that drive real growth.
               </p>
             </div>
 
@@ -67,30 +78,30 @@ export function Hero() {
                 </Button>
               </Link>
               <Button 
-                onClick={() => scrollToSection('brands')}
+                onClick={() => scrollToSection('about')}
                 variant="outline"
                 className="border border-border px-8 py-4 text-lg font-semibold hover:bg-secondary theme-transition"
-                data-testid="button-explore-brands"
+                data-testid="button-explore-about"
               >
-                Explore Our Brands
+                About Our Agency
               </Button>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-8">
               <div className="text-center" data-testid="stat-projects">
-                <div className="text-3xl font-bold text-primary">{metrics?.projects_total || 15}+</div>
-                <div className="text-sm text-muted-foreground">Projects</div>
+                <div className="text-3xl font-bold text-primary">{displayMetrics.projects}+</div>
+                <div className="text-sm text-muted-foreground">Projects Delivered</div>
               </div>
               <div className="text-center" data-testid="stat-clients">
-                <div className="text-3xl font-bold text-primary">{metrics?.clients_total || 15}+</div>
+                <div className="text-3xl font-bold text-primary">{displayMetrics.clients}+</div>
                 <div className="text-sm text-muted-foreground">Happy Clients</div>
               </div>
               <div className="text-center" data-testid="stat-satisfaction">
-                <div className="text-3xl font-bold text-primary">{metrics?.satisfaction_pct || 100}%</div>
-                <div className="text-sm text-muted-foreground">Satisfaction</div>
+                <div className="text-3xl font-bold text-primary">{displayMetrics.satisfaction}%</div>
+                <div className="text-sm text-muted-foreground">Client Satisfaction</div>
               </div>
               <div className="text-center" data-testid="stat-revenue">
-                <div className="text-3xl font-bold text-primary">${(metrics?.revenue_total || 20000).toLocaleString()}+</div>
+                <div className="text-3xl font-bold text-primary">${displayMetrics.revenue.toLocaleString()}+</div>
                 <div className="text-sm text-muted-foreground">Revenue Generated</div>
               </div>
             </div>

@@ -11,6 +11,7 @@ import { InteractiveRoadmap } from "@/components/InteractiveRoadmap";
 import { InteractiveMetrics } from "@/components/InteractiveMetrics";
 import { DataVisualizations } from "@/components/DataVisualizations";
 import { VisionStatement } from "@/components/VisionStatement";
+import { EcosystemNavigation } from "@/components/EcosystemNavigation";
 
 export default function Home() {
   return (
@@ -23,6 +24,7 @@ export default function Home() {
         <Services />
         <DataVisualizations />
         <PricingCalculator />
+        <EcosystemNavigation />
         <InteractiveRoadmap />
         <VisionStatement />
         <Portfolio />

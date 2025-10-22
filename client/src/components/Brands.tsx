@@ -3,56 +3,32 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { Box, ArrowRight, Shield, Palette, Building2, User } from "lucide-react";
+import { Box, ArrowRight, Building2, User } from "lucide-react";
 import nexusLogo from "@assets/NCS11_1756704209883.jpg";
-import cryptoLogo from "@assets/CN1_1756704209882.jpg";
-import byteLogo from "@assets/BS1_1756704209882.jpg";
 import founderImage from "@assets/JH1_1756704209882.png";
 
 const brands = [
   {
     name: "Nexus Creative Studio",
-    subtitle: "Multi-Brand Digital Agency",
-    description: "Umbrella brand housing specialized technology verticals. Strategic leadership, comprehensive solutions, and cross-brand synergy for maximum client value.",
+    subtitle: "Early-Stage Creative Agency",
+    description: "Founded in 2026, we're a lean creative agency specializing in AI-powered MVPs, automation systems, and growth-focused web development for startups and small businesses. Our mission: building world-class digital systems from the ground up.",
     icon: Building2,
     gradient: "from-blue-500 to-cyan-500",
-    tags: ["Strategy", "Leadership", "Multi-Brand"],
+    tags: ["Early-Stage", "AI-Powered", "Growth-Focused"],
     logo: nexusLogo,
     link: "/nexus-studio",
-    stats: "50+ Projects"
+    stats: "$12K+ Revenue"
   },
   {
     name: "Jobayer Hoque Siddique",
-    subtitle: "Founder & Strategic Leader",
-    description: "Authority-building personal brand focused on strategic consulting, technical leadership, and innovation. Trusted advisor for founders and enterprises.",
+    subtitle: "Founder & CEO",
+    description: "Full-stack developer and entrepreneur building an automation-heavy creative agency. Currently pursuing MS abroad (2026-2027) while scaling Nexus Creative Studio through systematic execution and AI-augmented workflows.",
     icon: User,
     gradient: "from-orange-500 to-red-500",
-    tags: ["Strategy", "Consulting", "Authority"],
+    tags: ["Founder", "Full-Stack", "MS Student"],
     logo: founderImage,
     link: "/founder", 
-    stats: "5+ Years Leading"
-  },
-  {
-    name: "Crypto Nexus",
-    subtitle: "Web3 & Blockchain Division",
-    description: "Leading blockchain innovation through secure smart contracts, DeFi protocols, and next-generation Web3 applications. Future-focused and security-first.",
-    icon: Shield,
-    gradient: "from-green-500 to-emerald-500",
-    tags: ["Smart Contracts", "DeFi", "Web3"],
-    logo: cryptoLogo,
-    link: "/crypto-nexus",
-    stats: "$4M+ TVL"
-  },
-  {
-    name: "Byte Studio",
-    subtitle: "Design & MVP Development",
-    description: "Rapid MVP development and premium design solutions. Helping startups validate ideas quickly with beautiful, functional prototypes and scalable systems.",
-    icon: Palette,
-    gradient: "from-purple-500 to-pink-500",
-    tags: ["MVP Development", "Design", "Prototyping"],
-    logo: byteLogo,
-    link: "/byte-studio",
-    stats: "25+ MVPs Built"
+    stats: "8 Months Operating"
   }
 ];
 
@@ -60,14 +36,14 @@ export function Brands() {
   const brandsRef = useScrollAnimation();
 
   return (
-    <section id="brands" className="py-24">
+    <section id="about" className="py-24">
       <div className="max-w-7xl mx-auto px-6" ref={brandsRef}>
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6" data-testid="brands-title">
-            Our Brands
+            About Our Agency
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto" data-testid="brands-description">
-            A family of specialized brands delivering excellence across different verticals and technologies.
+            Meet Nexus Creative Studio and our founder - an early-stage agency built for the future of digital transformation.
           </p>
         </div>
 

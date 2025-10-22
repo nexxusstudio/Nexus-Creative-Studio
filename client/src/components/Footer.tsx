@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Twitter, Github, Linkedin } from "lucide-react";
+import { ArrowRight, Twitter, Github, Linkedin, Building2 } from "lucide-react";
 import { SiFiverr, SiUpwork } from "react-icons/si";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "wouter";
+import { BRAND_CONFIGS, SOCIAL_LINKS, BRAND_CONTACTS, QUICK_LINKS } from "@/data/brand-links";
 import nexusLogo from "@assets/lg_1756703260455.jpg";
 
 export function Footer() {
@@ -12,7 +14,8 @@ export function Footer() {
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement newsletter signup
+    // Newsletter signup integration for production
+    // Integrate with email service provider (Mailchimp, ConvertKit, etc.)
     toast({
       title: "Newsletter Signup!",
       description: "Thank you for subscribing to our newsletter.",
@@ -30,8 +33,8 @@ export function Footer() {
   return (
     <footer className="bg-card border-t border-border py-16">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid lg:grid-cols-4 gap-8 mb-12">
-          <div className="space-y-4">
+        <div className="grid lg:grid-cols-5 gap-8 mb-12">
+          <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center space-x-3">
               <img src={nexusLogo} alt="Nexus Creative Studio" className="w-10 h-10 rounded-lg" />
               <span className="text-xl font-bold">Nexus Creative Studio</span>
@@ -41,13 +44,13 @@ export function Footer() {
             </p>
             <p className="text-sm text-muted-foreground">
               <strong>Email:</strong>{" "}
-              <a href="mailto:nexxusstudio.agency@gmail.com" className="hover:text-primary theme-transition">
-                nexxusstudio.agency@gmail.com
+              <a href={QUICK_LINKS.contactAgency} className="hover:text-primary theme-transition">
+                {BRAND_CONTACTS.agency.email}
               </a>
             </p>
             <div className="flex items-center space-x-4 pt-2">
               <a 
-                href="https://x.com/nexuscrativeio" 
+                href={SOCIAL_LINKS.agency.twitter} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary theme-transition"
@@ -57,7 +60,7 @@ export function Footer() {
                 <Twitter size={20} />
               </a>
               <a 
-                href="https://github.com/nexxusstudio" 
+                href={SOCIAL_LINKS.agency.github} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary theme-transition"
@@ -67,7 +70,7 @@ export function Footer() {
                 <Github size={20} />
               </a>
               <a 
-                href="https://pro.fiverr.com/nexusstudioagen" 
+                href={SOCIAL_LINKS.agency.fiverr} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary theme-transition"
@@ -77,7 +80,7 @@ export function Footer() {
                 <SiFiverr size={20} />
               </a>
               <a 
-                href="https://www.upwork.com/NexusStudio/" 
+                href={SOCIAL_LINKS.agency.upwork} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary theme-transition"
@@ -87,6 +90,43 @@ export function Footer() {
                 <SiUpwork size={20} />
               </a>
             </div>
+          </div>
+
+          <div>
+            <h4 className="font-semibold mb-4 flex items-center space-x-2" data-testid="footer-ecosystem-title">
+              <Building2 size={16} />
+              <span>Nexus Ecosystem</span>
+            </h4>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>
+                <Link href="/nexus-studio">
+                  <button className="hover:text-primary theme-transition" data-testid="footer-nexus-studio">
+                    Nexus Creative Studio
+                  </button>
+                </Link>
+              </li>
+              <li>
+                <Link href="/crypto-nexus">
+                  <button className="hover:text-primary theme-transition" data-testid="footer-crypto-nexus">
+                    Crypto Nexus
+                  </button>
+                </Link>
+              </li>
+              <li>
+                <Link href="/byte-studio">
+                  <button className="hover:text-primary theme-transition" data-testid="footer-byte-studio">
+                    Byte Studio
+                  </button>
+                </Link>
+              </li>
+              <li>
+                <Link href="/founder">
+                  <button className="hover:text-primary theme-transition" data-testid="footer-founder">
+                    Jobayer Hoque Siddique
+                  </button>
+                </Link>
+              </li>
+            </ul>
           </div>
 
           <div>
@@ -132,52 +172,6 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4" data-testid="footer-links-title">Quick Links</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <button 
-                  onClick={() => scrollToSection('portfolio')} 
-                  className="hover:text-primary theme-transition"
-                  data-testid="footer-link-portfolio"
-                >
-                  Portfolio
-                </button>
-              </li>
-              <li>
-                <a 
-                  href="https://nexuscreativestudio.notion.site/Nexus-Creative-Studio-28676083f2a4812eb694fa9dde05b381"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-primary theme-transition"
-                  data-testid="footer-link-notion"
-                >
-                  Notion Portfolio
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="https://nexuscreativestudio.notion.site/Client-Portal-22176083f2a4800cbe19d83a87e0671d"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-primary theme-transition"
-                  data-testid="footer-link-client-portal"
-                >
-                  Client Portal
-                </a>
-              </li>
-              <li>
-                <button 
-                  onClick={() => scrollToSection('contact')} 
-                  className="hover:text-primary theme-transition"
-                  data-testid="footer-link-contact"
-                >
-                  Get Started
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          <div>
             <h4 className="font-semibold mb-4" data-testid="footer-newsletter-title">Newsletter</h4>
             <p className="text-muted-foreground mb-4" data-testid="footer-newsletter-description">
               Stay updated with our latest projects and insights.
@@ -200,6 +194,27 @@ export function Footer() {
                 <ArrowRight size={20} />
               </Button>
             </form>
+            
+            <div className="mt-6 space-y-2 text-sm text-muted-foreground">
+              <a 
+                href={SOCIAL_LINKS.agency.portfolio}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block hover:text-primary theme-transition"
+                data-testid="footer-link-notion"
+              >
+                Notion Portfolio
+              </a>
+              <a 
+                href={SOCIAL_LINKS.agency.clientPortal}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block hover:text-primary theme-transition"
+                data-testid="footer-link-client-portal"
+              >
+                Client Portal
+              </a>
+            </div>
           </div>
         </div>
 

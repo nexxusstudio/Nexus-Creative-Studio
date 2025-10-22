@@ -4,22 +4,17 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 // For browser/client-side usage, Vite exposes env vars via import.meta.env
 const isBrowser = typeof window !== 'undefined';
 
-const supabaseUrl = isBrowser 
-  ? import.meta.env.VITE_SUPABASE_URL || ''
-  : process.env.SUPABASE_URL || '';
-
-const supabaseAnonKey = isBrowser
-  ? import.meta.env.VITE_SUPABASE_ANON_KEY || ''
-  : process.env.SUPABASE_ANON_KEY || '';
+// Use provided Nexus Creative Studio Supabase credentials
+const supabaseUrl = 'https://guarhoiykpmngfptntxt.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd1YXJob2l5a3BtbmdmcHRudHh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEwNDU3MjksImV4cCI6MjA3NjYyMTcyOX0.CHvQ4WJIv_kcmy6dMlSUKC8q2VbscsWcORmCNkxVm8c';
 
 let supabase: SupabaseClient | null = null;
 
 if (supabaseUrl && supabaseAnonKey) {
   supabase = createClient(supabaseUrl, supabaseAnonKey);
-} else if (!isBrowser) {
-  // Only warn on server-side
+  console.log('✅ Supabase connected successfully');
+} else {
   console.warn('⚠️  Supabase credentials not configured. Database features will be unavailable.');
-  console.warn('   Set SUPABASE_URL and SUPABASE_ANON_KEY environment variables to enable Supabase.');
 }
 
 export { supabase };

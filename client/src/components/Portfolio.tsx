@@ -6,28 +6,64 @@ import { Laptop, Coins, Smartphone, ArrowRight } from "lucide-react";
 
 const projects = [
   {
-    title: "SaaS Platform Redesign",
-    description: "Complete platform overhaul with AI-powered features resulting in 300% user engagement increase.",
+    title: "Freelance Dashboard Automation",
+    description: "Streamlined freelancer workflow management system using Airtable, OpenAI, and Zapier automation.",
     icon: Laptop,
     gradient: "from-blue-500 to-cyan-500",
-    tags: ["Web Development", "AI Integration"],
-    year: "2026"
+    tags: ["Automation", "AI Integration"],
+    year: "2026",
+    stack: ["Airtable", "OpenAI", "Zapier"],
+    outcome: "50% time saved on admin tasks"
   },
   {
-    title: "DeFi Trading Platform",
-    description: "Decentralized exchange with advanced trading features and yield farming capabilities.",
-    icon: Coins,
+    title: "Startup Landing Page",
+    description: "High-converting landing page built with Next.js and Supabase for an early-stage SaaS startup.",
+    icon: Laptop,
     gradient: "from-green-500 to-emerald-500",
-    tags: ["Blockchain", "DeFi"],
-    year: "2026"
+    tags: ["Web Development", "SaaS"],
+    year: "2026",
+    stack: ["Next.js", "Supabase", "Tailwind"],
+    outcome: "45% increase in conversions"
   },
   {
-    title: "Fintech Mobile App",
-    description: "Zero-to-one mobile banking solution with advanced security and intuitive UX design.",
+    title: "Client Portal System",
+    description: "Notion-based client portal with automated project tracking and communication workflows.",
     icon: Smartphone,
     gradient: "from-purple-500 to-pink-500",
-    tags: ["Mobile App", "MVP"],
-    year: "2025"
+    tags: ["System Integration", "CRM"],
+    year: "2026",
+    stack: ["Notion", "Automations", "API"],
+    outcome: "100% client satisfaction"
+  },
+  {
+    title: "AI Content Engine MVP",
+    description: "Custom AI-powered content generation tool using OpenAI API for marketing automation.",
+    icon: Laptop,
+    gradient: "from-orange-500 to-red-500",
+    tags: ["AI MVP", "Automation"],
+    year: "2026",
+    stack: ["OpenAI", "Vercel", "React"],
+    outcome: "3x faster content creation"
+  },
+  {
+    title: "E-commerce Integration",
+    description: "Complete e-commerce setup with payment processing and inventory management for small business.",
+    icon: Coins,
+    gradient: "from-indigo-500 to-purple-500",
+    tags: ["E-commerce", "Integration"],
+    year: "2026",
+    stack: ["Shopify", "Stripe", "Webhooks"],
+    outcome: "$25K+ monthly revenue"
+  },
+  {
+    title: "Growth Funnel System",
+    description: "End-to-end marketing automation and lead nurturing system for B2B service provider.",
+    icon: ArrowRight,
+    gradient: "from-pink-500 to-rose-500",
+    tags: ["Growth Systems", "Marketing"],
+    year: "2026",
+    stack: ["HubSpot", "Zapier", "Email"],
+    outcome: "200% lead generation increase"
   }
 ];
 
@@ -86,6 +122,26 @@ export function Portfolio() {
                 <p className="text-muted-foreground mb-4" data-testid={`project-description-${index}`}>
                   {project.description}
                 </p>
+                
+                <div className="mb-4">
+                  <div className="text-sm font-semibold mb-2">Tech Stack:</div>
+                  <div className="flex flex-wrap gap-1">
+                    {project.stack.map((tech, techIndex) => (
+                      <Badge 
+                        key={tech}
+                        variant="outline" 
+                        className="text-xs"
+                        data-testid={`project-tech-${index}-${techIndex}`}
+                      >
+                        {tech}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="mb-4 p-3 bg-secondary/30 rounded-lg">
+                  <div className="text-sm font-semibold text-primary">{project.outcome}</div>
+                </div>
                 
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground" data-testid={`project-year-${index}`}>

@@ -1,0 +1,76 @@
+{
+  "version": 2,
+  "name": "nexus-creative-studio",
+  "framework": null,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/public",
+  "installCommand": "npm ci",
+  "devCommand": "npm run dev",
+  "functions": {
+    "api/index.ts": {
+      "maxDuration": 30,
+      "runtime": "nodejs18.x",
+      "memory": 1024
+    }
+  },
+  "routes": [
+    {
+      "src": "/health",
+      "dest": "/api"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/api"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=0"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(js|css|svg|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "regions": ["iad1"],
+  "cleanUrls": true,
+  "trailingSlash": false
+}

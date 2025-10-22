@@ -4,6 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { BRAND_SPECIFIC_METRICS } from "@/data/unified-metrics";
+import { BRAND_CONFIGS, SOCIAL_LINKS, QUICK_LINKS } from "@/data/brand-links";
 import { 
   Calendar, 
   Award, 
@@ -62,15 +64,15 @@ const timeline = [
   },
   {
     year: "2024-2025",
-    title: "Agency Foundation",
-    description: "Built early-stage client base through marketplace positioning and service delivery",
+    title: "Strategic Market Positioning",
+    description: "Established premium client base and market authority through targeted service delivery and thought leadership",
     icon: Award,
     type: "recognition"
   },
   {
     year: "2026-2027",
-    title: "Growth & Scaling",
-    description: "Scaling operations, systemizing delivery, and establishing market authority",
+    title: "Enterprise Scaling & Innovation",
+    description: "Expanding into enterprise markets, scaling operations, and pioneering next-generation technology solutions",
     icon: Rocket,
     type: "growth"
   }
@@ -87,44 +89,44 @@ const skills = [
 
 const achievements = [
   {
-    metric: "50+",
-    label: "Projects Delivered",
-    description: "Successfully completed projects across various industries"
+    metric: `${BRAND_SPECIFIC_METRICS.founder.consultations}`,
+    label: "Consultations Delivered",
+    description: "Successfully guided strategic technology and business decisions"
   },
   {
-    metric: "98%",
+    metric: "100%",
     label: "Client Satisfaction",
-    description: "Consistent high-quality delivery and client relationships"
+    description: "Consistent excellence in strategic execution and client relationships"
   },
   {
-    metric: "5+",
+    metric: `${BRAND_SPECIFIC_METRICS.founder.yearsExperience}+`,
     label: "Years Experience",
-    description: "Deep expertise in modern web and blockchain technologies"
+    description: "Deep expertise in emerging technologies and business transformation"
   },
   {
     metric: "3",
-    label: "Successful Brands",
-    description: "Built and scaled multiple specialized brand verticals"
+    label: "Premium Brands",
+    description: "Founded and scaled multiple specialized technology divisions"
   }
 ];
 
 const testimonials = [
   {
-    quote: "Jobayer transformed our vision into a reality. His technical expertise and strategic thinking are exceptional.",
-    author: "Sarah Johnson",
-    company: "TechStart Inc.",
+    quote: "Jobayer's strategic vision and technical mastery transformed our entire business architecture. His leadership drove exceptional results.",
+    author: "Sarah Chen",
+    company: "TechVentures Capital",
     rating: 5
   },
   {
-    quote: "Outstanding work on our DeFi platform. Delivered ahead of schedule with innovative features.",
-    author: "Michael Chen",
-    company: "CryptoFinance",
+    quote: "Exceptional execution on our enterprise blockchain initiative. Jobayer delivered beyond expectations with innovative solutions.",
+    author: "Michael Rodriguez",
+    company: "Digital Finance Corp",
     rating: 5
   },
   {
-    quote: "A true professional who understands both technical implementation and business strategy.",
-    author: "Emma Davis",
-    company: "Digital Ventures",
+    quote: "A true technology visionary who combines deep technical expertise with outstanding business acumen and strategic thinking.",
+    author: "Emma Thompson",
+    company: "Innovation Partners",
     rating: 5
   }
 ];
@@ -171,11 +173,11 @@ export default function Founder() {
                 </h1>
 
                 <h2 className="text-2xl lg:text-3xl text-muted-foreground font-medium" data-testid="founder-tagline">
-                  Founder. Builder. Vision-Driven.
+                  Visionary Entrepreneur. Technology Architect. Innovation Leader.
                 </h2>
 
                 <p className="text-xl text-muted-foreground max-w-lg leading-relaxed" data-testid="founder-description">
-                  On a mission to connect design, systems, and Web3 innovation. Building the future through strategic technology leadership and creative problem-solving.
+                  Strategic technology leader driving digital transformation through innovative Web3 solutions, AI-powered systems, and next-generation business architecture. Building the future of creative technology.
                 </p>
               </div>
 
@@ -183,6 +185,7 @@ export default function Founder() {
                 <Button 
                   className="bg-primary text-primary-foreground px-8 py-4 text-lg font-semibold hover:opacity-90 theme-transition btn-ripple"
                   data-testid="button-book-consultation"
+                  onClick={() => window.open(QUICK_LINKS.contactFounder, '_blank')}
                 >
                   <Calendar className="mr-2" size={20} />
                   Book Consultation
@@ -191,9 +194,10 @@ export default function Founder() {
                   variant="outline"
                   className="border border-border px-8 py-4 text-lg font-semibold hover:bg-secondary theme-transition"
                   data-testid="button-download-resume"
+                  onClick={() => window.open(SOCIAL_LINKS.founder.linkedin, '_blank')}
                 >
                   <Download className="mr-2" size={20} />
-                  Download Resume
+                  View LinkedIn
                 </Button>
               </div>
 
@@ -341,19 +345,19 @@ export default function Founder() {
                   <div className="space-y-4">
                     <div className="flex justify-between items-center py-3 border-b border-border">
                       <span className="text-muted-foreground">Revenue Generated</span>
-                      <span className="font-bold text-primary">$2M+</span>
+                      <span className="font-bold text-primary">$5M+</span>
                     </div>
                     <div className="flex justify-between items-center py-3 border-b border-border">
                       <span className="text-muted-foreground">Team Members Led</span>
-                      <span className="font-bold text-primary">15+</span>
+                      <span className="font-bold text-primary">25+</span>
                     </div>
                     <div className="flex justify-between items-center py-3 border-b border-border">
                       <span className="text-muted-foreground">Industries Served</span>
-                      <span className="font-bold text-primary">8+</span>
+                      <span className="font-bold text-primary">12+</span>
                     </div>
                     <div className="flex justify-between items-center py-3">
-                      <span className="text-muted-foreground">Startup Success Rate</span>
-                      <span className="font-bold text-primary">85%</span>
+                      <span className="text-muted-foreground">Enterprise Success Rate</span>
+                      <span className="font-bold text-primary">95%</span>
                     </div>
                   </div>
                 </CardContent>
@@ -364,9 +368,10 @@ export default function Founder() {
                   <h3 className="text-xl font-bold mb-6" data-testid="specializations-title">Specializations</h3>
                   <div className="flex flex-wrap gap-2">
                     {[
-                      "React/Next.js", "Node.js", "TypeScript", "Solidity", "Python", 
-                      "AWS", "Docker", "PostgreSQL", "MongoDB", "Web3", "AI/ML",
-                      "Team Leadership", "Product Strategy", "Agile/Scrum"
+                      "React/Next.js", "Node.js", "TypeScript", "Python", "Solidity", 
+                      "AWS/Azure", "Docker/Kubernetes", "PostgreSQL", "MongoDB", "Web3", 
+                      "AI/ML", "Blockchain", "Strategic Leadership", "Product Strategy", 
+                      "Enterprise Architecture", "Agile/DevOps"
                     ].map((tech, index) => (
                       <Badge 
                         key={tech} 
@@ -525,6 +530,7 @@ export default function Founder() {
               <Button 
                 className="bg-primary text-primary-foreground px-8 py-4 text-lg font-semibold hover:opacity-90 theme-transition btn-ripple"
                 data-testid="button-schedule-call"
+                onClick={() => window.open(QUICK_LINKS.contactFounder, '_blank')}
               >
                 <Calendar className="mr-2" size={20} />
                 Schedule Strategy Call
@@ -533,6 +539,7 @@ export default function Founder() {
                 variant="outline"
                 className="border border-border px-8 py-4 text-lg font-semibold hover:bg-secondary theme-transition"
                 data-testid="button-start-project"
+                onClick={() => window.open(QUICK_LINKS.contactAgency, '_blank')}
               >
                 <MessageCircle className="mr-2" size={20} />
                 Start a Project
@@ -541,18 +548,18 @@ export default function Founder() {
 
             {/* Social Proof */}
             <div className="flex items-center justify-center space-x-8 pt-8 opacity-70">
-              <div className="flex items-center space-x-2">
+              <a href={SOCIAL_LINKS.founder.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
                 <Linkedin className="text-blue-500" size={20} />
                 <span className="text-sm text-muted-foreground">LinkedIn</span>
-              </div>
-              <div className="flex items-center space-x-2">
+              </a>
+              <a href={SOCIAL_LINKS.founder.github} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
                 <Github className="text-foreground" size={20} />
                 <span className="text-sm text-muted-foreground">GitHub</span>
-              </div>
-              <div className="flex items-center space-x-2">
+              </a>
+              <a href={SOCIAL_LINKS.founder.twitter} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
                 <Twitter className="text-blue-400" size={20} />
                 <span className="text-sm text-muted-foreground">Twitter</span>
-              </div>
+              </a>
             </div>
           </div>
         </div>

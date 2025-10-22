@@ -1,6 +1,5 @@
 import { sql } from "drizzle-orm";
 import { pgTable, text, varchar, integer, boolean, json, timestamp, serial, real } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 export const users = pgTable("users", {
@@ -9,9 +8,10 @@ export const users = pgTable("users", {
   password: text("password").notNull(),
 });
 
-export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
-  password: true,
+// Manual Zod schemas instead of createInsertSchema to avoid compatibility issues
+export const insertUserSchema = z.object({
+  username: z.string().min(1),
+  password: z.string().min(1),
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -33,10 +33,17 @@ export const projects = pgTable("projects", {
   updated_at: timestamp("updated_at").notNull().defaultNow(),
 });
 
-export const insertProjectSchema = createInsertSchema(projects).omit({
-  id: true,
-  created_at: true,
-  updated_at: true,
+export const insertProjectSchema = z.object({
+  title: z.string().min(1),
+  slug: z.string().min(1),
+  year: z.number().int(),
+  client_name: z.string().nullable().optional(),
+  categories: z.array(z.string()).optional(),
+  technologies: z.array(z.string()).optional(),
+  description: z.string().nullable().optional(),
+  metrics: z.record(z.any()).optional(),
+  is_featured: z.boolean().optional(),
+  published: z.boolean().optional(),
 });
 
 export type InsertProject = z.infer<typeof insertProjectSchema>;
@@ -55,10 +62,14 @@ export const services = pgTable("services", {
   updated_at: timestamp("updated_at").notNull().defaultNow(),
 });
 
-export const insertServiceSchema = createInsertSchema(services).omit({
-  id: true,
-  created_at: true,
-  updated_at: true,
+export const insertServiceSchema = z.object({
+  title: z.string().min(1),
+  description: z.string().nullable().optional(),
+  category: z.string().min(1),
+  price_min: z.number().optional(),
+  price_max: z.number().optional(),
+  features: z.array(z.string()).optional(),
+  is_featured: z.boolean().optional(),
 });
 
 export type InsertService = z.infer<typeof insertServiceSchema>;
@@ -77,9 +88,15 @@ export const contactSubmissions = pgTable("contact_submissions", {
   created_at: timestamp("created_at").notNull().defaultNow(),
 });
 
-export const insertContactSubmissionSchema = createInsertSchema(contactSubmissions).omit({
-  id: true,
-  created_at: true,
+export const insertContactSubmissionSchema = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+  company: z.string().nullable().optional(),
+  phone: z.string().nullable().optional(),
+  message: z.string().min(1),
+  service_interest: z.string().optional(),
+  budget_range: z.string().optional(),
+  status: z.string().optional(),
 });
 
 export type InsertContactSubmission = z.infer<typeof insertContactSubmissionSchema>;
@@ -95,9 +112,12 @@ export const siteMetrics = pgTable("site_metrics", {
   updated_at: timestamp("updated_at").notNull().defaultNow(),
 });
 
-export const insertSiteMetricsSchema = createInsertSchema(siteMetrics).omit({
-  id: true,
-  updated_at: true,
+export const insertSiteMetricsSchema = z.object({
+  revenue_total: z.number().optional(),
+  projects_total: z.number().int().optional(),
+  clients_total: z.number().int().optional(),
+  satisfaction_pct: z.number().optional(),
+  success_rate_pct: z.number().optional(),
 });
 
 export type InsertSiteMetrics = z.infer<typeof insertSiteMetricsSchema>;
@@ -115,10 +135,13 @@ export const pricingTiers = pgTable("pricing_tiers", {
   updated_at: timestamp("updated_at").notNull().defaultNow(),
 });
 
-export const insertPricingTierSchema = createInsertSchema(pricingTiers).omit({
-  id: true,
-  created_at: true,
-  updated_at: true,
+export const insertPricingTierSchema = z.object({
+  service_type: z.string().min(1),
+  tier_name: z.string().min(1),
+  price_min: z.number(),
+  price_max: z.number(),
+  features: z.array(z.string()).optional(),
+  is_active: z.boolean().optional(),
 });
 
 export type InsertPricingTier = z.infer<typeof insertPricingTierSchema>;

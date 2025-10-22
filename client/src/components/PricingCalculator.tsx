@@ -8,22 +8,23 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Calculator, DollarSign, Clock, Star } from "lucide-react";
 
 const projectTypes = [
-  { name: "Web Application", base: 15000, multiplier: 1.0, duration: "4-8 weeks" },
-  { name: "E-commerce Platform", base: 25000, multiplier: 1.2, duration: "6-12 weeks" },
-  { name: "Mobile App", base: 30000, multiplier: 1.5, duration: "8-16 weeks" },
-  { name: "Blockchain/Web3", base: 40000, multiplier: 2.0, duration: "10-20 weeks" },
-  { name: "Enterprise Solution", base: 60000, multiplier: 2.5, duration: "12-24 weeks" },
+  { name: "AI + Automation MVP", base: 3000, multiplier: 1.0, duration: "2-4 weeks", category: "ai-mvp" },
+  { name: "Landing Page", base: 1000, multiplier: 0.8, duration: "1-2 weeks", category: "web-dev" },
+  { name: "Multi-page Website", base: 2500, multiplier: 1.0, duration: "2-3 weeks", category: "web-dev" },
+  { name: "Web Application", base: 5000, multiplier: 1.2, duration: "3-6 weeks", category: "web-dev" },
+  { name: "System Integration", base: 800, multiplier: 1.0, duration: "1-3 weeks", category: "automation" },
+  { name: "Growth Systems Setup", base: 1500, multiplier: 1.1, duration: "2-4 weeks", category: "growth" },
 ];
 
 const features = [
-  { name: "Advanced Analytics", price: 5000 },
-  { name: "AI Integration", price: 8000 },
-  { name: "Payment Processing", price: 3000 },
-  { name: "Real-time Features", price: 6000 },
-  { name: "Admin Dashboard", price: 4000 },
-  { name: "Mobile Optimization", price: 3500 },
-  { name: "Third-party Integrations", price: 2500 },
-  { name: "Security Audit", price: 5000 },
+  { name: "AI Chatbot Integration", price: 800 },
+  { name: "Payment Processing", price: 500 },
+  { name: "Admin Dashboard", price: 1000 },
+  { name: "Mobile Optimization", price: 600 },
+  { name: "SEO Optimization", price: 400 },
+  { name: "Analytics Setup", price: 300 },
+  { name: "Email Automation", price: 500 },
+  { name: "Social Media Integration", price: 350 },
 ];
 
 export function PricingCalculator() {
@@ -66,7 +67,7 @@ export function PricingCalculator() {
             Investment Calculator
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto" data-testid="calculator-description">
-            Get an instant estimate for your project. This calculator provides ballpark pricing to help you plan your digital transformation.
+            Get an instant estimate for your project. Early-stage agency pricing designed for startups and small businesses looking to scale fast.
           </p>
         </div>
 

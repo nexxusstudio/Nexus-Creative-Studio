@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { BRAND_CONTACTS, SOCIAL_LINKS, QUICK_LINKS } from "@/data/brand-links";
 import {
   MapPin,
   Phone,
@@ -64,7 +65,7 @@ export function Contact() {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to send message. Please email us directly at nexxusstudio.agency@gmail.com",
+        description: `Failed to send message. Please email us directly at ${BRAND_CONTACTS.agency.email}`,
         variant: "destructive"
       });
     } finally {
@@ -180,9 +181,14 @@ export function Contact() {
                     <MapPin className="text-primary" size={20} />
                     <span className="text-muted-foreground">Dhaka, Bangladesh</span>
                   </div>
-                  <div className="flex items-center space-x-3" data-testid="hq-phone">
-                    <Phone className="text-primary" size={20} />
-                    <span className="text-muted-foreground">+880 1234 567890</span>
+                  <div className="flex items-center space-x-3" data-testid="hq-email">
+                    <Mail className="text-primary" size={20} />
+                    <a 
+                      href={QUICK_LINKS.contactAgency} 
+                      className="text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {BRAND_CONTACTS.agency.email}
+                    </a>
                   </div>
                   <div className="flex items-center space-x-3" data-testid="hq-whatsapp">
                     <MessageCircle className="text-primary" size={20} />
@@ -238,48 +244,97 @@ export function Contact() {
               <CardContent className="p-6 space-y-4">
                 <h4 className="text-lg font-semibold" data-testid="social-title">Social Profiles</h4>
                 <div className="flex flex-wrap gap-3">
-                  <Button
-                    size="icon"
-                    className="w-12 h-12 bg-blue-500 rounded-lg hover:opacity-80 theme-transition"
-                    data-testid="social-linkedin"
+                  <a 
+                    href={SOCIAL_LINKS.founder.linkedin} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
                   >
-                    <Linkedin className="text-white" size={20} />
-                  </Button>
-                  <Button
-                    size="icon"
-                    className="w-12 h-12 bg-black rounded-lg hover:opacity-80 theme-transition"
-                    data-testid="social-github"
+                    <Button
+                      size="icon"
+                      className="w-12 h-12 bg-blue-500 rounded-lg hover:opacity-80 theme-transition"
+                      data-testid="social-linkedin"
+                    >
+                      <Linkedin className="text-white" size={20} />
+                    </Button>
+                  </a>
+                  <a 
+                    href={SOCIAL_LINKS.agency.github} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
                   >
-                    <Github className="text-white" size={20} />
-                  </Button>
-                  <Button
-                    size="icon"
-                    className="w-12 h-12 bg-blue-400 rounded-lg hover:opacity-80 theme-transition"
-                    data-testid="social-twitter"
+                    <Button
+                      size="icon"
+                      className="w-12 h-12 bg-black rounded-lg hover:opacity-80 theme-transition"
+                      data-testid="social-github"
+                    >
+                      <Github className="text-white" size={20} />
+                    </Button>
+                  </a>
+                  <a 
+                    href={SOCIAL_LINKS.agency.twitter} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
                   >
-                    <Twitter className="text-white" size={20} />
-                  </Button>
-                  <Button
-                    size="icon"
-                    className="w-12 h-12 bg-green-500 rounded-lg hover:opacity-80 theme-transition"
-                    data-testid="social-fiverr"
+                    <Button
+                      size="icon"
+                      className="w-12 h-12 bg-blue-400 rounded-lg hover:opacity-80 theme-transition"
+                      data-testid="social-twitter"
+                    >
+                      <Twitter className="text-white" size={20} />
+                    </Button>
+                  </a>
+                  <a 
+                    href={SOCIAL_LINKS.agency.fiverr} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
                   >
-                    <span className="text-white font-bold text-sm">F</span>
-                  </Button>
-                  <Button
-                    size="icon"
-                    className="w-12 h-12 bg-green-600 rounded-lg hover:opacity-80 theme-transition"
-                    data-testid="social-upwork"
+                    <Button
+                      size="icon"
+                      className="w-12 h-12 bg-green-500 rounded-lg hover:opacity-80 theme-transition"
+                      data-testid="social-fiverr"
+                    >
+                      <span className="text-white font-bold text-sm">F</span>
+                    </Button>
+                  </a>
+                  <a 
+                    href={SOCIAL_LINKS.agency.upwork} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
                   >
-                    <span className="text-white font-bold text-sm">U</span>
-                  </Button>
-                  <Button
-                    size="icon"
-                    className="w-12 h-12 bg-gray-800 rounded-lg hover:opacity-80 theme-transition"
-                    data-testid="social-medium"
+                    <Button
+                      size="icon"
+                      className="w-12 h-12 bg-green-600 rounded-lg hover:opacity-80 theme-transition"
+                      data-testid="social-upwork"
+                    >
+                      <span className="text-white font-bold text-sm">U</span>
+                    </Button>
+                  </a>
+                  <a 
+                    href={SOCIAL_LINKS.founder.freelancer} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
                   >
-                    <span className="text-white font-bold text-sm">M</span>
-                  </Button>
+                    <Button
+                      size="icon"
+                      className="w-12 h-12 bg-blue-600 rounded-lg hover:opacity-80 theme-transition"
+                      data-testid="social-freelancer"
+                    >
+                      <span className="text-white font-bold text-sm">FL</span>
+                    </Button>
+                  </a>
+                  <a 
+                    href="https://contra.com/jobayer_hoque_siddique_1hrc474w" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    <Button
+                      size="icon"
+                      className="w-12 h-12 bg-gray-800 rounded-lg hover:opacity-80 theme-transition"
+                      data-testid="social-contra"
+                    >
+                      <span className="text-white font-bold text-sm">C</span>
+                    </Button>
+                  </a>
                 </div>
               </CardContent>
             </Card>
