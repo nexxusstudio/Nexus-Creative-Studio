@@ -5,6 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Link, useLocation } from "wouter";
+import nexusLogo from "@assets/lg_1756703260455.jpg";
 
 export function Navigation() {
   const { theme, setTheme } = useTheme();
@@ -24,9 +25,7 @@ export function Navigation() {
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-primary to-accent rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold">N</span>
-            </div>
+            <img src={nexusLogo} alt="Nexus Creative Studio" className="w-10 h-10 rounded-lg" />
             <span className="text-xl font-bold">Nexus Creative Studio</span>
           </div>
 
