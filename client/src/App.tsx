@@ -2,14 +2,15 @@ import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
+import { ErrorBoundary } from "./components/ErrorBoundary";
+import NotFound from "./pages/not-found";
+import Home from "./pages/Home";
+import CryptoNexus from "./pages/CryptoNexus";
+import ByteStudio from "./pages/ByteStudio";
+import Founder from "./pages/Founder";
+import NexusStudio from "./pages/NexusStudio";
+import { ThemeProvider } from "./components/ThemeProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { ThemeProvider } from "@/components/ThemeProvider";
-import Home from "@/pages/Home";
-import Founder from "@/pages/Founder";
-import CryptoNexus from "@/pages/CryptoNexus";
-import ByteStudio from "@/pages/ByteStudio";
-import NexusStudio from "@/pages/NexusStudio";
-import NotFound from "@/pages/not-found";
 
 function Router() {
   return (
@@ -26,14 +27,16 @@ function Router() {
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme="light" storageKey="nexus-theme">
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
-      </ThemeProvider>
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider defaultTheme="light" storageKey="nexus-theme">
+          <TooltipProvider>
+            <Toaster />
+            <Router />
+          </TooltipProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
 
