@@ -6,56 +6,43 @@ import { CheckCircle, Circle, ArrowRight, Calendar, Users, Code, Rocket } from "
 
 const roadmapSteps = [
   {
-    phase: "Discovery & Strategy",
-    duration: "Week 1-2",
+    phase: "Phase 1: Foundation",
+    duration: "Months 1-3",
     icon: Users,
     color: "from-blue-500 to-cyan-500",
     tasks: [
-      "Stakeholder interviews and requirements gathering",
-      "Competitive analysis and market research", 
-      "Technical architecture planning",
-      "Project timeline and milestone definition"
+      "Brand identity and visual system development",
+      "Online presence: website, portfolio, social profiles",
+      "Core systems setup: project management, communication",
+      "Initial marketplace positioning (Fiverr, Upwork)"
     ],
-    deliverables: ["Strategy Document", "Technical Roadmap", "Project Plan"]
+    deliverables: ["Brand Kit", "Portfolio Website", "Client Systems"]
   },
   {
-    phase: "Design & Prototyping",
-    duration: "Week 2-4",
+    phase: "Phase 2: Automation",
+    duration: "Months 4-8",
     icon: Code,
     color: "from-purple-500 to-pink-500", 
     tasks: [
-      "User experience design and wireframing",
-      "Visual design and brand integration",
-      "Interactive prototype development",
-      "Stakeholder feedback and iterations"
+      "AI-driven workflows and delivery automation",
+      "Client dashboard and portal development",
+      "Template library for repeatable services",
+      "Process documentation and SOPs"
     ],
-    deliverables: ["Design System", "Interactive Prototype", "User Flows"]
+    deliverables: ["Automated Workflows", "Client Portal", "SOP Library"]
   },
   {
-    phase: "Development & Implementation",
-    duration: "Week 4-8",
-    icon: Code,
+    phase: "Phase 3: Scale",
+    duration: "Months 9-12+",
+    icon: Rocket,
     color: "from-green-500 to-emerald-500",
     tasks: [
-      "Frontend and backend development",
-      "Database design and API creation",
-      "Third-party integrations and services",
-      "Quality assurance and testing"
+      "Marketing funnels and outbound systems",
+      "SaaS integrations and productized services",
+      "Recurring revenue streams and retainer packages",
+      "Team expansion and freelancer network"
     ],
-    deliverables: ["MVP Release", "API Documentation", "Test Reports"]
-  },
-  {
-    phase: "Launch & Optimization",
-    duration: "Week 8-10",
-    icon: Rocket,
-    color: "from-orange-500 to-red-500",
-    tasks: [
-      "Production deployment and monitoring",
-      "Performance optimization and security audit",
-      "User training and documentation",
-      "Post-launch support and maintenance setup"
-    ],
-    deliverables: ["Live Application", "Training Materials", "Support Plan"]
+    deliverables: ["Marketing System", "Productized Offers", "Growth Engine"]
   }
 ];
 
@@ -79,13 +66,13 @@ export function InteractiveRoadmap() {
         <div className="text-center mb-16">
           <div className="inline-flex items-center space-x-2 bg-card px-4 py-2 rounded-full border border-border mb-6">
             <Calendar className="text-primary" size={20} />
-            <span className="text-sm font-semibold">Project Process</span>
+            <span className="text-sm font-semibold">Growth Strategy 2026-2027</span>
           </div>
           <h2 className="text-4xl lg:text-5xl font-bold mb-6" data-testid="roadmap-title">
-            Your Success Roadmap
+            Your Future Growth Path
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto" data-testid="roadmap-description">
-            Our proven 4-phase methodology ensures your project succeeds from concept to launch. Transparent process, clear milestones.
+            Our 3-phase early-stage growth methodology: from foundation to automation to scale. Built for startups and small businesses.
           </p>
         </div>
 
