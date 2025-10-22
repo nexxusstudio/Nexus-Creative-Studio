@@ -37,7 +37,10 @@ export function Footer() {
               <span className="text-xl font-bold">Nexus Creative Studio</span>
             </div>
             <p className="text-muted-foreground" data-testid="footer-description">
-              Building the future of digital experiences through innovation, creativity, and technical excellence.
+              Transforming Ideas into Digital Excellence. Multi-brand agency specializing in web development, Web3 solutions, and strategic technology leadership.
+            </p>
+            <p className="text-sm text-muted-foreground mt-2">
+              <strong>Email:</strong> nexxusstudio.agency@gmail.com
             </p>
           </div>
 

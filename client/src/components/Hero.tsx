@@ -2,11 +2,13 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { ParticleBackground } from "./ParticleBackground";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import { useSiteMetrics } from "@/hooks/useSupabase";
 import founderHeroImage from "@assets/JH1_1756704209882.png";
 import nexusStudioCover from "@assets/NCS1_1756703260455.jpg";
 
 export function Hero() {
   const heroRef = useScrollAnimation();
+  const { data: metrics } = useSiteMetrics();
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -76,20 +78,20 @@ export function Hero() {
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-8">
               <div className="text-center" data-testid="stat-projects">
-                <div className="text-3xl font-bold text-primary animate-neon-pulse">50+</div>
+                <div className="text-3xl font-bold text-primary">{metrics?.projects_total || 20}</div>
                 <div className="text-sm text-muted-foreground">Projects</div>
               </div>
-              <div className="text-center" data-testid="stat-brands">
-                <div className="text-3xl font-bold text-primary animate-neon-pulse">3</div>
-                <div className="text-sm text-muted-foreground">Brands</div>
+              <div className="text-center" data-testid="stat-clients">
+                <div className="text-3xl font-bold text-primary">{metrics?.clients_total || 13}</div>
+                <div className="text-sm text-muted-foreground">Clients</div>
               </div>
               <div className="text-center" data-testid="stat-satisfaction">
-                <div className="text-3xl font-bold text-primary animate-neon-pulse">98%</div>
+                <div className="text-3xl font-bold text-primary">{metrics?.satisfaction_pct || 98.5}%</div>
                 <div className="text-sm text-muted-foreground">Satisfaction</div>
               </div>
-              <div className="text-center" data-testid="stat-value">
-                <div className="text-3xl font-bold text-primary animate-neon-pulse">$4M+</div>
-                <div className="text-sm text-muted-foreground">Value Created</div>
+              <div className="text-center" data-testid="stat-revenue">
+                <div className="text-3xl font-bold text-primary">${(metrics?.revenue_total || 15000).toLocaleString()}</div>
+                <div className="text-sm text-muted-foreground">Total Revenue</div>
               </div>
             </div>
           </div>

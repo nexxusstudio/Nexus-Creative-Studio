@@ -132,6 +132,9 @@ CREATE POLICY "Public read projects" ON projects FOR SELECT USING (published = t
 DROP POLICY IF EXISTS "Public read metrics" ON site_metrics;
 CREATE POLICY "Public read metrics" ON site_metrics FOR SELECT USING (true);
 
--- Contact submissions: insert only
+-- Contact submissions: insert only (allow anon users to submit)
 DROP POLICY IF EXISTS "Public insert submissions" ON contact_submissions;
-CREATE POLICY "Public insert submissions" ON contact_submissions FOR INSERT WITH CHECK (true);
+CREATE POLICY "Public insert submissions" ON contact_submissions 
+  FOR INSERT 
+  TO anon, authenticated
+  WITH CHECK (true);

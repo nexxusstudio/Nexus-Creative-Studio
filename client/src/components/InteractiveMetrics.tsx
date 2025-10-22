@@ -3,69 +3,70 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { TrendingUp, Users, Code, Award, Globe, Shield } from "lucide-react";
+import { useSiteMetrics } from "@/hooks/useSupabase";
 
 const metrics = [
   {
-    title: "Global Reach",
-    value: 15,
-    max: 20,
-    unit: "Countries",
-    icon: Globe,
+    title: "Total Projects",
+    value: 20,
+    max: 25,
+    unit: "Projects",
+    icon: Code,
     color: "from-blue-500 to-cyan-500",
-    description: "International client portfolio"
+    description: "Successfully delivered projects"
   },
   {
     title: "Client Satisfaction",
-    value: 98,
+    value: 98.5,
     max: 100,
     unit: "%",
     icon: Award,
     color: "from-green-500 to-emerald-500",
-    description: "Average satisfaction rating"
+    description: "Average client satisfaction rating"
   },
   {
-    title: "Code Quality",
-    value: 95,
-    max: 100,
-    unit: "Score",
-    icon: Code,
+    title: "Total Clients",
+    value: 13,
+    max: 20,
+    unit: "Clients",
+    icon: Users,
     color: "from-purple-500 to-pink-500",
-    description: "Test coverage & best practices"
+    description: "Happy clients served"
   },
   {
-    title: "Security Rating",
-    value: 99,
+    title: "Success Rate",
+    value: 100,
     max: 100,
-    unit: "A+",
+    unit: "%",
     icon: Shield,
     color: "from-red-500 to-orange-500",
-    description: "Security audit compliance"
+    description: "Project completion rate"
   },
   {
-    title: "Team Growth",
-    value: 250,
-    max: 300,
-    unit: "%",
-    icon: Users,
+    title: "Active Clients",
+    value: 5,
+    max: 10,
+    unit: "Active",
+    icon: Globe,
     color: "from-indigo-500 to-purple-500",
-    description: "Year-over-year growth"
+    description: "Currently active projects"
   },
   {
-    title: "Revenue Growth",
-    value: 340,
-    max: 400,
-    unit: "%",
+    title: "Quality Score",
+    value: 4.8,
+    max: 5.0,
+    unit: "/5.0",
     icon: TrendingUp,
     color: "from-pink-500 to-rose-500",
-    description: "Annual revenue increase"
+    description: "Average project quality rating"
   }
 ];
 
 const achievements = [
-  { title: "Forbes 30 Under 30 Nominee", year: "2024", category: "Technology" },
-  { title: "Blockchain Innovation Award", year: "2024", category: "DeFi" },
-  { title: "Startup Accelerator Graduate", year: "2023", category: "Tech" },
-  { title: "Industry Speaking Engagements", year: "2024", category: "Leadership" },
+  { title: "Fiverr Pro Verified", year: "2024", category: "Development" },
+  { title: "13 Happy Clients", year: "2024", category: "Client Success" },
+  { title: "20 Projects Delivered", year: "2024", category: "Milestone" },
+  { title: "6 Months in Business", year: "2024", category: "Growth" },
 ];
 
 export function InteractiveMetrics() {
