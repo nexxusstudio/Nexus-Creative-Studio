@@ -5,31 +5,35 @@ import { Card, CardContent } from "@/components/ui/card";
 const services = [
   {
     icon: Brain,
-    title: "AI Solutions",
-    description: "Custom AI integrations, automation, and intelligent systems that enhance your business operations.",
+    title: "AI + Automation MVPs",
+    description: "SaaS tools, AI agents, and automation systems using OpenAI, Supabase, and modern frameworks.",
     gradient: "from-purple-500 to-pink-500",
-    features: ["AI Chatbots", "Process Automation", "Data Analytics"]
+    features: ["AI Chatbots & Agents", "Workflow Automation", "MVP Development"],
+    priceRange: "$3K - $8K"
   },
   {
     icon: Code,
-    title: "Web Development",
-    description: "Modern, responsive websites and web applications built with cutting-edge technologies.",
+    title: "Web Design & Development",
+    description: "Conversion-focused websites, landing pages, and portfolio systems built for growth.",
     gradient: "from-blue-500 to-cyan-500",
-    features: ["React/Next.js", "Full-Stack Apps", "API Development"]
-  },
-  {
-    icon: Bitcoin,
-    title: "Blockchain & Crypto",
-    description: "Web3 applications, smart contracts, and decentralized solutions for the future of finance.",
-    gradient: "from-green-500 to-emerald-500",
-    features: ["Smart Contracts", "DeFi Platforms", "NFT Marketplaces"]
+    features: ["Landing Pages", "Multi-page Websites", "Web Applications"],
+    priceRange: "$1K - $5K"
   },
   {
     icon: Plus,
-    title: "Add-ons",
-    description: "Additional services to complement your project and maximize its potential.",
+    title: "System Integration & Automation",
+    description: "Zapier/Make workflows, Notion systems, Airtable setups, and CRM stack integrations.",
+    gradient: "from-green-500 to-emerald-500",
+    features: ["No-Code Automation", "System Integration", "CRM Setup"],
+    priceRange: "$500 - $2K"
+  },
+  {
+    icon: Bitcoin,
+    title: "Growth Systems & Funnels",
+    description: "Outbound systems, marketing automations, and brand positioning for early-stage growth.",
     gradient: "from-orange-500 to-red-500",
-    features: ["SEO Optimization", "Performance Audit", "Maintenance"]
+    features: ["Marketing Automation", "Brand Strategy", "Growth Systems"],
+    priceRange: "$1K - $3K"
   }
 ];
 
@@ -44,7 +48,7 @@ export function Services() {
             Our Services
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto" data-testid="services-description">
-            From AI-powered solutions to blockchain development, we offer comprehensive digital services that scale with your business.
+            Four core service pillars designed to help startups and small businesses scale fast with AI, automation, and modern technology.
           </p>
         </div>
 
@@ -64,9 +68,14 @@ export function Services() {
                   {service.title}
                 </h3>
                 
-                <p className="text-muted-foreground mb-6" data-testid={`service-description-${index}`}>
+                <p className="text-muted-foreground mb-4" data-testid={`service-description-${index}`}>
                   {service.description}
                 </p>
+                
+                <div className="mb-6">
+                  <div className="text-primary font-bold text-lg">{service.priceRange}</div>
+                  <div className="text-xs text-muted-foreground">Average project range</div>
+                </div>
                 
                 <ul className="space-y-2">
                   {service.features.map((feature, featureIndex) => (

@@ -7,31 +7,31 @@ import { useSupabase } from "@/hooks/useSupabase";
 
 const metrics = [
   {
-    title: "Total Projects",
+    title: "Total Revenue",
     value: 20,
-    max: 25,
-    unit: "Projects",
-    icon: Code,
+    max: 30,
+    unit: "K+",
+    icon: TrendingUp,
     color: "from-blue-500 to-cyan-500",
-    description: "Successfully delivered projects"
+    description: "Revenue generated from client projects"
   },
   {
     title: "Client Satisfaction",
-    value: 98.5,
+    value: 100,
     max: 100,
     unit: "%",
     icon: Award,
     color: "from-green-500 to-emerald-500",
-    description: "Average client satisfaction rating"
+    description: "Perfect satisfaction across all clients"
   },
   {
-    title: "Total Clients",
-    value: 13,
+    title: "Total Projects",
+    value: 15,
     max: 20,
-    unit: "Clients",
-    icon: Users,
+    unit: "+",
+    icon: Code,
     color: "from-purple-500 to-pink-500",
-    description: "Happy clients served"
+    description: "Projects delivered across 4 countries"
   },
   {
     title: "Success Rate",
@@ -40,25 +40,25 @@ const metrics = [
     unit: "%",
     icon: Shield,
     color: "from-red-500 to-orange-500",
-    description: "Project completion rate"
+    description: "Perfect project completion rate"
   },
   {
-    title: "Active Clients",
-    value: 5,
-    max: 10,
-    unit: "Active",
+    title: "Active Marketplaces",
+    value: 4,
+    max: 5,
+    unit: "Platforms",
     icon: Globe,
     color: "from-indigo-500 to-purple-500",
-    description: "Currently active projects"
+    description: "Fiverr, Upwork, Contra, Freelancer"
   },
   {
-    title: "Quality Score",
-    value: 4.8,
-    max: 5.0,
-    unit: "/5.0",
-    icon: TrendingUp,
+    title: "Repeat Clients",
+    value: 60,
+    max: 100,
+    unit: "%",
+    icon: Users,
     color: "from-pink-500 to-rose-500",
-    description: "Average project quality rating"
+    description: "Client retention and repeat business"
   }
 ];
 

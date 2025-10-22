@@ -40,20 +40,20 @@ export function Hero() {
             <div className="space-y-6">
               <div className="inline-flex items-center space-x-2 bg-card/80 backdrop-blur-sm px-4 py-2 rounded-full border border-border">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" data-testid="status-indicator"></div>
-                <span className="text-sm text-muted-foreground">Available for Strategic Partnerships</span>
+                <span className="text-sm text-muted-foreground">Now Accepting Projects (2026-2027)</span>
               </div>
 
               <h1 className="text-5xl lg:text-8xl font-bold leading-tight" data-testid="hero-title">
-                Where{" "}
+                Building{" "}
                 <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent animate-glow">
-                  Vision
+                  World-Class
                 </span>
                 <br />
-                Meets Innovation
+                Digital Systems
               </h1>
 
               <p className="text-xl text-muted-foreground max-w-lg leading-relaxed" data-testid="hero-description">
-                Multi-brand digital agency specializing in Web3, design, and strategic technology leadership. From blockchain solutions to MVP development - we build the future.
+                Early-stage agency delivering AI-powered MVPs, modern web applications, and automation systems. From idea to launch - lean, fast, and focused on your growth.
               </p>
             </div>
 
@@ -78,20 +78,20 @@ export function Hero() {
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-8">
               <div className="text-center" data-testid="stat-projects">
-                <div className="text-3xl font-bold text-primary">{metrics?.projects_total || 20}</div>
+                <div className="text-3xl font-bold text-primary">{metrics?.projects_total || 15}+</div>
                 <div className="text-sm text-muted-foreground">Projects</div>
               </div>
               <div className="text-center" data-testid="stat-clients">
-                <div className="text-3xl font-bold text-primary">{metrics?.clients_total || 13}</div>
-                <div className="text-sm text-muted-foreground">Clients</div>
+                <div className="text-3xl font-bold text-primary">{metrics?.clients_total || 15}+</div>
+                <div className="text-sm text-muted-foreground">Happy Clients</div>
               </div>
               <div className="text-center" data-testid="stat-satisfaction">
-                <div className="text-3xl font-bold text-primary">{metrics?.satisfaction_pct || 98.5}%</div>
+                <div className="text-3xl font-bold text-primary">{metrics?.satisfaction_pct || 100}%</div>
                 <div className="text-sm text-muted-foreground">Satisfaction</div>
               </div>
               <div className="text-center" data-testid="stat-revenue">
-                <div className="text-3xl font-bold text-primary">${(metrics?.revenue_total || 15000).toLocaleString()}</div>
-                <div className="text-sm text-muted-foreground">Total Revenue</div>
+                <div className="text-3xl font-bold text-primary">${(metrics?.revenue_total || 20000).toLocaleString()}+</div>
+                <div className="text-sm text-muted-foreground">Revenue Generated</div>
               </div>
             </div>
           </div>
