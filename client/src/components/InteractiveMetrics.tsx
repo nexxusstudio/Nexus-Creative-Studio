@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { TrendingUp, Users, Code, Award, Globe, Shield } from "lucide-react";
-import { useSiteMetrics } from "@/hooks/useSupabase";
+import { useSupabase } from "@/hooks/useSupabase";
 
 const metrics = [
   {
@@ -72,6 +72,7 @@ const achievements = [
 export function InteractiveMetrics() {
   const [animatedValues, setAnimatedValues] = useState<{ [key: string]: number }>({});
   const [selectedMetric, setSelectedMetric] = useState<string | null>(null);
+  const { metrics: siteMetrics } = useSupabase();
 
   useEffect(() => {
     const timer = setTimeout(() => {

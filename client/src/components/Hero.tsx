@@ -2,13 +2,13 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { ParticleBackground } from "./ParticleBackground";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { useSiteMetrics } from "@/hooks/useSupabase";
+import { useSupabase } from "@/hooks/useSupabase";
 import founderHeroImage from "@assets/JH1_1756704209882.png";
 import nexusStudioCover from "@assets/NCS1_1756703260455.jpg";
 
 export function Hero() {
   const heroRef = useScrollAnimation();
-  const { data: metrics } = useSiteMetrics();
+  const { metrics } = useSupabase();
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
