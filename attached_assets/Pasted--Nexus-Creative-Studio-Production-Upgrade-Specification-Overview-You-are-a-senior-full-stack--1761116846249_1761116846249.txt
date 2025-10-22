@@ -1,0 +1,1018 @@
+# Nexus Creative Studio - Production Upgrade Specification
+
+## Overview
+You are a senior full-stack engineer tasked with transforming the Nexus Creative Studio website from a placeholder-filled prototype into a production-ready, data-driven platform. This upgrade must deliver a professional, performant, and fully functional agency website with real content, working features, and production infrastructure.
+
+## Tech Stack
+- **Framework:** Next.js 14 (App Router)
+- **Language:** TypeScript (strict mode)
+- **Styling:** Tailwind CSS v3+
+- **Database:** Supabase (PostgreSQL)
+- **Auth & Storage:** Supabase
+- **Testing:** Jest (unit) + Playwright (E2E)
+- **Monitoring:** Sentry
+- **Analytics:** Google Analytics 4
+- **CI/CD:** GitHub Actions
+- **Hosting:** Vercel
+- **State Management:** React Server Components + Client Components (minimal client state)
+
+## Performance Targets
+- Lighthouse Score: ≥95 (all categories)
+- Largest Contentful Paint (LCP): <2.5s
+- Cumulative Layout Shift (CLS): <0.1
+- First Input Delay (FID): <100ms
+- Time to Interactive (TTI): <3.5s
+
+---
+
+## Phase 1: Database Architecture & Integration
+
+### 1.1 Supabase Connection Setup
+
+**Database Credentials:**
+```
+Host: db.guarhoiykpmngfptntxt.supabase.co
+Port: 5432
+Database: postgres
+User: postgres
+Anon Key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd1YXJob2l5a3BtbmdmcHRudHh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEwNDU3MjksImV4cCI6MjA3NjYyMTcyOX0.CHvQ4WJIv_kcmy6dMlSUKC8q2VbscsWcORmCNkxVm8c
+JWT Secret: m6SmLwfmBPDtTmEYnlZKRedFMt2H+SlvRhqFyNiyWPvpOZ9pVdni6qkStRT37aTE6YqnkT6+C/nvTG+9UKUcgQ==
+```
+
+**Environment Variables:**
+```env
+# .env.local
+NEXT_PUBLIC_SUPABASE_URL=https://guarhoiykpmngfptntxt.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+SUPABASE_SERVICE_ROLE_KEY=<service_role_key>
+NEXT_PUBLIC_SITE_URL=https://nexuscreativestudio.com
+```
+
+**Client Initialization:**
+```typescript
+// lib/supabase/client.ts - For client components
+// lib/supabase/server.ts - For server components (RSC-safe)
+// lib/supabase/middleware.ts - For middleware
+```
+
+### 1.2 Database Schema
+
+Create the following tables with proper indexing and RLS policies:
+
+```sql
+-- Brands Table
+CREATE TABLE brands (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  name TEXT NOT NULL,
+  slug TEXT UNIQUE NOT NULL,
+  summary TEXT,
+  description TEXT,
+  logo_url TEXT,
+  website_url TEXT,
+  tagline TEXT,
+  metrics JSONB DEFAULT '{}',
+  social_links JSONB DEFAULT '{}',
+  color_primary TEXT,
+  color_secondary TEXT,
+  is_active BOOLEAN DEFAULT true,
+  display_order INTEGER DEFAULT 0,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_brands_slug ON brands(slug);
+CREATE INDEX idx_brands_active ON brands(is_active);
+
+-- Services Table
+CREATE TABLE services (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  title TEXT NOT NULL,
+  slug TEXT UNIQUE NOT NULL,
+  description TEXT,
+  category TEXT NOT NULL,
+  price_base DECIMAL(10,2),
+  price_complexity_multiplier JSONB DEFAULT '{"simple": 1.0, "standard": 1.5, "complex": 2.0}',
+  features TEXT[],
+  deliverables TEXT[],
+  timeline_days INTEGER,
+  icon_name TEXT,
+  is_featured BOOLEAN DEFAULT false,
+  brand_id UUID REFERENCES brands(id),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_services_slug ON services(slug);
+CREATE INDEX idx_services_category ON services(category);
+CREATE INDEX idx_services_featured ON services(is_featured);
+
+-- Projects Table
+CREATE TABLE projects (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  title TEXT NOT NULL,
+  slug TEXT UNIQUE NOT NULL,
+  year INTEGER NOT NULL,
+  client_name TEXT,
+  categories TEXT[] DEFAULT '{}',
+  technologies TEXT[] DEFAULT '{}',
+  case_study_url TEXT,
+  cover_image_url TEXT,
+  gallery_images TEXT[] DEFAULT '{}',
+  excerpt TEXT,
+  description TEXT,
+  metrics JSONB DEFAULT '{}',
+  testimonial JSONB,
+  brand_id UUID REFERENCES brands(id),
+  service_id UUID REFERENCES services(id),
+  is_featured BOOLEAN DEFAULT false,
+  published BOOLEAN DEFAULT true,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_projects_slug ON projects(slug);
+CREATE INDEX idx_projects_year ON projects(year DESC);
+CREATE INDEX idx_projects_featured ON projects(is_featured);
+CREATE INDEX idx_projects_published ON projects(published);
+
+-- Site Metrics Table (Singleton)
+CREATE TABLE site_metrics (
+  id INTEGER PRIMARY KEY DEFAULT 1 CHECK (id = 1),
+  revenue_total DECIMAL(12,2) DEFAULT 0,
+  projects_total INTEGER DEFAULT 0,
+  clients_total INTEGER DEFAULT 0,
+  months_in_business INTEGER DEFAULT 0,
+  satisfaction_pct DECIMAL(5,2) DEFAULT 100.00,
+  success_rate_pct DECIMAL(5,2) DEFAULT 100.00,
+  quality_score DECIMAL(3,2) DEFAULT 5.00,
+  active_clients INTEGER DEFAULT 0,
+  repeat_clients INTEGER DEFAULT 0,
+  avg_project_value DECIMAL(10,2) DEFAULT 0,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+INSERT INTO site_metrics (id) VALUES (1);
+
+-- Investment Features Table
+CREATE TABLE investment_features (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  label TEXT NOT NULL,
+  price_addon DECIMAL(10,2) NOT NULL,
+  description TEXT,
+  category TEXT,
+  enabled BOOLEAN DEFAULT true,
+  display_order INTEGER DEFAULT 0,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_features_enabled ON investment_features(enabled);
+
+-- Navigation Links Table
+CREATE TABLE nav_links (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  label TEXT NOT NULL,
+  href TEXT NOT NULL,
+  external BOOLEAN DEFAULT false,
+  icon_name TEXT,
+  parent_id UUID REFERENCES nav_links(id),
+  display_order INTEGER DEFAULT 0,
+  is_active BOOLEAN DEFAULT true,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_nav_order ON nav_links(display_order);
+
+-- Contact Submissions Table
+CREATE TABLE contact_submissions (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  company TEXT,
+  phone TEXT,
+  message TEXT NOT NULL,
+  service_interest TEXT,
+  budget_range TEXT,
+  metadata JSONB DEFAULT '{}',
+  status TEXT DEFAULT 'new',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_submissions_status ON contact_submissions(status);
+CREATE INDEX idx_submissions_created ON contact_submissions(created_at DESC);
+
+-- Row Level Security Policies
+ALTER TABLE brands ENABLE ROW LEVEL SECURITY;
+ALTER TABLE services ENABLE ROW LEVEL SECURITY;
+ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
+ALTER TABLE site_metrics ENABLE ROW LEVEL SECURITY;
+ALTER TABLE investment_features ENABLE ROW LEVEL SECURITY;
+ALTER TABLE nav_links ENABLE ROW LEVEL SECURITY;
+ALTER TABLE contact_submissions ENABLE ROW LEVEL SECURITY;
+
+-- Public read access
+CREATE POLICY "Public read brands" ON brands FOR SELECT USING (is_active = true);
+CREATE POLICY "Public read services" ON services FOR SELECT USING (true);
+CREATE POLICY "Public read projects" ON projects FOR SELECT USING (published = true);
+CREATE POLICY "Public read metrics" ON site_metrics FOR SELECT USING (true);
+CREATE POLICY "Public read features" ON investment_features FOR SELECT USING (enabled = true);
+CREATE POLICY "Public read nav" ON nav_links FOR SELECT USING (is_active = true);
+
+-- Contact submissions: insert only
+CREATE POLICY "Public insert submissions" ON contact_submissions FOR INSERT WITH CHECK (true);
+```
+
+### 1.3 Seed Data
+
+Create seed script (`scripts/seed.ts`) to populate:
+
+**Brands:**
+- Nexus Creative Studio (main umbrella)
+- Crypto Nexus (Web3 division)
+- Byte Studio (Design/MVP division)
+
+**Services:**
+- Brand Identity & Strategy
+- Web Development (Frontend/Full-stack)
+- Web3 & Blockchain Development
+- UI/UX Design
+- MVP Development
+- Digital Marketing
+- Consulting & Strategy
+
+**Projects:**
+- 5-10 realistic portfolio projects with metrics
+- Mix of web2 and web3 projects
+- Real case study links or internal case study pages
+
+**Site Metrics:**
+- Realistic, coherent numbers based on agency timeline
+
+**Investment Features:**
+- Common add-ons (CMS, E-commerce, Auth, API Integration, etc.)
+
+---
+
+## Phase 2: Content Replacement & Information Architecture
+
+### 2.1 Remove All Placeholders
+
+**Scan and replace:**
+- All "Lorem ipsum" text
+- Placeholder company names (remove "Acme Corp", "Example Inc.", etc.)
+- Dummy statistics and metrics
+- Generic testimonials
+- Placeholder images and logos
+- Sample project names
+- Test/demo data in UI
+
+### 2.2 Brand Information
+
+**Nexus Creative Studio (Main Brand):**
+- **Tagline:** "Transforming Ideas into Digital Excellence"
+- **Email:** nexxusstudio.agency@gmail.com
+- **Description:** Multi-brand creative agency specializing in web development, Web3 solutions, and design excellence
+- **Social Links:**
+  - X: https://x.com/nexuscrativeio
+  - GitHub: https://github.com/nexxusstudio
+  - Fiverr Pro: https://pro.fiverr.com/nexusstudioagen
+  - Upwork: Profile link
+  - Portfolio: https://nexuscreativestudio.notion.site/Nexus-Creative-Studio-28676083f2a4812eb694fa9dde05b381
+  - Client Portal: https://nexuscreativestudio.notion.site/Client-Portal-22176083f2a4800cbe19d83a87e0671d
+
+**Founder Information (Jobayer Hoque Siddique):**
+- **Title:** Founder & CEO
+- **Bio:** Engineering student, entrepreneur, and full-stack developer
+- **Email:** jobayerhoquesiddique@gmail.com
+- **Portfolio:** https://jobayerhoque.com
+- **Social Links:**
+  - X: https://x.com/jobayerhoquesid
+  - GitHub: https://github.com/jobayerhoquesiddique
+  - LinkedIn: https://www.linkedin.com/in/jobayer-hoque-siddique-58367a37a/
+  - Fiverr: https://www.fiverr.com/s/m5vGDRZ
+  - Upwork: https://www.upwork.com/freelancers/~012712dfc006df1367
+  - Freelancer: https://www.freelancer.com/u/jobayerhoques
+  - Contra: https://contra.com/jobayer_hoque_siddique_1hrc474w
+
+### 2.3 Dynamic Content Strategy
+
+**All content must be:**
+- Loaded from Supabase (no hardcoded content)
+- Cached appropriately (ISR with 1-hour revalidation for most content)
+- Type-safe with Zod schemas
+- Server-rendered where possible
+- Client-rendered only for interactive elements
+
+---
+
+## Phase 3: Navigation & Routing
+
+### 3.1 Site Structure
+
+```
+/                          - Homepage (hero, brands, stats, CTA)
+/brands/[slug]             - Individual brand pages
+/services                  - Services overview
+/services/[slug]           - Service detail pages
+/work                      - Portfolio grid
+/work/[slug]               - Case study pages
+/about                     - About Nexus + Founder
+/contact                   - Contact form
+/calculator                - Investment calculator
+/blog                      - Blog (future)
+/api/*                     - Server actions & API routes
+```
+
+### 3.2 Navigation Links (from DB)
+
+**Primary Nav:**
+- Home
+- Brands (dropdown: Nexus, Crypto Nexus, Byte Studio)
+- Services
+- Work
+- About
+- Contact
+- Calculator
+
+**Footer Nav:**
+- Company links
+- Services links
+- Resources links
+- Social links
+- Legal (Privacy, Terms)
+
+### 3.3 Implementation Requirements
+
+- Use Next.js `<Link>` for all internal navigation
+- Add `prefetch={true}` for critical links
+- External links use `rel="noopener noreferrer"`
+- Active link states with pathname matching
+- Mobile-responsive hamburger menu
+- Sticky header with scroll behavior
+- Accessible skip-to-content link
+
+---
+
+## Phase 4: Theme & Design System
+
+### 4.1 Design Tokens
+
+**Colors:**
+```typescript
+// tailwind.config.ts
+colors: {
+  brand: {
+    primary: '#3B82F6',    // Blue
+    secondary: '#8B5CF6',  // Purple
+    accent: '#06B6D4',     // Cyan
+  },
+  neutral: {
+    50: '#FAFAFA',
+    100: '#F5F5F5',
+    // ... full scale
+    900: '#171717',
+  }
+}
+```
+
+**Typography:**
+- Headings: Inter (variable font)
+- Body: Inter
+- Mono: JetBrains Mono (for code)
+
+**Spacing:**
+- Use Tailwind's default spacing scale
+- Custom: `4.5`, `18`, `22` for specific needs
+
+**Components:**
+- Rounded corners: `rounded-lg` default
+- Shadows: `shadow-lg`, `shadow-xl` for cards
+- Transitions: `transition-all duration-300`
+
+### 4.2 Component Library
+
+Create reusable components in `/components/ui/`:
+
+- **Button** - Primary, secondary, outline, ghost variants
+- **Card** - For projects, services, stats
+- **Badge** - For tags, categories
+- **Input/Textarea** - Form controls
+- **Select** - Dropdowns
+- **Stat** - Metric display
+- **Section** - Page sections with consistent spacing
+- **Container** - Max-width wrapper
+- **Logo** - Brand logos with variants
+- **Avatar** - Team member images
+- **Modal/Dialog** - Overlays
+- **Toast** - Notifications
+
+### 4.3 Dark Mode
+
+- Implement with `next-themes`
+- System preference detection
+- Toggle in header
+- Persist preference in localStorage
+- Smooth transitions between modes
+- Accessible color contrast in both modes
+
+### 4.4 Animations
+
+**Framer Motion:**
+- Hero section fade-in
+- Stats counter animations
+- Scroll-triggered reveals
+- Page transitions (subtle)
+- Button hover effects
+- Card hover lifts
+
+**Respect prefers-reduced-motion:**
+```typescript
+const prefersReducedMotion = useReducedMotion();
+const variants = prefersReducedMotion ? undefined : motionVariants;
+```
+
+### 4.5 Logo Implementation
+
+**Assets needed:**
+- Nexus Creative Studio logo (SVG)
+- Crypto Nexus logo (SVG)
+- Byte Studio logo (SVG)
+- Jobayer Hoque Siddique personal mark (SVG)
+- Favicon set (16x16, 32x32, 180x180, 192x192, 512x512)
+
+**Usage:**
+```typescript
+// Store in public/logos/ or Supabase storage
+<Image 
+  src="/logos/nexus-logo.svg" 
+  alt="Nexus Creative Studio"
+  width={180}
+  height={40}
+  priority
+/>
+```
+
+---
+
+## Phase 5: Feature Implementation
+
+### 5.1 Data-Driven Success Section
+
+**Display metrics from `site_metrics` table:**
+
+```typescript
+// components/sections/MetricsSection.tsx
+- Total Revenue (formatted: $XXX,XXX+)
+- Projects Completed (XXX+)
+- Active Clients (XX+)
+- Client Satisfaction (XX%)
+- Success Rate (XX%)
+- Quality Score (X.X/5.0)
+- Months in Business
+- Repeat Client Rate
+```
+
+**Implementation:**
+- Fetch from Supabase on server
+- Animated counters on client (Framer Motion)
+- Real-time badge indicators
+- Update badge when data changes
+- Cache with 1-hour revalidation
+- Add trend charts (revenue & projects over time)
+
+**Charts:**
+- Use lightweight custom SVG or Recharts (if needed)
+- Revenue trend: Area chart (last 12 months)
+- Projects trend: Line chart (last 12 months)
+- Keep charts simple and performant
+
+### 5.2 Investment Calculator
+
+**Features:**
+```typescript
+interface CalculatorState {
+  projectType: string;        // Service ID
+  complexity: 'simple' | 'standard' | 'complex';
+  features: string[];          // Feature IDs
+  timeline?: number;
+}
+
+interface CalculatorResult {
+  basePrice: number;
+  complexityMultiplier: number;
+  featuresTotal: number;
+  total: number;
+  breakdown: {
+    item: string;
+    price: number;
+  }[];
+}
+```
+
+**Calculation Logic:**
+```typescript
+total = (basePrice * complexityMultiplier) + sum(featurePrices)
+```
+
+**UI Requirements:**
+- Step-by-step wizard OR single-page form
+- Real-time price updates
+- Breakdown table showing cost components
+- Save/share via URL params: `/calculator?service=web-dev&complexity=standard&features=cms,auth`
+- Clear pricing disclaimer
+- CTA: "Request Quote" → prefills contact form with selections
+
+**Validation:**
+- Zod schema for inputs
+- Server-side validation if persisted
+- User-friendly error messages
+
+### 5.3 Contact Form
+
+**Fields:**
+- Name (required)
+- Email (required, validated)
+- Company (optional)
+- Phone (optional)
+- Service Interest (dropdown from services)
+- Budget Range (optional)
+- Message (required, min 20 chars)
+
+**Implementation:**
+- Server Action for submission
+- Store in `contact_submissions` table
+- Send email notification (Resend API or Supabase Edge Function)
+- Rate limiting: 5 submissions per hour per IP (middleware)
+- Success toast notification
+- Form reset after submission
+- reCAPTCHA or honeypot for spam prevention
+
+**Server Action:**
+```typescript
+// app/actions/contact.ts
+'use server';
+export async function submitContactForm(data: ContactFormData) {
+  // Validate with Zod
+  // Insert to Supabase
+  // Send email notification
+  // Return success/error
+}
+```
+
+### 5.4 Brands Pages
+
+**Route:** `/brands/[slug]`
+
+**Content per brand:**
+- Hero section with brand logo & tagline
+- Brand story/description
+- Services offered by this brand
+- Featured projects from this brand
+- Team members (if applicable)
+- CTA to contact or explore services
+
+### 5.5 Services Pages
+
+**Route:** `/services/[slug]`
+
+**Content:**
+- Service title & icon
+- Description & benefits
+- Deliverables list
+- Pricing information (base price + complexity)
+- Related projects
+- Process/timeline
+- CTA to get estimate or contact
+
+### 5.6 Portfolio Pages
+
+**Route:** `/work/[slug]`
+
+**Content:**
+- Project hero image
+- Client name & year
+- Categories & technologies
+- Problem statement
+- Solution approach
+- Key features
+- Results/metrics (JSONB)
+- Testimonial (if available)
+- Image gallery
+- CTA to next project or contact
+
+---
+
+## Phase 6: Performance Optimization
+
+### 6.1 Image Optimization
+
+- All images via `next/image`
+- Define width & height to prevent CLS
+- Use `priority` for above-the-fold images
+- Lazy load below-the-fold images
+- Serve WebP/AVIF formats
+- Compress images to <100KB for thumbnails, <300KB for hero images
+- Store in Supabase storage or use Vercel's image optimization
+
+### 6.2 Code Splitting
+
+- Dynamic imports for heavy components
+- Route-based code splitting (automatic with App Router)
+- Lazy load modals, charts, calculators
+
+### 6.3 Font Optimization
+
+```typescript
+// app/layout.tsx
+import { Inter } from 'next/font/google';
+
+const inter = Inter({ 
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter'
+});
+```
+
+### 6.4 Caching Strategy
+
+**Server Components:**
+```typescript
+// Fetch with revalidation
+export const revalidate = 3600; // 1 hour
+
+const data = await fetch(url, { 
+  next: { revalidate: 3600 } 
+});
+```
+
+**Incremental Static Regeneration (ISR):**
+- Static pages: Home, About, Services index
+- ISR pages: Brands, Services detail, Projects (1-hour revalidation)
+- Dynamic pages: Contact form (no caching)
+
+**Database Queries:**
+- Index all frequently queried columns
+- Use `select` to limit returned columns
+- Implement pagination for large datasets
+
+### 6.5 Bundle Size
+
+- Remove unused dependencies
+- Tree-shake Tailwind (purge unused classes)
+- Analyze bundle with `@next/bundle-analyzer`
+- Target: <200KB initial JS load
+
+---
+
+## Phase 7: Security & Best Practices
+
+### 7.1 Environment Variables
+
+**Never expose server-side keys:**
+```env
+# ❌ NEVER use in client components
+SUPABASE_SERVICE_ROLE_KEY=xxx
+
+# ✅ Safe for client
+NEXT_PUBLIC_SUPABASE_URL=xxx
+NEXT_PUBLIC_SUPABASE_ANON_KEY=xxx
+```
+
+### 7.2 Content Security Policy
+
+```typescript
+// middleware.ts
+const cspHeader = `
+  default-src 'self';
+  script-src 'self' 'unsafe-eval' 'unsafe-inline' *.vercel-insights.com;
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' blob: data: *.supabase.co;
+  font-src 'self';
+  connect-src 'self' *.supabase.co *.vercel.com;
+  frame-ancestors 'none';
+`;
+```
+
+### 7.3 Rate Limiting
+
+```typescript
+// middleware.ts - Rate limit contact submissions
+const rateLimit = new Map();
+// Allow 5 requests per hour per IP
+```
+
+### 7.4 Input Validation
+
+**All user inputs must be validated:**
+```typescript
+import { z } from 'zod';
+
+const contactSchema = z.object({
+  name: z.string().min(2).max(100),
+  email: z.string().email(),
+  message: z.string().min(20).max(1000),
+});
+```
+
+### 7.5 XSS Prevention
+
+- Never use `dangerouslySetInnerHTML` unless absolutely necessary
+- Sanitize all user-generated content
+- Use TypeScript for type safety
+
+---
+
+## Phase 8: Testing Strategy
+
+### 8.1 Unit Tests (Jest)
+
+**Test coverage for:**
+- Utility functions (price calculator logic)
+- Form validation schemas
+- Data transformation functions
+- Component rendering (React Testing Library)
+
+**Example:**
+```typescript
+// __tests__/lib/calculator.test.ts
+describe('calculateProjectCost', () => {
+  it('calculates base price correctly', () => {
+    expect(calculateProjectCost({
+      basePrice: 5000,
+      complexity: 'simple',
+      features: []
+    })).toBe(5000);
+  });
+});
+```
+
+### 8.2 E2E Tests (Playwright)
+
+**Test scenarios:**
+1. **Navigation:** All nav links work and lead to correct pages
+2. **Contact Form:** 
+   - Submit valid form → success message
+   - Submit invalid form → validation errors
+3. **Calculator:**
+   - Select service → price updates
+   - Add features → price updates correctly
+   - Share URL → state persists
+4. **Portfolio:**
+   - Grid loads projects
+   - Click project → detail page loads
+5. **Responsive:**
+   - Mobile menu works
+   - Forms work on mobile
+
+**Example:**
+```typescript
+// e2e/contact.spec.ts
+test('submits contact form successfully', async ({ page }) => {
+  await page.goto('/contact');
+  await page.fill('[name="name"]', 'John Doe');
+  await page.fill('[name="email"]', 'john@example.com');
+  await page.fill('[name="message"]', 'I need a website...');
+  await page.click('button[type="submit"]');
+  await expect(page.locator('text=Message sent')).toBeVisible();
+});
+```
+
+### 8.3 Accessibility Testing
+
+- Use `axe-core` via `@axe-core/playwright`
+- Test keyboard navigation
+- Test screen reader compatibility
+- Verify ARIA labels and landmarks
+- Check color contrast ratios
+
+---
+
+## Phase 9: Monitoring & Analytics
+
+### 9.1 Sentry Integration
+
+**Error Tracking:**
+```typescript
+// sentry.client.config.ts
+// sentry.server.config.ts
+// sentry.edge.config.ts
+
+Sentry.init({
+  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+  environment: process.env.NODE_ENV,
+  tracesSampleRate: 0.1,
+});
+```
+
+**Features:**
+- Automatic error capture
+- Performance monitoring
+- User feedback widget
+- Source maps upload
+
+### 9.2 Google Analytics 4
+
+```typescript
+// components/Analytics.tsx
+<Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
+<Script id="google-analytics">
+  {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '${GA_ID}');
+  `}
+</Script>
+```
+
+**Track events:**
+- Contact form submissions
+- Calculator usage
+- CTA button clicks
+- Project page views
+
+### 9.3 Logging
+
+**Server-side logging:**
+```typescript
+import pino from 'pino';
+
+const logger = pino({
+  level: process.env.LOG_LEVEL || 'info',
+  redact: ['email', 'phone'], // Redact PII
+});
+
+logger.info({ action: 'contact_submit' }, 'Contact form submitted');
+```
+
+---
+
+## Phase 10: CI/CD & Deployment
+
+### 10.1 GitHub Actions
+
+**CI Workflow (`.github/workflows/ci.yml`):**
+```yaml
+name: CI
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm ci
+      - run: npm run type-check
+      - run: npm run lint
+      - run: npm run test
+      - run: npm run build
+```
+
+**Deploy Workflow (`.github/workflows/deploy.yml`):**
+```yaml
+name: Deploy
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+```
+
+### 10.2 Vercel Configuration
+
+**vercel.json:**
+```json
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "regions": ["sin1"],
+  "env": {
+    "NEXT_PUBLIC_SUPABASE_URL": "@supabase_url",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase_anon_key"
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    }
+  ]
+}
+```
+
+**Environment Variables in Vercel:**
+- Set via Vercel dashboard
+- Never commit secrets to Git
+- Use different values for preview/production
+
+### 10.3 Domain Setup
+
+**Steps:**
+1. Add custom domain in Vercel dashboard
+2. Update DNS records:
+   - A record: `76.76.21.21` (Vercel)
+   - CNAME: `cname.vercel-dns.com`
+3. Enforce HTTPS redirect
+4. Set canonical domain (www vs non-www)
+
+---
+
+## Phase 11: Documentation
+
+### 11.1 README.md
+
+**Sections:**
+- Project overview
+- Tech stack
+- Prerequisites
+- Installation steps
+- Environment variables setup
+- Development commands
+- Testing commands
+- Deployment instructions
+- Troubleshooting
+
+### 11.2 Architecture Documentation
+
+**`docs/architecture.md`:**
+- Directory structure
+- Data model (ER diagram)
+- Resource layer pattern
+- Caching strategy
+- Authentication flow
+- API routes overview
+
+### 11.3 Content Management
+
+**`docs/content.md`:**
+- How to add/edit brands
+- How to add/edit services
+- How to add/edit projects
+- How to update site metrics
+- Image guidelines (dimensions, formats, sizes)
+- SEO best practices
+
+### 11.4 Contributing Guide
+
+**`CONTRIBUTING.md`:**
+- Code style guide
+- Commit message conventions (Conventional Commits)
+- PR template
+- Testing requirements
+- Code review process
+
+---
+
+## Phase 12: Resource Layer Implementation
+
+### 12.1 Resource Pattern
+
+**Structure:**
+```
+lib/
+  resources/
+    brands.ts       - Brand CRUD operations
+    services.ts     - Service CRUD operations
+    projects.ts     - Project CRUD operations
+    metrics.ts      - Site metrics operations
+    features.ts     - Investment features operations
+    submissions.ts  - Contact submissions operations
+```
+
+**Example Resource:**
+```typescript
+// lib/resources/brands.ts
+import { createClient } from '@/lib/supabase/server';
+import { z } from 'zod';
+
+const BrandSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string(),
+  slug: z.string(),
+  // ... other fields
+});
+
+export type Brand = z.infer<typeof BrandSchema>;
+
+export async function getBrands() {
+  const supabase = createClient();

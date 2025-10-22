@@ -1,0 +1,746 @@
+# Production-Ready Web App Development Prompt
+
+## Project Context
+Build a complete, production-ready dynamic web app for Nexus Creative Studio and sub-brands based on the approved website revamp specifications. This must be a fully functional, scalable, and professional application ready for immediate deployment and client/portfolio use.
+
+## Development Specifications
+
+### Tech Stack (Final)
+- **Framework**: Next.js 14+ (App Router)
+- **Language**: TypeScript (type safety for production)
+- **Styling**: Tailwind CSS + shadcn/ui components
+- **Database**: Supabase (PostgreSQL + Auth + Storage)
+- **Form Handling**: React Hook Form + Zod validation
+- **State Management**: React Context API + Zustand (if needed)
+- **Animation**: Framer Motion (subtle, performant)
+- **Icons**: Lucide React
+- **Deployment**: Vercel
+- **Analytics**: Vercel Analytics + Google Analytics 4
+- **SEO**: Next.js Metadata API + next-sitemap
+- **Image Optimization**: Next.js Image component + Cloudinary/Supabase Storage
+
+### Database Schema (Supabase)
+
+```sql
+-- Projects Table
+CREATE TABLE projects (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  title VARCHAR(255) NOT NULL,
+  slug VARCHAR(255) UNIQUE NOT NULL,
+  short_description TEXT,
+  full_description TEXT,
+  tech_stack TEXT[], -- Array of technologies
+  category VARCHAR(100), -- 'web', 'design', 'automation', 'crypto'
+  client_name VARCHAR(255),
+  project_url VARCHAR(500),
+  github_url VARCHAR(500),
+  image_url VARCHAR(500),
+  gallery_images TEXT[], -- Array of image URLs
+  featured BOOLEAN DEFAULT false,
+  results_metrics JSONB, -- Store metrics like revenue, users, etc.
+  order_index INTEGER,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Clients Table
+CREATE TABLE clients (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  name VARCHAR(255) NOT NULL,
+  logo_url VARCHAR(500),
+  industry VARCHAR(100),
+  testimonial TEXT,
+  project_id UUID REFERENCES projects(id),
+  website_url VARCHAR(500),
+  featured BOOLEAN DEFAULT false,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Contact Submissions Table
+CREATE TABLE contact_submissions (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  company VARCHAR(255),
+  phone VARCHAR(50),
+  service_interest VARCHAR(100),
+  message TEXT NOT NULL,
+  budget_range VARCHAR(50),
+  timeline VARCHAR(50),
+  status VARCHAR(50) DEFAULT 'new', -- 'new', 'contacted', 'qualified', 'converted'
+  source VARCHAR(100), -- Track where lead came from
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Blog Posts Table
+CREATE TABLE blog_posts (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  title VARCHAR(255) NOT NULL,
+  slug VARCHAR(255) UNIQUE NOT NULL,
+  excerpt TEXT,
+  content TEXT NOT NULL,
+  author VARCHAR(255) DEFAULT 'Jobayer Hoque',
+  cover_image VARCHAR(500),
+  tags TEXT[],
+  category VARCHAR(100),
+  published BOOLEAN DEFAULT false,
+  featured BOOLEAN DEFAULT false,
+  seo_title VARCHAR(255),
+  seo_description TEXT,
+  reading_time INTEGER, -- In minutes
+  views INTEGER DEFAULT 0,
+  published_at TIMESTAMP,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Services Table
+CREATE TABLE services (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  name VARCHAR(255) NOT NULL,
+  slug VARCHAR(255) UNIQUE NOT NULL,
+  short_description TEXT,
+  full_description TEXT,
+  icon VARCHAR(100), -- Lucide icon name
+  features TEXT[],
+  starting_price VARCHAR(100),
+  delivery_time VARCHAR(100),
+  order_index INTEGER,
+  active BOOLEAN DEFAULT true,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Newsletter Subscribers Table
+CREATE TABLE newsletter_subscribers (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  email VARCHAR(255) UNIQUE NOT NULL,
+  name VARCHAR(255),
+  status VARCHAR(50) DEFAULT 'active', -- 'active', 'unsubscribed'
+  source VARCHAR(100),
+  subscribed_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Analytics Events Table (Custom tracking)
+CREATE TABLE analytics_events (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  event_name VARCHAR(100) NOT NULL,
+  event_data JSONB,
+  user_id VARCHAR(255),
+  session_id VARCHAR(255),
+  page_url VARCHAR(500),
+  referrer VARCHAR(500),
+  created_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+### Environment Variables (.env.local)
+
+```bash
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=https://db.posglrvagrmkhosqrert.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key_here
+
+# Database (for direct connections if needed)
+DATABASE_URL=postgresql://postgres:NexxusStu@123@db.posglrvagrmkhosqrert.supabase.co:5432/postgres
+
+# Email (for contact form notifications)
+RESEND_API_KEY=your_resend_key_here
+CONTACT_EMAIL=contact@nexuscreativestudio.com
+
+# Analytics
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+
+# Site Config
+NEXT_PUBLIC_SITE_URL=https://nexuscreativestudio.com
+```
+
+## File Structure
+
+```
+nexus-website/
+├── app/
+│   ├── (marketing)/
+│   │   ├── page.tsx                 # Home page
+│   │   ├── about/page.tsx
+│   │   ├── services/
+│   │   │   ├── page.tsx
+│   │   │   └── [slug]/page.tsx      # Dynamic service pages
+│   │   ├── portfolio/
+│   │   │   ├── page.tsx
+│   │   │   └── [slug]/page.tsx      # Dynamic project case studies
+│   │   ├── blog/
+│   │   │   ├── page.tsx
+│   │   │   └── [slug]/page.tsx      # Dynamic blog posts
+│   │   ├── contact/page.tsx
+│   │   ├── layout.tsx               # Marketing layout with header/footer
+│   │   └── not-found.tsx
+│   ├── crypto-nexus/
+│   │   └── page.tsx                 # Sub-brand page
+│   ├── byte-studio/
+│   │   └── page.tsx                 # Sub-brand page
+│   ├── jobayer-hoque/
+│   │   └── page.tsx                 # Personal brand page
+│   ├── api/
+│   │   ├── contact/route.ts         # Contact form API
+│   │   ├── newsletter/route.ts      # Newsletter signup API
+│   │   └── analytics/route.ts       # Custom analytics API
+│   ├── layout.tsx                   # Root layout
+│   ├── globals.css
+│   └── providers.tsx                # Context providers
+├── components/
+│   ├── ui/                          # shadcn/ui components
+│   ├── layout/
+│   │   ├── Header.tsx
+│   │   ├── Footer.tsx
+│   │   ├── MobileNav.tsx
+│   │   └── Breadcrumbs.tsx
+│   ├── home/
+│   │   ├── Hero.tsx
+│   │   ├── FeaturedProjects.tsx
+│   │   ├── ServicesOverview.tsx
+│   │   ├── ClientLogos.tsx
+│   │   ├── Stats.tsx
+│   │   └── CTASection.tsx
+│   ├── portfolio/
+│   │   ├── ProjectCard.tsx
+│   │   ├── ProjectGrid.tsx
+│   │   ├── ProjectFilter.tsx
+│   │   └── CaseStudy.tsx
+│   ├── forms/
+│   │   ├── ContactForm.tsx
+│   │   ├── NewsletterForm.tsx
+│   │   └── ProjectInquiryForm.tsx
+│   ├── blog/
+│   │   ├── BlogCard.tsx
+│   │   ├── BlogGrid.tsx
+│   │   └── BlogPost.tsx
+│   └── shared/
+│       ├── Button.tsx
+│       ├── Card.tsx
+│       ├── Logo.tsx
+│       ├── LoadingSpinner.tsx
+│       └── SEO.tsx
+├── lib/
+│   ├── supabase/
+│   │   ├── client.ts                # Client-side Supabase
+│   │   ├── server.ts                # Server-side Supabase
+│   │   └── queries.ts               # Database queries
+│   ├── validations/
+│   │   ├── contact.ts               # Zod schemas
+│   │   └── newsletter.ts
+│   ├── utils.ts
+│   └── constants.ts
+├── types/
+│   ├── database.ts                  # Supabase generated types
+│   ├── project.ts
+│   ├── service.ts
+│   └── blog.ts
+├── public/
+│   ├── images/
+│   │   ├── logos/
+│   │   ├── projects/
+│   │   └── brand/
+│   └── fonts/
+├── config/
+│   ├── site.ts                      # Site metadata
+│   └── navigation.ts                # Navigation structure
+└── content/
+    └── initial-data.ts              # Seed data for database
+```
+
+## Core Features Implementation
+
+### 1. Navigation System
+
+**Header Component** (`components/layout/Header.tsx`):
+- Sticky header with transparent → solid on scroll
+- Desktop: Horizontal nav with dropdown menus for sub-brands
+- Mobile: Hamburger menu with slide-in drawer
+- Active route highlighting
+- Logo clickable to home
+- CTA button (e.g., "Start Project")
+
+**Navigation Structure**:
+```typescript
+{
+  mainNav: [
+    { label: 'Home', href: '/' },
+    { label: 'Services', href: '/services' },
+    { label: 'Portfolio', href: '/portfolio' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'About', href: '/about' },
+    { label: 'Contact', href: '/contact' }
+  ],
+  subBrands: [
+    { label: 'Nexus Creative Studio', href: '/' },
+    { label: 'Crypto Nexus', href: '/crypto-nexus' },
+    { label: 'Byte Studio', href: '/byte-studio' },
+    { label: 'Jobayer Hoque', href: '/jobayer-hoque' }
+  ]
+}
+```
+
+**Footer Component** (`components/layout/Footer.tsx`):
+- 4-column layout: About, Services, Quick Links, Connect
+- Social media icons (LinkedIn, X, GitHub, Email)
+- Newsletter signup form
+- Copyright notice
+- Sitemap links
+
+### 2. Home Page Components
+
+**Hero Section**:
+- Headline: "Building Digital Experiences That Scale"
+- Subheadline: Clear value proposition
+- CTA buttons: "Start a Project" + "View Portfolio"
+- Animated background or subtle gradient
+- Trust indicators: "13 Clients • 20 Projects • $15K Revenue"
+
+**Client Logos Section**:
+- Scrolling marquee or grid of 6-13 client logos
+- Grayscale with hover color effect
+
+**Featured Projects**:
+- 3-4 project cards with hover effects
+- Each card: Image, title, tech stack tags, "View Case Study" link
+
+**Services Overview**:
+- Card grid of 3-5 services
+- Icon, title, brief description, "Learn More" link
+
+**Stats Section**:
+- Animated counters: Projects, Clients, Revenue, Experience
+- Clean card layout
+
+**CTA Section**:
+- "Ready to start your project?"
+- Contact button
+
+### 3. Portfolio System
+
+**Portfolio Page** (`app/portfolio/page.tsx`):
+- Filter buttons: All, Web Dev, Design, Automation, Crypto
+- Grid layout (3 columns desktop, 2 tablet, 1 mobile)
+- Lazy loading for images
+- Smooth animations on scroll
+
+**Project Card** (`components/portfolio/ProjectCard.tsx`):
+- Hover effect revealing tech stack
+- "View Case Study" overlay
+- Featured badge for top projects
+
+**Case Study Page** (`app/portfolio/[slug]/page.tsx`):
+- Hero image (full-width)
+- Breadcrumb navigation
+- Project metadata: Client, Date, Tech Stack, Category
+- Content sections:
+  - Overview
+  - Problem Statement
+  - Solution Approach
+  - Technical Implementation
+  - Results & Impact
+  - Gallery (if applicable)
+- Related projects section
+- CTA: "Start Your Project"
+
+### 4. Services System
+
+**Services Page** (`app/services/page.tsx`):
+- Grid of service cards
+- Each card: Icon, title, description, starting price, "Learn More"
+
+**Individual Service Page** (`app/services/[slug]/page.tsx`):
+- Service overview
+- What's included (checklist)
+- Process/Timeline
+- Pricing tiers (if applicable)
+- FAQ section
+- Case studies using this service
+- Contact CTA
+
+### 5. Contact System
+
+**Contact Form** (`components/forms/ContactForm.tsx`):
+- Fields: Name*, Email*, Company, Phone, Service Interest (dropdown), Budget Range (dropdown), Timeline (dropdown), Message*
+- Client-side validation (Zod)
+- Server-side validation (API route)
+- Loading states
+- Success/error notifications (toast)
+- reCAPTCHA v3 (spam protection)
+
+**API Route** (`app/api/contact/route.ts`):
+```typescript
+- Validate input
+- Insert into Supabase contact_submissions table
+- Send notification email (Resend)
+- Send auto-reply email to submitter
+- Return success/error response
+- Log analytics event
+```
+
+**Contact Page** (`app/contact/page.tsx`):
+- Hero section
+- Contact form (left column)
+- Contact info + social links (right column)
+- Optional: Calendly embed for booking calls
+- Map or office location (if applicable)
+
+### 6. Blog System
+
+**Blog Index** (`app/blog/page.tsx`):
+- Featured post (large card)
+- Grid of recent posts
+- Filter by category/tag
+- Search functionality
+- Pagination or infinite scroll
+
+**Blog Post** (`app/blog/[slug]/page.tsx`):
+- Cover image
+- Metadata: Author, date, reading time, category
+- Table of contents (for long posts)
+- Rich content with syntax highlighting (for code)
+- Social share buttons
+- Author bio section
+- Related posts
+- Newsletter CTA
+
+### 7. Sub-Brand Pages
+
+**Crypto Nexus** (`app/crypto-nexus/page.tsx`):
+- Hero: Position as crypto/Web3 specialist
+- Services specific to crypto
+- Featured crypto projects
+- Contact CTA
+
+**Byte Studio** (`app/byte-studio/page.tsx`):
+- Hero: Position for SaaS/product focus
+- Showcase products/tools
+- Waitlist form (if applicable)
+
+**Jobayer Hoque** (`app/jobayer-hoque/page.tsx`):
+- Personal bio/story
+- Skills & expertise
+- Featured writing (blog posts)
+- Social proof (credentials, MS abroad)
+- Connect CTAs (LinkedIn, X, Email)
+- Resume/CV download button
+
+### 8. About Page
+
+**Content Structure**:
+- Hero: Founder story
+- Mission & Vision
+- Timeline/Journey (visual)
+- Credentials (MS abroad, certifications)
+- Team section (if applicable, or "Founder-led")
+- Company values
+- Contact CTA
+
+## Production Requirements
+
+### Performance Optimization
+
+**Images**:
+- Use Next.js Image component everywhere
+- Implement blur placeholders
+- Lazy loading for below-fold images
+- WebP format with fallbacks
+- Image CDN (Cloudinary or Supabase Storage)
+- Compress all images (max 200KB for web)
+
+**Code Splitting**:
+- Dynamic imports for heavy components
+- Route-based code splitting (Next.js automatic)
+- Lazy load non-critical JavaScript
+
+**Caching**:
+- Implement ISR (Incremental Static Regeneration) for blog posts
+- Static generation for portfolio/services pages
+- Cache API responses (Redis or Next.js cache if needed)
+
+**Bundle Size**:
+- Analyze with `@next/bundle-analyzer`
+- Remove unused dependencies
+- Tree-shaking optimization
+- Target: First Load JS < 200KB
+
+**Core Web Vitals Targets**:
+- LCP (Largest Contentful Paint): < 2.5s
+- FID (First Input Delay): < 100ms
+- CLS (Cumulative Layout Shift): < 0.1
+- Performance score: > 90 (Lighthouse)
+
+### SEO Implementation
+
+**Metadata** (every page):
+```typescript
+export const metadata: Metadata = {
+  title: 'Page Title | Nexus Creative Studio',
+  description: 'Compelling description under 160 characters',
+  openGraph: {
+    title: 'Page Title',
+    description: 'Description',
+    images: ['/og-image.jpg'],
+    url: 'https://nexuscreativestudio.com/page'
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Page Title',
+    description: 'Description',
+    images: ['/twitter-image.jpg']
+  },
+  alternates: {
+    canonical: 'https://nexuscreativestudio.com/page'
+  }
+}
+```
+
+**Technical SEO**:
+- Generate sitemap.xml (`next-sitemap` package)
+- Create robots.txt
+- Implement structured data (JSON-LD):
+  - Organization
+  - Person (Jobayer Hoque)
+  - BreadcrumbList
+  - Article (blog posts)
+  - Service
+- Add meta robots tags
+- Implement canonical URLs
+- Create 404 page
+- Set up redirects (if needed)
+
+**Performance SEO**:
+- Server-side rendering for critical content
+- Optimize Time to First Byte (TTFB)
+- Minimize render-blocking resources
+
+### Analytics & Tracking
+
+**Google Analytics 4**:
+- Page views
+- Custom events: form submissions, button clicks, scroll depth
+- Conversion tracking
+- User demographics
+
+**Vercel Analytics**:
+- Real user metrics
+- Performance monitoring
+
+**Custom Analytics** (`app/api/analytics/route.ts`):
+- Track project views
+- Blog post engagement
+- Popular services
+- Contact form conversion rates
+
+**Events to Track**:
+- Portfolio filter usage
+- Project case study views
+- Contact form starts vs completions
+- Newsletter signups
+- CTA button clicks
+- Social media link clicks
+
+### Security Measures
+
+**Form Protection**:
+- reCAPTCHA v3 on all forms
+- Rate limiting on API routes
+- Input sanitization (DOMPurify if allowing HTML)
+- SQL injection prevention (Supabase parameterized queries)
+
+**Environment Security**:
+- Never expose service role keys client-side
+- Use Row Level Security (RLS) in Supabase
+- Implement CORS properly
+- Use HTTPS only (Vercel automatic)
+
+**Headers** (next.config.js):
+```javascript
+headers: [
+  {
+    key: 'X-Frame-Options',
+    value: 'DENY'
+  },
+  {
+    key: 'X-Content-Type-Options',
+    value: 'nosniff'
+  },
+  {
+    key: 'Referrer-Policy',
+    value: 'origin-when-cross-origin'
+  }
+]
+```
+
+### Accessibility (WCAG 2.1 AA)
+
+**Requirements**:
+- Semantic HTML5 elements
+- ARIA labels where needed
+- Keyboard navigation support
+- Focus visible states
+- Alt text for all images
+- Color contrast ratio: 4.5:1 (text), 3:1 (UI)
+- Skip to main content link
+- Responsive text sizing
+- Form labels and error messages
+- Screen reader testing
+
+**Tools**:
+- Run axe DevTools audit
+- Test with keyboard only
+- Use NVDA/JAWS screen reader
+- Lighthouse accessibility score: 100
+
+### Error Handling
+
+**Client-Side**:
+- Error boundaries for React components
+- Toast notifications for user errors
+- Loading states for async operations
+- Empty states for data fetching
+
+**Server-Side**:
+- Try-catch blocks in API routes
+- Proper HTTP status codes
+- Detailed error logging
+- User-friendly error messages
+
+**Monitoring**:
+- Sentry or similar error tracking
+- Log all API errors
+- Track failed form submissions
+
+### Testing Strategy
+
+**Manual Testing Checklist**:
+- [ ] All navigation links work (every page)
+- [ ] Mobile responsive (test 375px, 768px, 1024px, 1440px)
+- [ ] Forms submit successfully
+- [ ] Database connections work
+- [ ] Images load and are optimized
+- [ ] Page load times < 3s
+- [ ] Cross-browser (Chrome, Firefox, Safari, Edge)
+- [ ] Accessibility audit passes
+- [ ] SEO meta tags present
+- [ ] Analytics tracking works
+
+**Automated Testing** (Optional for MVP):
+- Unit tests: Vitest + React Testing Library
+- E2E tests: Playwright
+- CI/CD: GitHub Actions
+
+### Deployment Checklist
+
+**Pre-Deployment**:
+- [ ] Set all environment variables in Vercel
+- [ ] Test production build locally (`npm run build && npm start`)
+- [ ] Run Lighthouse audit
+- [ ] Verify database connection
+- [ ] Test all forms in production mode
+- [ ] Verify email notifications work
+- [ ] Check analytics integration
+- [ ] Set up custom domain
+- [ ] Configure DNS properly
+- [ ] Add SSL certificate (Vercel automatic)
+
+**Post-Deployment**:
+- [ ] Submit sitemap to Google Search Console
+- [ ] Verify Google Analytics tracking
+- [ ] Test contact form end-to-end
+- [ ] Check all links with broken link checker
+- [ ] Monitor error logs for 48 hours
+- [ ] Set up uptime monitoring (UptimeRobot)
+- [ ] Create backup of database
+- [ ] Document deployment process
+
+### Content Population
+
+**Seed Data Needed**:
+1. **13-15 Projects**: Title, description, tech stack, images, full case study content
+2. **13 Clients**: Names (or anonymized), logos, industries, optional testimonials
+3. **3-5 Services**: Full descriptions, features, pricing, process
+4. **5-10 Blog Posts**: Complete articles for launch (content engine starter)
+5. **Brand Assets**: All logos (Nexus, Crypto Nexus, Byte Studio, personal)
+6. **About Content**: Bio, mission, timeline, credentials
+7. **Images**: Hero images, project screenshots, team photos (if applicable)
+
+**Supabase Data Import**:
+- Create SQL script to insert initial data
+- Upload all images to Supabase Storage
+- Update image URLs in database
+- Verify data integrity
+
+### Admin Panel (Optional but Recommended)
+
+**Features**:
+- View contact submissions
+- Manage projects (CRUD)
+- Manage blog posts (CRUD)
+- View analytics dashboard
+- Manage newsletter subscribers
+
+**Implementation**:
+- Protected route (`/admin`) with Supabase Auth
+- Simple dashboard with tables
+- Forms for content management
+- Or use external CMS: Sanity, Contentful, Strapi
+
+### Maintenance Plan
+
+**Regular Tasks**:
+- Update dependencies monthly
+- Monitor analytics weekly
+- Respond to contact forms within 24 hours
+- Publish blog posts regularly (weekly/bi-weekly)
+- Update portfolio with new projects
+- Backup database weekly
+- Monitor performance metrics
+- Check broken links monthly
+
+### Documentation
+
+**Create Documentation**:
+1. **README.md**: Setup instructions, environment variables, deployment steps
+2. **CONTRIBUTING.md**: How to add projects, blog posts, services
+3. **ARCHITECTURE.md**: File structure, component patterns, data flow
+4. **API.md**: API routes documentation
+5. **DEPLOYMENT.md**: Deployment checklist and rollback procedures
+
+## Success Criteria
+
+The app is production-ready when:
+- [ ] All pages load without errors
+- [ ] Navigation works seamlessly across all pages
+- [ ] Forms submit and store data in database
+- [ ] Email notifications work
+- [ ] Mobile responsive on all devices
+- [ ] Lighthouse scores: Performance > 90, Accessibility 100, Best Practices > 90, SEO 100
+- [ ] All images optimized and loading fast
+- [ ] SEO meta tags on every page
+- [ ] Analytics tracking properly
+- [ ] Zero console errors
+- [ ] Zero broken links
+- [ ] Deployed to custom domain with SSL
+- [ ] Submitted to search engines
+- [ ] Contact form tested end-to-end
+- [ ] Database has 13-15 projects populated
+- [ ] All sub-brand pages complete
+- [ ] Blog has 5+ posts ready
+
+## Deliverables
+
+1. **Complete Codebase**: Organized, commented, production-ready
+2. **Deployed Application**: Live on custom domain
+3. **Populated Database**: All content loaded
+4. **Documentation**: Setup and maintenance guides
+5. **Admin Access**: Supabase dashboard credentials
+6. **Analytics Setup**: GA4 and Vercel Analytics configured
+7. **SEO Setup**: Sitemap, robots.txt, Search Console verified
+8. **Performance Report**: Lighthouse scores and Core Web Vitals
+9. **Handoff Guide**: How to update content, monitor analytics, maintain site
+
+---
+
+**Build this systematically. Every component must be production-grade, fully functional, and optimized. This is not an MVP—this is a complete, scalable web app ready to drive inbound leads, showcase work, and establish credibility for agency scaling and MS abroad applications.**
