@@ -1,0 +1,243 @@
+Here’s your **comprehensive full-stack development prompt**, rewritten for **early-stage agency alignment (2026–2027)** and fully integrated with your real links, data, and system connections.
+You can feed this directly into your development agent or team as the **main build directive** for **Nexus Creative Studio Website v2 (Early Growth Phase)**.
+
+---
+
+## 🧠 **DEVELOPMENT PROMPT — Nexus Creative Studio (Early-Stage Build 2026–2027)**
+
+### 🏗️ Project Overview
+
+You are an **advanced full-stack web development agent** tasked with **rebuilding and modernizing the Nexus Creative Studio website** — optimized for **early-stage agency positioning** (2026–2027) focused on growth, credibility, and conversion.
+
+Your primary goal is to:
+
+* Rebuild the site for **modern design**, **high-converting UX**, and **consistent branding**.
+* Replace all **enterprise-grade placeholders** with **early-stage agency positioning** (bootstrapped → scaling phase).
+* Integrate **Supabase database connectivity** across forms, calculators, and portfolio data.
+* Connect **live links, socials, and brand assets**.
+* Implement **functional navigation, buttons, and interactivity** site-wide.
+
+---
+
+## ⚙️ **Core Directives**
+
+### 🔁 1. Replace All Legacy & Placeholder Data
+
+* Replace **2024 references → 2026–2027**.
+* Replace all **enterprise-level claims → early-stage growth context** (lean, agile, fast-scaling).
+* Replace any **placeholder logos, emails, links** with **official Nexus Creative Studio + Jobayer Hoque Siddique links**.
+* Replace **enterprise metrics** with **early-stage metrics** like:
+
+  * **$20K+ revenue generated**
+  * **15+ client projects delivered**
+  * **100% positive client satisfaction**
+  * **Active in freelance marketplaces (Fiverr, Upwork, Contra, Freelancer)**
+
+---
+
+### 💼 2. Brand Identity Integration
+
+**Logo:** Use the actual Nexus Creative Studio logo.
+**Consistency:** Apply the logo in header, footer, favicon, and meta images.
+
+**Brand Voice:**
+Early-stage confidence → “Building world-class digital systems from the ground up.”
+Use humanized, professional, and optimistic copy.
+
+**Color Palette:**
+Use a modern minimal color theme (black/white base + neon accent from logo).
+
+---
+
+### 🧩 3. Service Section (Revamp to Ultimate Level)
+
+Rebuild **“Our Services”** section with tiered structure:
+
+**Main Categories**
+
+1. 🧠 AI + Automation MVPs
+
+   * SaaS, tools, and agent systems using OpenAI, Supabase, and Next.js
+   * Average project: $3K–$8K
+
+2. 🌐 Web Design & Development
+
+   * Conversion-focused websites, portfolio systems, landing pages
+   * Average project: $1K–$5K
+
+3. ⚙️ System Integration & Workflow Automation
+
+   * Zapier/Make, Notion, Airtable, and CRM stack setups
+
+4. 📈 Growth Systems & Funnels
+
+   * Outbound systems, marketing automations, and brand positioning
+
+Each service should have:
+
+* **Card layout with icon, title, and summary**
+* **CTA button linked to project inquiry form (connected to Supabase)**
+
+---
+
+### 📊 4. Data-Driven Success Metrics Section
+
+Add an **early-stage performance tracker**:
+
+* “$20,000+ revenue generated”
+* “15 projects delivered across 4 countries”
+* “Serving startups, creators, and small businesses”
+* “Active across Fiverr, Upwork, Contra, and Freelancer”
+
+Include light animations (counter-up / progress visualization).
+
+---
+
+### 🧭 5. Your Success Roadmap (Future Vision)
+
+Rebuild this as **“Your Future Growth Path (2026–2027)”**
+Structure:
+
+1. **Phase 1: Foundation** – Brand Identity, Online Presence, Core Systems
+2. **Phase 2: Automation** – AI-driven workflows, client dashboards
+3. **Phase 3: Scale** – Marketing funnels, SaaS integrations, recurring systems
+
+Include a horizontal timeline visualization or scroll-based roadmap with milestone animations.
+
+---
+
+### 💰 6. Investment Calculator (Realtime Pricing)
+
+* Connect calculator to **Supabase database** for dynamic pricing.
+* Real-time pricing model:
+
+  * Website Projects: **$1K–$5K**
+  * SaaS / AI MVPs: **$3K–$8K**
+  * Brand & System Packages: **$500–$2K**
+* Add toggle for USD / BDT pricing.
+
+---
+
+### 🧱 7. Featured Work (Portfolio Section)
+
+Showcase **13–15 real-life early to mid-stage projects** in **card/grid layout**:
+Each Project Card Includes:
+
+* **Thumbnail image**
+* **Title**
+* **Brief Description**
+* **Tech Stack**
+* **Project Outcome / Metrics**
+* **CTA (View Case Study → opens modal or separate page)**
+
+Example projects:
+
+1. “Freelance Dashboard Automation” – Airtable + OpenAI + Zapier
+2. “Startup Landing Page” – Next.js + Supabase
+3. “Client Portal System” – Notion + Automations
+4. “AI Content Engine MVP” – OpenAI + Vercel
+   (Continue up to 15)
+
+All portfolio data should be **stored and fetched from Supabase** (linked DB).
+
+---
+
+### 🔗 8. Linked Information Database
+
+Integrate and use these **official data points across the app**.
+
+#### 👤 **Jobayer Hoque Siddique**
+
+* Email: [jobayerhoquesiddique@gmail.com](mailto:jobayerhoquesiddique@gmail.com)
+* X: [x.com/jobayerhoquesid](https://x.com/jobayerhoquesid)
+* GitHub: [github.com/jobayerhoquesiddique](https://github.com/jobayerhoquesiddique)
+* LinkedIn: [linkedin.com/in/jobayer-hoque-siddique-58367a37a](https://www.linkedin.com/in/jobayer-hoque-siddique-58367a37a/)
+* Fiverr: [https://www.fiverr.com/s/m5vGDRZ](https://www.fiverr.com/s/m5vGDRZ)
+* Upwork: [https://www.upwork.com/freelancers/~012712dfc006df1367](https://www.upwork.com/freelancers/~012712dfc006df1367)
+* Contra: [https://contra.com/jobayer_hoque_siddique_1hrc474w](https://contra.com/jobayer_hoque_siddique_1hrc474w)
+
+#### 🚀 **Nexus Creative Studio**
+
+* Email: [nexxusstudio.agency@gmail.com](mailto:nexxusstudio.agency@gmail.com)
+* X: [x.com/nexuscrativeio](https://x.com/nexuscrativeio)
+* GitHub: [github.com/nexxusstudio](https://github.com/nexxusstudio)
+* Fiverr Pro: [https://pro.fiverr.com/nexusstudioagen](https://pro.fiverr.com/nexusstudioagen)
+* Upwork: [https://www.upwork.com/NexusStudio/](https://www.upwork.com/NexusStudio/)
+* Portfolio: [https://nexuscreativestudio.notion.site/Nexus-Creative-Studio-28676083f2a4812eb694fa9dde05b381](https://nexuscreativestudio.notion.site/Nexus-Creative-Studio-28676083f2a4812eb694fa9dde05b381)
+* Client Portal: [https://nexuscreativestudio.notion.site/Client-Portal-22176083f2a4800cbe19d83a87e0671d](https://nexuscreativestudio.notion.site/Client-Portal-22176083f2a4800cbe19d83a87e0671d)
+
+---
+
+### 🧩 9. Database Connectivity (Supabase)
+
+Connect Supabase database to:
+
+* **Forms** (project inquiry, contact, newsletter)
+* **Investment calculator**
+* **Portfolio data fetching**
+
+#### Supabase Credentials
+
+```bash
+Host: db.guarhoiykpmngfptntxt.supabase.co
+Port: 5432
+Database: postgres
+User: postgres
+Anon Key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+JWT Key: m6SmLwfmBPDtTmEYnlZKRedFMt2H+SlvRhqFyNiyWPvpOZ9pVdni6qkStRT37aTE6YqnkT6+C/nvTG+9UKUcgQ==
+```
+
+---
+
+### 🧭 10. Navigation, Footer, and UX
+
+**Navigation:**
+
+* Fully link all pages and buttons.
+* Add hover animation & smooth transitions.
+
+**Footer:**
+
+* Include Nexus Creative Studio logo.
+* Add contact info, social icons (linked).
+* Include © 2026–2027 Nexus Creative Studio. All rights reserved.
+
+**UX Enhancements:**
+
+* Remove chat widget.
+* Add a **floating navigation widget (assistive ball)** for quick section access.
+
+---
+
+### 🧱 11. Authority & Excellence Section
+
+Add **future vision statement**:
+
+> “By 2027, Nexus Creative Studio aims to become the most trusted AI-driven creative partner for startups and small businesses worldwide — empowering 100+ brands to scale with automation and intelligence.”
+
+Include visuals (growth chart or mission graphic).
+
+---
+
+### 🧩 12. Functional Completion
+
+* Ensure all **buttons**, **forms**, **CTAs**, and **social links** are functional.
+* Apply **responsive design (mobile-first)**.
+* Optimize for **performance and SEO**.
+* Ensure **branding and tone consistency** across all sections.
+
+---
+
+## ✅ FINAL OUTPUT EXPECTATION
+
+A fully functional, early-stage optimized Nexus Creative Studio website (2026–2027 version) that:
+
+* Reflects real growth metrics, future vision, and service clarity.
+* Connects all databases, forms, and portfolios.
+* Uses official logos, links, and contact info.
+* Has all pages interlinked and working seamlessly.
+* Embeds the narrative: “From early agency → emerging leader.”
+
+---
+
+Would you like me to now **format this into a developer-ready JSON or Markdown structure** (so it can be pasted directly into your development environment or prompt builder)?

@@ -1,0 +1,35 @@
+# Links
+
+### **🧑🏻‍💼 Jobayer Hoque Siddique**
+
+- **Email:** [jobayerhoquesiddique@gmail.com](mailto:jobayerhoquesiddique@gmail.com)
+- **Socials:**
+    - X: [https://x.com/jobayerhoquesid](https://x.com/jobayerhoquesid)
+    - GitHub: [https://github.com/jobayerhoquesiddique](https://github.com/jobayerhoquesiddique)
+    - LinkedIn: [https://www.linkedin.com/in/jobayer-hoque-siddique-58367a37a/](https://www.linkedin.com/in/jobayer-hoque-siddique-58367a37a/)
+    - Fiverr: [https://www.fiverr.com/s/m5vGDRZ](https://www.fiverr.com/s/m5vGDRZ)
+    - Upwork: [https://www.upwork.com/freelancers/~012712dfc006df1367?mp_source=share](https://www.upwork.com/freelancers/~012712dfc006df1367?mp_source=share)
+    - [Freelancer.com](http://freelancer.com/): [https://www.freelancer.com/u/jobayerhoques?sb=t](https://www.freelancer.com/u/jobayerhoques?sb=t)
+    - Contra: [https://contra.com/jobayer_hoque_siddique_1hrc474w?referralExperimentNid=DEFAULT_REFERRAL_PROGRAM&referrerUsername=jobayer_hoque_siddique_1hrc474w](https://contra.com/jobayer_hoque_siddique_1hrc474w?referralExperimentNid=DEFAULT_REFERRAL_PROGRAM&referrerUsername=jobayer_hoque_siddique_1hrc474w)
+
+---
+
+### **🚀 Nexus Creative Studio**
+
+- **Email:** [nexxusstudio.agency@gmail.com](mailto:nexxusstudio.agency@gmail.com)
+- **Socials:**
+    - X: [@nexuscrativeio](https://x.com/nexuscrativeio)
+    - GitHub: [nexxusstudio](https://github.com/nexxusstudio)
+    - Fiverr Pro: [Profile](https://pro.fiverr.com/nexusstudioagen)
+    - Upwork: [Profile](https://www.upwork.com/NexusStudio/)
+    - Portfolio: [](https://www.notion.so/28676083f2a4812eb694fa9dde05b381?pvs=21)[https://nexuscreativestudio.notion.site/Nexus-Creative-Studio-28676083f2a4812eb694fa9dde05b381](https://nexuscreativestudio.notion.site/Nexus-Creative-Studio-28676083f2a4812eb694fa9dde05b381)
+    - Client Portal: [](https://www.notion.so/22176083f2a4800cbe19d83a87e0671d?pvs=21)[https://nexuscreativestudio.notion.site/Client-Portal-22176083f2a4800cbe19d83a87e0671d](https://nexuscreativestudio.notion.site/Client-Portal-22176083f2a4800cbe19d83a87e0671d)
+
+### Database Supabase
+PSQL (Direct Connection): 
+- psql -h db.guarhoiykpmngfptntxt.supabase.co -p 5432 -d postgres -U postgres
+
+Anon Key:
+- eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd1YXJob2l5a3BtbmdmcHRudHh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEwNDU3MjksImV4cCI6MjA3NjYyMTcyOX0.CHvQ4WJIv_kcmy6dMlSUKC8q2VbscsWcORmCNkxVm8c
+JWT Key: 
+- m6SmLwfmBPDtTmEYnlZKRedFMt2H+SlvRhqFyNiyWPvpOZ9pVdni6qkStRT37aTE6YqnkT6+C/nvTG+9UKUcgQ==
