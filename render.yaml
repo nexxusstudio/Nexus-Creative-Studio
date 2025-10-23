@@ -2,10 +2,10 @@
 services:
   - type: web
     name: nexus-creative-studio
-    env: node
+    runtime: node
     region: oregon
     plan: free
-    buildCommand: npm run build && npm run build:server
+    buildCommand: npm install && npm run build && npm run build:server
     startCommand: npm start
     healthCheckPath: /health
     envVars:

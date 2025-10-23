@@ -1,7 +1,7 @@
 # Netlify Configuration for Nexus Creative Studio
 [build]
   publish = "public"
-  command = "npm run build"
+  command = "npm install && npm run build"
   functions = "api"
 
 [build.environment]

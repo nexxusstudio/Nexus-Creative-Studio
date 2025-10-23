@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package.json package-lock.json* ./
-RUN npm ci --only=production && npm cache clean --force
+RUN if [ -f package-lock.json ]; then npm ci --omit=dev; else npm install --omit=dev; fi && npm cache clean --force
 
 # Build stage
 FROM node:18-alpine AS build
@@ -17,13 +17,14 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 
 # Install all dependencies (including dev dependencies)
-RUN npm ci
+# Use npm install if package-lock.json doesn't exist, otherwise use npm ci
+RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
 
 # Copy source code
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN npm run build && npm run build:server
 
 # Production stage
 FROM node:18-alpine AS production
@@ -39,6 +40,7 @@ COPY --from=dependencies --chown=appuser:nodejs /app/node_modules ./node_modules
 
 # Copy built application
 COPY --from=build --chown=appuser:nodejs /app/public ./public
+COPY --from=build --chown=appuser:nodejs /app/dist ./dist
 COPY --from=build --chown=appuser:nodejs /app/api ./api
 COPY --from=build --chown=appuser:nodejs /app/server ./server
 COPY --from=build --chown=appuser:nodejs /app/shared ./shared
