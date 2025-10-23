@@ -1,0 +1,12 @@
+# Railway Configuration for Nexus Creative Studio
+[build]
+  builder = "nixpacks"
+
+[deploy]
+  startCommand = "npm start"
+  healthcheckPath = "/health"
+  restartPolicyType = "on_failure"
+
+[variables]
+  NODE_ENV = "production"
+  PORT = "3000"

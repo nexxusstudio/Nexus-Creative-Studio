@@ -2,8 +2,12 @@ import express, { type Request, Response, NextFunction } from "express";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import { registerRoutes } from "./routes";
-import { setupVite, serveStatic, log } from "./vite";
 import { env } from "./env";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -67,7 +71,7 @@ const limiter = rateLimit({
   legacyHeaders: false,
   skip: (req) => {
     // Skip rate limiting for health checks and static assets
-    return req.path === '/health' || req.path.startsWith('/assets/');
+    return req.path === '/health' || !req.path.startsWith('/api');
   },
 });
 
@@ -83,39 +87,6 @@ app.use(express.json({
 }));
 app.use(express.urlencoded({ extended: false, limit: '10mb' }));
 
-// Request logging middleware
-app.use((req, res, next) => {
-  const start = Date.now();
-  const path = req.path;
-  let capturedJsonResponse: Record<string, any> | undefined = undefined;
-
-  const originalResJson = res.json;
-  res.json = function (bodyJson, ...args) {
-    capturedJsonResponse = bodyJson;
-    return originalResJson.apply(res, [bodyJson, ...args]);
-  };
-
-  res.on("finish", () => {
-    const duration = Date.now() - start;
-    if (path.startsWith("/api")) {
-      let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      
-      // Log response data in development only
-      if (env.NODE_ENV === 'development' && capturedJsonResponse) {
-        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
-      }
-
-      if (logLine.length > 80) {
-        logLine = logLine.slice(0, 79) + "…";
-      }
-
-      log(logLine);
-    }
-  });
-
-  next();
-});
-
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({
@@ -127,63 +98,57 @@ app.get('/health', (req, res) => {
   });
 });
 
-(async () => {
-  const server = await registerRoutes(app);
+// Register API routes
+registerRoutes(app);
 
-  // Enhanced error handling middleware
-  app.use((err: any, req: Request, res: Response, _next: NextFunction) => {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
+// Serve static files in production
+if (env.NODE_ENV === 'production') {
+  const publicPath = path.join(__dirname, '..', 'public');
+  app.use(express.static(publicPath));
 
-    // Generate unique error ID for tracking
-    const errorId = `err_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-
-    // Log error details
-    if (env.NODE_ENV === 'development') {
-      console.error(`Error ${errorId}:`, err);
-      res.status(status).json({ 
-        error: true,
-        message,
-        errorId,
-        stack: err.stack,
-        details: err 
-      });
-    } else {
-      // Production error logging (could integrate with logging service)
-      console.error(`Error ${errorId}:`, {
-        message: err.message,
-        status,
-        stack: err.stack,
-        url: req.url,
-        method: req.method,
-        ip: req.ip,
-        userAgent: req.get('User-Agent')
-      });
-      
-      res.status(status).json({ 
-        error: true,
-        message: status === 500 ? "Internal Server Error" : message,
-        errorId
-      });
-    }
+  // For any other request, serve the index.html file
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(publicPath, 'index.html'));
   });
+}
 
-  // Setup development or production serving
-  if (env.NODE_ENV === "development") {
-    await setupVite(app, server);
+// Enhanced error handling middleware
+app.use((err: any, req: Request, res: Response, _next: NextFunction) => {
+  const status = err.status || err.statusCode || 500;
+  const message = err.message || "Internal Server Error";
+
+  // Generate unique error ID for tracking
+  const errorId = `err_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+  // Log error details
+  if (env.NODE_ENV === 'development') {
+    console.error(`Error ${errorId}:`, err);
+    res.status(status).json({ 
+      error: true,
+      message,
+      errorId,
+      stack: err.stack,
+      details: err 
+    });
   } else {
-    serveStatic(app);
-  }
-
-  // Start server with appropriate host binding
-  const host = env.NODE_ENV === 'production' ? '0.0.0.0' : '127.0.0.1';
-  
-  server.listen(env.PORT, host, () => {
-    log(`🚀 Server running in ${env.NODE_ENV} mode on http://${host}:${env.PORT}`);
+    // Production error logging (could integrate with logging service)
+    console.error(`Error ${errorId}:`, {
+      message: err.message,
+      status,
+      stack: err.stack,
+      url: req.url,
+      method: req.method,
+      ip: req.ip,
+      userAgent: req.get('User-Agent')
+    });
     
-    if (env.NODE_ENV === 'production') {
-      log(`🔒 Security headers enabled`);
-      log(`⚡ Rate limiting: ${env.RATE_LIMIT_MAX_REQUESTS} requests per ${env.RATE_LIMIT_WINDOW_MS / 1000}s`);
-    }
-  });
-})();
+    res.status(status).json({ 
+      error: true,
+      message: status === 500 ? "Internal Server Error" : message,
+      errorId
+    });
+  }
+});
+
+export default app;
+

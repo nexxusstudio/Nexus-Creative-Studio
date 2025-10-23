@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://nexus-creative-studio.vercel.app/sitemap.xml
+
+# Important pages
+Allow: /
+Allow: /nexus-studio
+Allow: /crypto-nexus
+Allow: /byte-studio
+Allow: /founder
+
+# Block unnecessary files
+Disallow: /api/
+Disallow: /_next/
+Disallow: /assets/
+Disallow: *.json$
+Disallow: *.map$
+
+# Crawl delay (optional)
+Crawl-delay: 1

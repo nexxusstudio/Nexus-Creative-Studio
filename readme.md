@@ -328,29 +328,6 @@ VITE_ENVIRONMENT=production
 VITE_API_URL=/api
 ```
 
-### **CMS Integration Ready**
-
-Future-proof architecture with CMS providers ready:
-- 🎨 **Sanity CMS**: Structured content management
-- 🚀 **Strapi CMS**: Open-source headless CMS  
-- 📝 **Notion API**: Simple content management
-- 🔧 **Custom CMS**: Extensible interface
-
-**Activate CMS** by adding environment variables:
-```bash
-# For Sanity
-SANITY_PROJECT_ID=your_project_id
-SANITY_DATASET=production
-
-# For Strapi  
-STRAPI_URL=https://your-strapi.com
-STRAPI_API_TOKEN=your_token
-
-# For Notion
-NOTION_TOKEN=your_integration_token
-NOTION_DATABASE_ID=your_database_id
-```
-
 ---
 
 ## 🧪 **Testing**
