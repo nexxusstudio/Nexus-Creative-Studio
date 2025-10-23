@@ -5,7 +5,7 @@ services:
     env: node
     region: oregon
     plan: free
-    buildCommand: npm run build
+    buildCommand: npm run build && npm run build:server
     startCommand: npm start
     healthCheckPath: /health
     envVars:
@@ -13,10 +13,8 @@ services:
         value: production
       - key: RENDER
         value: "true"
+      - key: PORT
+        sync: false
     scaling:
       minInstances: 1
       maxInstances: 1
-    disk:
-      name: nexus-disk
-      mountPath: /tmp
-      sizeGB: 1

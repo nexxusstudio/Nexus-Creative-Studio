@@ -24,11 +24,10 @@
   "scripts": {
     "dev": "tsx --watch server/index.ts",
     "build": "vite build",
-    "build:client": "vite build",
-    "build:server": "esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outfile=api/index.js --sourcemap",
+    "build:server": "esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/server.js --sourcemap",
     "build:analyze": "vite build --mode analyze",
     "preview": "vite preview",
-    "start": "node api/index.js",
+    "start": "node dist/server.js",
     "start:dev": "npm run build && npm start",
     
     "deploy": "npm run build",
@@ -132,6 +131,7 @@
     "autoprefixer": "^10.4.21",
     "tailwindcss": "^3.4.18",
     "@tailwindcss/typography": "^0.5.19",
+    "esbuild": "^0.25.11",
     "postcss": "^8.5.6",
     "zod": "^3.25.76",
     "zod-validation-error": "^4.0.2"
@@ -155,7 +155,6 @@
     "@vercel/node": "^5.4.1",
     "@vitest/ui": "^3.2.4",
     "drizzle-kit": "^0.31.5",
-    "esbuild": "^0.25.11",
     "eslint": "^9.17.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.37.2",
