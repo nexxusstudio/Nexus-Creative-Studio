@@ -47,11 +47,23 @@ export const queryClient = new QueryClient({
       queryFn: getQueryFn({ on401: "throw" }),
       refetchInterval: false,
       refetchOnWindowFocus: false,
-      staleTime: Infinity,
-      retry: false,
+      staleTime: 5 * 60 * 1000, // 5 minutes - better than Infinity for dynamic data
+      gcTime: 10 * 60 * 1000, // 10 minutes garbage collection
+      retry: (failureCount, error) => {
+        // Don't retry on 4xx errors except 401/403
+        if (error instanceof Error && error.message.match(/^4[0-9][0-9]/)) {
+          return false;
+        }
+        return failureCount < 2; // Retry up to 2 times for other errors
+      },
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000), // Exponential backoff
     },
     mutations: {
       retry: false,
+      // Add global mutation options
+      onError: (error) => {
+        console.error('Mutation error:', error);
+      },
     },
   },
 });

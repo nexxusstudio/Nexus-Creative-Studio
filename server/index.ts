@@ -150,5 +150,47 @@ app.use((err: any, req: Request, res: Response, _next: NextFunction) => {
   }
 });
 
+// Cross-platform server startup
+async function startServer() {
+  try {
+    const httpServer = await registerRoutes(app);
+
+    // Graceful shutdown handling
+    process.on('SIGINT', () => {
+      console.log('\n🛑 Received SIGINT, shutting down gracefully...');
+      httpServer.close(() => {
+        console.log('✅ Server closed');
+        process.exit(0);
+      });
+    });
+
+    process.on('SIGTERM', () => {
+      console.log('\n🛑 Received SIGTERM, shutting down gracefully...');
+      httpServer.close(() => {
+        console.log('✅ Server closed');
+        process.exit(0);
+      });
+    });
+
+    // Start server
+    httpServer.listen(env.PORT, '0.0.0.0', () => {
+      console.log(`🚀 Server running on http://0.0.0.0:${env.PORT}`);
+      console.log(`📊 Environment: ${env.NODE_ENV}`);
+      console.log(`🏗️  Platform: ${env.DEPLOYMENT_PLATFORM}`);
+      console.log(`💾 Database: ${env.SUPABASE_URL ? 'Supabase' : 'Not configured'}`);
+      console.log(`🔗 Health check: http://0.0.0.0:${env.PORT}/health`);
+    });
+    
+  } catch (error) {
+    console.error('❌ Failed to start server:', error);
+    process.exit(1);
+  }
+}
+
+// Only start server if this file is being run directly
+if (import.meta.url === `file://${process.argv[1]}`) {
+  startServer();
+}
+
 export default app;
 

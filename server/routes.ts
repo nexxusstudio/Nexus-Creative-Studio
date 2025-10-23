@@ -5,6 +5,7 @@ import { insertContactSubmissionSchema } from "@shared/schema";
 import { fromZodError } from "zod-validation-error";
 import { z } from "zod";
 import { env } from "./env";
+import enhancedApiRoutes from "./routes/enhanced-api.js";
 
 // Input validation schemas
 const projectQuerySchema = z.object({
@@ -27,6 +28,9 @@ function sanitizeString(input: string): string {
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Register enhanced API routes
+  app.use("/api/enhanced", enhancedApiRoutes);
+
   app.get("/api/projects", async (req, res) => {
     try {
       const validationResult = projectQuerySchema.safeParse(req.query);
