@@ -33,3 +33,4 @@ npm-debug.log*
 # Replit
 .replit.nix
 .config/
+.vercel
