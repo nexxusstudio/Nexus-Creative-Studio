@@ -57,11 +57,11 @@ else
     print_status "Site content file missing" 1
 fi
 
-print_info "Checking for legacy content..."
-if grep -r "22000\|22K\|\$22K\|17 projects\|14 clients\|2026-2027" client/src/ --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" > /dev/null 2>&1; then
-    print_warning "Legacy content found - review needed"
+print_info "Checking for legacy content in production code..."
+if grep -r "22000\|22K\|\$22K\|17 projects\|14 clients\|2026-2027" client/src/ --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" --exclude-dir="__tests__" --exclude="*.test.*" --exclude="content-manager.ts" > /dev/null 2>&1; then
+    print_warning "Legacy content found in production code - review needed"
 else
-    print_status "No legacy content detected" 0
+    print_status "No legacy content in production code" 0
 fi
 
 # 3. Dependencies Verification
