@@ -22,7 +22,7 @@ const brands = [
   {
     name: "Jobayer Hoque Siddique",
     subtitle: "Founder & CEO",
-    description: "Full-stack developer and entrepreneur building an automation-heavy creative agency. Currently pursuing MS abroad (2026-2027) while scaling Nexus Creative Studio through systematic execution and AI-augmented workflows.",
+    description: "Full-stack developer and entrepreneur building an automation-heavy creative agency. Founded Nexus Creative Studio in 2024, achieved $13K revenue with 13 clients and 20 projects through systematic execution and AI-augmented workflows.",
     icon: User,
     gradient: "from-orange-500 to-red-500",
     tags: ["Founder", "Full-Stack", "MS Student"],

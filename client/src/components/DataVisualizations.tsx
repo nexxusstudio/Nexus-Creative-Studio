@@ -37,7 +37,7 @@ const clientGrowth = [
   { quarter: 'Q3 2025', clients: 9, retention: 100 },
   { quarter: 'Q4 2025', clients: 12, retention: 100 },
   { quarter: 'Q1 2026', clients: 15, retention: 100 },
-  { quarter: 'Q2 2026-2027', clients: 18, retention: 100 },
+  { quarter: 'Q2 2024', clients: 18, retention: 100 },
 ];
 
 export function DataVisualizations() {

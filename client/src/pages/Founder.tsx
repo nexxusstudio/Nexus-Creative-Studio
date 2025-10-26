@@ -70,7 +70,7 @@ const timeline = [
     type: "recognition"
   },
   {
-    year: "2026-2027",
+    year: "2024",
     title: "Enterprise Scaling & Innovation",
     description: "Expanding into enterprise markets, scaling operations, and pioneering next-generation technology solutions",
     icon: Rocket,
