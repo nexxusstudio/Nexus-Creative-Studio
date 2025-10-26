@@ -18,6 +18,14 @@ export default defineConfig(({ mode }) => ({
     sourcemap: false,
     minify: 'esbuild',
     target: 'es2022',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          ui: ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-tabs'],
+        },
+      },
+    },
   },
   server: {
     port: 5173,
@@ -26,5 +34,9 @@ export default defineConfig(({ mode }) => ({
   define: {
     __DEV__: mode === 'development',
     __PROD__: mode === 'production',
-  }
+    'process.env.NODE_ENV': JSON.stringify(mode),
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'framer-motion'],
+  },
 }));

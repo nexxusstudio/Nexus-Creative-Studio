@@ -1,34 +1,77 @@
-import { readFileSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+// Import site content directly for browser compatibility
+import siteContentData from '../data/site-content.json';
+import { productionConfig } from './production-config';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-// Load the canonical site content
+// Cached site content
 let siteContent: any = null;
 
 function loadSiteContent() {
   if (!siteContent) {
     try {
-      const contentPath = join(__dirname, '../data/site-content.json');
-      const contentFile = readFileSync(contentPath, 'utf-8');
-      siteContent = JSON.parse(contentFile);
+      // Ensure the imported data is valid
+      if (siteContentData && typeof siteContentData === 'object') {
+        siteContent = siteContentData;
+        
+        if (productionConfig.debugMode) {
+          console.log('✅ Site content loaded successfully');
+        }
+      } else {
+        throw new Error('Invalid site content data');
+      }
     } catch (error) {
       console.error('Failed to load site content:', error);
-      // Fallback to hardcoded content if file doesn't exist
+      // Fallback to hardcoded content if import fails
       siteContent = getDefaultContent();
+      
+      if (productionConfig.debugMode) {
+        console.warn('🔄 Using fallback content due to load failure');
+      }
     }
   }
   return siteContent;
 }
 
-function getDefaultContent() {
+// TypeScript interfaces for type safety
+interface AgencyIdentity {
+  revenue: number;
+  revenueFormatted: string;
+  clients: number;
+  projects: number;
+  satisfaction: number;
+  founded: number;
+}
+
+interface AgencyInfo {
+  name: string;
+  tagline: string;
+  founded: number;
+  identity: AgencyIdentity;
+  description?: string;
+  mission?: string;
+  contact?: {
+    email: string;
+    website: string;
+  };
+}
+
+interface SiteContent {
+  agency: AgencyInfo;
+  pages: Record<string, any>;
+  components?: Record<string, any>;
+  seo?: Record<string, any>;
+  microcopy?: Record<string, any>;
+  testimonials?: any[];
+  legacyKeywords?: string[];
+}
+
+function getDefaultContent(): SiteContent {
   return {
     agency: {
       name: "Nexus Creative Studio",
       tagline: "Where Vision Meets Innovation",
       founded: 2024,
+      description: "The creative technology agency for ambitious startups and forward-thinking businesses.",
+      mission: "Building Digital Excellence",
       identity: {
         revenue: 13000,
         revenueFormatted: "$13K",
@@ -36,6 +79,10 @@ function getDefaultContent() {
         projects: 20,
         satisfaction: 100,
         founded: 2024
+      },
+      contact: {
+        email: "jobayerhoquesiddique@gmail.com",
+        website: "https://nexuscreativestudio.com"
       }
     },
     pages: {
@@ -44,10 +91,19 @@ function getDefaultContent() {
           headline: "Where Vision Meets Innovation",
           subheading: "Building Digital Excellence",
           description: "Nexus Creative Studio - The creative technology agency for ambitious startups and forward-thinking businesses.",
-          status: "Early Growth Stage • Founded 2024"
+          status: "Founded 2024 • $13K Revenue • 13 Clients • 20 Projects"
+        },
+        seo: {
+          title: "Nexus Creative Studio - Digital Innovation Agency | Founded 2024",
+          description: "Founded 2024 creative agency with $13K revenue, 13 clients, 20 projects. AI-powered solutions, conversion optimization, and scalable automation.",
+          keywords: ["creative agency", "digital innovation", "AI solutions", "web development", "startup technology"]
         }
       }
-    }
+    },
+    components: {},
+    microcopy: {},
+    testimonials: [],
+    legacyKeywords: ["$22K", "22000", "17 projects", "14 clients", "2026-2027", "Early Growth Stage"]
   };
 }
 
