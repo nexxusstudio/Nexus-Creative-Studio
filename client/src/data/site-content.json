@@ -1,0 +1,392 @@
+{
+  "agency": {
+    "name": "Nexus Creative Studio",
+    "tagline": "Where Vision Meets Innovation",
+    "founded": 2024,
+    "description": "The creative technology agency for ambitious startups and forward-thinking businesses. We architect AI-powered solutions, conversion-optimized experiences, and scalable automation systems that drive real growth.",
+    "mission": "Building Digital Excellence",
+    "identity": {
+      "revenue": 13000,
+      "revenueFormatted": "$13K",
+      "clients": 13,
+      "projects": 20,
+      "satisfaction": 100,
+      "founded": 2024
+    },
+    "contact": {
+      "email": "jobayerhoquesiddique@gmail.com",
+      "website": "https://nexuscreativestudio.com"
+    }
+  },
+
+  "pages": {
+    "home": {
+      "seo": {
+        "title": "Nexus Creative Studio - Digital Innovation Agency | Founded 2024",
+        "description": "Founded 2024 creative agency with $13K revenue, 13 clients, 20 projects. AI-powered solutions, conversion optimization, and scalable automation.",
+        "keywords": ["creative agency", "digital innovation", "AI solutions", "web development", "startup technology"]
+      },
+      "hero": {
+        "headline": "Where Vision Meets Innovation",
+        "subheading": "Building Digital Excellence",
+        "description": "Nexus Creative Studio - The creative technology agency for ambitious startups and forward-thinking businesses. We architect AI-powered solutions, conversion-optimized experiences, and scalable automation systems that drive real growth.",
+        "status": "Early Growth Stage • Founded 2024",
+        "primaryCta": "Meet the Founder",
+        "secondaryCta": "About Our Agency",
+        "proofElements": [
+          "Founded 2024 | $13K revenue | 13 clients | 20 projects"
+        ]
+      },
+      "stats": {
+        "projects": {
+          "value": 20,
+          "label": "Projects Delivered"
+        },
+        "clients": {
+          "value": 13,
+          "label": "Happy Clients"
+        },
+        "satisfaction": {
+          "value": 100,
+          "label": "Client Satisfaction",
+          "suffix": "%"
+        },
+        "revenue": {
+          "value": 13000,
+          "label": "Revenue Generated",
+          "prefix": "$",
+          "formatted": "$13K+"
+        }
+      }
+    },
+
+    "about": {
+      "seo": {
+        "title": "About Nexus Creative Studio - Founded 2024 Digital Agency",
+        "description": "Learn about our journey from startup to $13K revenue agency. 13 clients, 20 projects, 100% satisfaction. Founded 2024 by Jobayer Hoque Siddique.",
+        "keywords": ["about nexus creative", "agency story", "digital agency founded 2024", "startup journey"]
+      },
+      "content": {
+        "headline": "Our Story",
+        "subheading": "Founded 2024 with a Vision for Digital Excellence",
+        "description": "From startup to success - our journey to serving 13 clients with 20 exceptional projects and $13K in revenue, all while maintaining 100% client satisfaction.",
+        "sections": [
+          {
+            "title": "Our Beginning",
+            "content": "Founded in 2024, Nexus Creative Studio emerged from a vision to bridge the gap between cutting-edge technology and exceptional user experiences."
+          },
+          {
+            "title": "Our Growth",
+            "content": "In our journey since 2024, we've successfully delivered 20 projects for 13 satisfied clients, generating $13K in revenue while maintaining our commitment to excellence."
+          },
+          {
+            "title": "Our Future",
+            "content": "As we continue to grow from our 2024 foundation, we're expanding our ecosystem to serve more clients with innovative digital solutions."
+          }
+        ]
+      }
+    },
+
+    "services": {
+      "seo": {
+        "title": "Services - Nexus Creative Studio | 20 Projects, 13 Clients",
+        "description": "Comprehensive digital services from our 2024-founded agency. 20 successful projects, 13 happy clients, $13K revenue. AI solutions, web development, automation.",
+        "keywords": ["digital services", "web development", "AI solutions", "automation", "creative agency services"]
+      },
+      "content": {
+        "headline": "Our Services",
+        "subheading": "Comprehensive Digital Solutions",
+        "description": "From our 2024 foundation, we've delivered 20 projects across diverse service areas, helping 13 clients achieve their digital goals.",
+        "servicesList": [
+          {
+            "name": "AI-Powered Development",
+            "description": "Custom AI solutions that have contributed to our $13K revenue growth since 2024.",
+            "features": ["Machine Learning Integration", "Intelligent Automation", "Predictive Analytics"]
+          },
+          {
+            "name": "Web Development",
+            "description": "Full-stack development services that have satisfied all 13 of our clients.",
+            "features": ["React/TypeScript", "Node.js Backend", "Database Integration"]
+          },
+          {
+            "name": "Digital Strategy",
+            "description": "Strategic consulting across our 20 completed projects since founding in 2024.",
+            "features": ["Business Analysis", "Technology Planning", "Growth Strategy"]
+          }
+        ]
+      }
+    },
+
+    "ecosystem": {
+      "seo": {
+        "title": "Nexus Ecosystem - Multi-Brand Digital Solutions | Founded 2024",
+        "description": "Explore our 4-brand ecosystem serving 13 clients with 20 projects. $13K revenue across Nexus Studio, Crypto Nexus, Byte Studio. Founded 2024.",
+        "keywords": ["nexus ecosystem", "multi-brand agency", "crypto development", "design studio", "digital solutions"]
+      },
+      "content": {
+        "headline": "The Nexus Ecosystem",
+        "subheading": "Four Specialized Brands, One Vision",
+        "description": "Since our 2024 founding, we've built a comprehensive ecosystem serving 13 clients across 20 projects, generating $13K in revenue.",
+        "brands": [
+          {
+            "name": "Nexus Creative Studio",
+            "tagline": "Full-Stack Digital Solutions",
+            "description": "Main agency hub delivering comprehensive digital solutions",
+            "projects": "8 projects",
+            "specialization": "Web development, AI integration, digital strategy"
+          },
+          {
+            "name": "Crypto Nexus",
+            "tagline": "Web3 & Blockchain Development",
+            "description": "Specialized blockchain and DeFi solutions",
+            "projects": "4 projects", 
+            "specialization": "Smart contracts, DeFi protocols, Web3 applications"
+          },
+          {
+            "name": "Byte Studio",
+            "tagline": "Design & MVP Development",
+            "description": "Design-focused rapid prototyping and MVP creation",
+            "projects": "6 projects",
+            "specialization": "UI/UX design, MVP development, user research"
+          },
+          {
+            "name": "Founder Hub",
+            "tagline": "Strategic Leadership & Consulting",
+            "description": "Direct access to founder expertise and strategic guidance",
+            "projects": "2 projects",
+            "specialization": "Technical leadership, strategic consulting, mentorship"
+          }
+        ]
+      }
+    },
+
+    "pricing": {
+      "seo": {
+        "title": "Pricing - Nexus Creative Studio | Transparent Project Costs",
+        "description": "Transparent pricing from our 2024-founded agency. Based on $13K revenue from 20 projects serving 13 clients. Get your custom quote today.",
+        "keywords": ["agency pricing", "web development cost", "digital project pricing", "transparent pricing"]
+      },
+      "content": {
+        "headline": "Transparent Pricing",
+        "subheading": "Investment in Your Digital Success",
+        "description": "Based on our experience delivering 20 projects for 13 clients since 2024, we offer transparent, value-driven pricing.",
+        "note": "Our $13K revenue from 20 projects reflects our commitment to delivering exceptional value at fair prices."
+      }
+    },
+
+    "contact": {
+      "seo": {
+        "title": "Contact Nexus Creative Studio - Start Your Project Today",
+        "description": "Contact our 2024-founded agency. Join our 13 satisfied clients and become part of our success story. 20 projects, $13K revenue, 100% satisfaction.",
+        "keywords": ["contact nexus creative", "start project", "digital agency contact", "web development inquiry"]
+      },
+      "content": {
+        "headline": "Start Your Project",
+        "subheading": "Join Our 13 Satisfied Clients",
+        "description": "Ready to become part of our success story? Since 2024, we've delivered 20 projects with 100% client satisfaction.",
+        "formFields": {
+          "name": "Full Name",
+          "email": "Email Address", 
+          "company": "Company Name",
+          "project": "Project Description",
+          "budget": "Project Budget",
+          "timeline": "Desired Timeline"
+        },
+        "contact": {
+          "email": "jobayerhoquesiddique@gmail.com",
+          "response": "We respond within 24 hours"
+        }
+      }
+    },
+
+    "caseStudies": {
+      "seo": {
+        "title": "Case Studies - 20 Successful Projects | Nexus Creative Studio",
+        "description": "Explore our 20 successful projects serving 13 clients since 2024. Real results, measurable impact, $13K revenue generated through excellent work.",
+        "keywords": ["case studies", "project portfolio", "client success stories", "digital project results"]
+      },
+      "content": {
+        "headline": "Success Stories",
+        "subheading": "20 Projects, Measurable Results",
+        "description": "Since our 2024 founding, we've delivered exceptional results for 13 clients across 20 diverse projects.",
+        "featured": [
+          {
+            "title": "E-commerce Platform Redesign",
+            "client": "Tech Startup",
+            "challenge": "Outdated platform with poor conversion rates",
+            "solution": "Modern React-based e-commerce solution with AI recommendations",
+            "results": ["35% increase in conversions", "50% faster page load times", "100% client satisfaction"],
+            "timeline": "6 weeks",
+            "technologies": ["React", "Node.js", "MongoDB", "AI/ML"]
+          },
+          {
+            "title": "DeFi Protocol Development",
+            "client": "Blockchain Startup",
+            "challenge": "Need for secure, scalable DeFi protocol",
+            "solution": "Custom smart contract development with comprehensive testing",
+            "results": ["$25K TVL in first month", "Zero security incidents", "95% user retention"],
+            "timeline": "8 weeks",
+            "technologies": ["Solidity", "Web3.js", "React", "Ethereum"]
+          }
+        ]
+      }
+    }
+  },
+
+  "components": {
+    "navigation": {
+      "logo": "Nexus Creative Studio",
+      "items": [
+        { "label": "Home", "href": "/" },
+        { "label": "Services", "href": "#services" },
+        { "label": "Ecosystem", "href": "#ecosystem" },
+        { "label": "Case Studies", "href": "#portfolio" },
+        { "label": "Pricing", "href": "#pricing" },
+        { "label": "About", "href": "#about" },
+        { "label": "Contact", "href": "#contact" }
+      ],
+      "cta": "Start Project"
+    },
+
+    "footer": {
+      "description": "Founded 2024 creative technology agency serving 13 clients with 20 successful projects. $13K revenue, 100% satisfaction.",
+      "sections": [
+        {
+          "title": "About",
+          "links": [
+            { "label": "Our Story", "href": "#about" },
+            { "label": "Team", "href": "/founder" },
+            { "label": "Careers", "href": "#careers" }
+          ]
+        },
+        {
+          "title": "Services", 
+          "links": [
+            { "label": "Web Development", "href": "#services" },
+            { "label": "AI Solutions", "href": "#services" },
+            { "label": "Digital Strategy", "href": "#services" }
+          ]
+        },
+        {
+          "title": "Ecosystem",
+          "links": [
+            { "label": "Nexus Studio", "href": "/nexus-studio" },
+            { "label": "Crypto Nexus", "href": "/crypto-nexus" },
+            { "label": "Byte Studio", "href": "/byte-studio" }
+          ]
+        },
+        {
+          "title": "Legal & Social",
+          "links": [
+            { "label": "Privacy Policy", "href": "/privacy" },
+            { "label": "Terms of Service", "href": "/terms" },
+            { "label": "Contact", "href": "#contact" }
+          ]
+        }
+      ],
+      "copyright": "© 2024 Nexus Creative Studio. All rights reserved.",
+      "metrics": "Founded 2024 | $13K Revenue | 13 Clients | 20 Projects"
+    }
+  },
+
+  "seo": {
+    "defaultTitle": "Nexus Creative Studio - Digital Innovation Agency Founded 2024",
+    "defaultDescription": "Founded 2024 creative technology agency. $13K revenue, 13 satisfied clients, 20 successful projects. AI solutions, web development, digital innovation.",
+    "siteName": "Nexus Creative Studio",
+    "siteUrl": "https://nexuscreativestudio.com",
+    "twitterHandle": "@nexuscreative",
+    "language": "en",
+    "region": "US",
+    "jsonLd": {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Nexus Creative Studio",
+      "description": "Creative technology agency founded in 2024, serving 13 clients with 20 successful projects and $13K revenue.",
+      "foundingDate": "2024",
+      "url": "https://nexuscreativestudio.com",
+      "email": "jobayerhoquesiddique@gmail.com",
+      "sameAs": [],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Global",
+        "addressRegion": "Remote"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5.0",
+        "bestRating": "5.0",
+        "ratingCount": "13"
+      },
+      "numberOfEmployees": {
+        "@type": "QuantitativeValue",
+        "value": "1-5"
+      }
+    }
+  },
+
+  "microcopy": {
+    "buttons": {
+      "learnMore": "Learn More",
+      "getStarted": "Get Started", 
+      "startProject": "Start Project",
+      "viewPortfolio": "View Portfolio",
+      "contactUs": "Contact Us",
+      "requestQuote": "Request Quote",
+      "scheduleCall": "Schedule Call",
+      "downloadPdf": "Download PDF"
+    },
+    "forms": {
+      "required": "Required field",
+      "email": "Please enter a valid email",
+      "phone": "Please enter a valid phone number",
+      "message": "Please enter your message",
+      "success": "Thank you! We'll respond within 24 hours.",
+      "error": "Something went wrong. Please try again.",
+      "sending": "Sending..."
+    },
+    "states": {
+      "loading": "Loading...",
+      "error": "Something went wrong",
+      "empty": "No items found",
+      "retry": "Try again",
+      "notFound": "Page not found"
+    }
+  },
+
+  "testimonials": [
+    {
+      "quote": "Nexus Creative Studio delivered exceptional results. Their attention to detail and technical expertise exceeded our expectations.",
+      "author": "Sarah Johnson",
+      "company": "TechStart Inc.",
+      "rating": 5,
+      "project": "Web Application Development"
+    },
+    {
+      "quote": "Working with the Nexus team was seamless. They understood our vision and brought it to life perfectly.",
+      "author": "Michael Chen", 
+      "company": "Digital Ventures",
+      "rating": 5,
+      "project": "Brand Identity & Website"
+    },
+    {
+      "quote": "Professional, reliable, and innovative. Nexus Creative Studio is our go-to partner for digital projects.",
+      "author": "Emma Rodriguez",
+      "company": "Growth Labs",
+      "rating": 5,
+      "project": "E-commerce Platform"
+    }
+  ],
+
+  "legacyKeywords": [
+    "22000",
+    "22K",
+    "$22K",
+    "17 projects",
+    "14 clients",
+    "15+ Projects",
+    "25+ MVPs",
+    "50+ Consultations",
+    "2026-2027",
+    "Early Growth Stage"
+  ]
+}

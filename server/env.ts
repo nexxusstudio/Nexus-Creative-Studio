@@ -10,6 +10,10 @@ interface EnvConfig {
   DATABASE_URL?: string;
   SUPABASE_URL?: string;
   SUPABASE_ANON_KEY?: string;
+  SUPABASE_SERVICE_ROLE_KEY?: string;
+  SUPABASE_SECOND_URL?: string;
+  SUPABASE_SECOND_ANON_KEY?: string;
+  SUPABASE_SECOND_SERVICE_KEY?: string;
   SESSION_SECRET?: string;
   CORS_ORIGIN?: string;
   RATE_LIMIT_WINDOW_MS: number;
@@ -93,6 +97,10 @@ function validateEnv(): EnvConfig {
     DATABASE_URL: process.env.DATABASE_URL,
     SUPABASE_URL: process.env.SUPABASE_URL,
     SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
+    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
+    SUPABASE_SECOND_URL: process.env.SUPABASE_SECOND_URL,
+    SUPABASE_SECOND_ANON_KEY: process.env.SUPABASE_SECOND_ANON_KEY,
+    SUPABASE_SECOND_SERVICE_KEY: process.env.SUPABASE_SECOND_SERVICE_KEY,
     SESSION_SECRET: sessionSecret,
     CORS_ORIGIN: process.env.CORS_ORIGIN,
     RATE_LIMIT_WINDOW_MS: rateLimitWindow,

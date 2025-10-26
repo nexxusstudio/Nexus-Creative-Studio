@@ -1,15 +1,146 @@
 import { createClient } from '@supabase/supabase-js';
 import { env } from '../env.js';
-import * as schema from '../../shared/enhanced-schema.js';
 
-// Create Supabase client for database operations
+// Primary Supabase client for database operations
 export const supabase = createClient(
   env.SUPABASE_URL || '',
   env.SUPABASE_ANON_KEY || ''
 );
 
+// Secondary Supabase client (if configured)
+export const supabaseSecond = env.SUPABASE_SECOND_URL ? createClient(
+  env.SUPABASE_SECOND_URL,
+  env.SUPABASE_SECOND_ANON_KEY || ''
+) : null;
+
+// Service role client for admin operations (if configured)
+export const supabaseAdmin = env.SUPABASE_SERVICE_ROLE_KEY ? createClient(
+  env.SUPABASE_URL || '',
+  env.SUPABASE_SERVICE_ROLE_KEY
+) : null;
+
 // Database wrapper to provide a consistent interface
 export const db = {
+  // Agency metrics
+  agencyMetrics: {
+    async getAll() {
+      const client = getDatabaseClient('read');
+      const { data, error } = await client
+        .from('agency_metrics')
+        .select('*')
+        .eq('is_active', true)
+        .order('metric_name');
+      
+      if (error) throw error;
+      return data || [];
+    },
+    
+    async getByName(metricName: string) {
+      const client = getDatabaseClient('read');
+      const { data, error } = await client
+        .from('agency_metrics')
+        .select('*')
+        .eq('metric_name', metricName)
+        .eq('is_active', true)
+        .single();
+      
+      if (error && error.code !== 'PGRST116') throw error;
+      return data;
+    },
+    
+    async update(metricName: string, value: number, formatted?: string) {
+      const client = getDatabaseClient('write');
+      const { data, error } = await client
+        .from('agency_metrics')
+        .upsert({
+          metric_name: metricName,
+          metric_value: value,
+          metric_formatted: formatted || value.toString(),
+          last_updated: new Date().toISOString()
+        })
+        .select()
+        .single();
+      
+      if (error) throw error;
+      return data;
+    }
+  },
+
+  // Site content
+  siteContent: {
+    async getByKey(contentKey: string) {
+      const client = getDatabaseClient('read');
+      const { data, error } = await client
+        .from('site_content')
+        .select('*')
+        .eq('content_key', contentKey)
+        .eq('is_active', true)
+        .single();
+      
+      if (error && error.code !== 'PGRST116') throw error;
+      return data;
+    },
+    
+    async getAllByType(contentType: string) {
+      const client = getDatabaseClient('read');
+      const { data, error } = await client
+        .from('site_content')
+        .select('*')
+        .eq('content_type', contentType)
+        .eq('is_active', true)
+        .order('content_key');
+      
+      if (error) throw error;
+      return data || [];
+    },
+    
+    async upsert(contentKey: string, contentValue: any, contentType: string, pageName?: string) {
+      const client = getDatabaseClient('write');
+      const { data, error } = await client
+        .from('site_content')
+        .upsert({
+          content_key: contentKey,
+          content_value: contentValue,
+          content_type: contentType,
+          page_name: pageName,
+          updated_at: new Date().toISOString()
+        })
+        .select()
+        .single();
+      
+      if (error) throw error;
+      return data;
+    }
+  },
+
+  // Ecosystem brands
+  ecosystemBrands: {
+    async findMany() {
+      const client = getDatabaseClient('read');
+      const { data, error } = await client
+        .from('ecosystem_brands')
+        .select('*')
+        .eq('is_active', true)
+        .order('sort_order');
+      
+      if (error) throw error;
+      return data || [];
+    },
+    
+    async findBySlug(slug: string) {
+      const client = getDatabaseClient('read');
+      const { data, error } = await client
+        .from('ecosystem_brands')
+        .select('*')
+        .eq('slug', slug)
+        .eq('is_active', true)
+        .single();
+      
+      if (error && error.code !== 'PGRST116') throw error;
+      return data;
+    }
+  },
+
   // Contacts
   contactSubmissions: {
     async create(data: any) {
@@ -225,13 +356,38 @@ export const db = {
   }
 };
 
-// Health check function
-export async function checkDatabaseConnection(): Promise<boolean> {
+// Health check functions
+export async function checkDatabaseConnection(client = supabase): Promise<boolean> {
   try {
-    const { data, error } = await supabase.from('contact_submissions').select('id').limit(1);
+    const { data, error } = await client.from('agency_metrics').select('id').limit(1);
     return !error;
   } catch (error) {
     console.error('Database connection failed:', error);
     return false;
+  }
+}
+
+export async function checkAllDatabaseConnections(): Promise<{
+  primary: boolean;
+  secondary: boolean | null;
+  admin: boolean | null;
+}> {
+  const primary = await checkDatabaseConnection(supabase);
+  const secondary = supabaseSecond ? await checkDatabaseConnection(supabaseSecond) : null;
+  const admin = supabaseAdmin ? await checkDatabaseConnection(supabaseAdmin) : null;
+  
+  return { primary, secondary, admin };
+}
+
+// Get database client based on operation type
+export function getDatabaseClient(operation: 'read' | 'write' | 'admin' = 'read') {
+  switch (operation) {
+    case 'admin':
+      return supabaseAdmin || supabase;
+    case 'write':
+      return supabaseSecond || supabase;
+    case 'read':
+    default:
+      return supabase;
   }
 }

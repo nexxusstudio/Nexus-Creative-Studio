@@ -8,8 +8,8 @@ import { useSupabase } from "@/hooks/useSupabase";
 const metrics = [
   {
     title: "Total Revenue",
-    value: 20,
-    max: 30,
+    value: 13,
+    max: 20,
     unit: "K+",
     icon: TrendingUp,
     color: "from-blue-500 to-cyan-500",
@@ -26,12 +26,12 @@ const metrics = [
   },
   {
     title: "Total Projects",
-    value: 15,
-    max: 20,
+    value: 20,
+    max: 25,
     unit: "+",
     icon: Code,
     color: "from-purple-500 to-pink-500",
-    description: "Projects delivered across 4 countries"
+    description: "Projects delivered since 2024"
   },
   {
     title: "Success Rate",
@@ -63,10 +63,10 @@ const metrics = [
 ];
 
 const achievements = [
-  { title: "Fiverr Pro Verified", year: "2026", category: "Development" },
-  { title: "15+ Happy Clients", year: "2026-2027", category: "Client Success" },
-  { title: "$20K+ Revenue", year: "2026-2027", category: "Milestone" },
-  { title: "Early-Stage Growth", year: "2026-2027", category: "Growth" },
+  { title: "Agency Founded", year: "2024", category: "Development" },
+  { title: "13+ Happy Clients", year: "2024", category: "Client Success" },
+  { title: "$13K+ Revenue", year: "2024", category: "Milestone" },
+  { title: "Growing Digital Agency", year: "2024", category: "Growth" },
 ];
 
 export function InteractiveMetrics() {

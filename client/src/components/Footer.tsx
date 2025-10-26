@@ -5,12 +5,16 @@ import { ArrowRight, Twitter, Github, Linkedin, Building2 } from "lucide-react";
 import { SiFiverr, SiUpwork } from "react-icons/si";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "wouter";
-import { BRAND_CONFIGS, SOCIAL_LINKS, BRAND_CONTACTS, QUICK_LINKS } from "@/data/brand-links";
+import { getComponentContent, getAgencyInfo } from "@/lib/content-manager";
 import nexusLogo from "@assets/lg_1756703260455.jpg";
 
 export function Footer() {
   const { toast } = useToast();
   const [email, setEmail] = useState("");
+  
+  // Get canonical content
+  const footerContent = getComponentContent('footer');
+  const agencyInfo = getAgencyInfo();
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,21 +40,24 @@ export function Footer() {
         <div className="grid lg:grid-cols-5 gap-8 mb-12">
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center space-x-3">
-              <img src={nexusLogo} alt="Nexus Creative Studio" className="w-10 h-10 rounded-lg" />
-              <span className="text-xl font-bold">Nexus Creative Studio</span>
+              <img src={nexusLogo} alt={agencyInfo.name} className="w-10 h-10 rounded-lg" />
+              <span className="text-xl font-bold">{agencyInfo.name}</span>
             </div>
             <p className="text-muted-foreground text-sm" data-testid="footer-description">
-              Building world-class digital systems from the ground up. Early-stage agency focused on AI MVPs, automation, and growth systems.
+              {footerContent.description || agencyInfo.description}
             </p>
             <p className="text-sm text-muted-foreground">
               <strong>Email:</strong>{" "}
-              <a href={QUICK_LINKS.contactAgency} className="hover:text-primary theme-transition">
-                {BRAND_CONTACTS.agency.email}
+              <a href={`mailto:${agencyInfo.contact?.email}`} className="hover:text-primary theme-transition">
+                {agencyInfo.contact?.email}
               </a>
+            </p>
+            <p className="text-xs text-muted-foreground mt-2" data-testid="footer-metrics">
+              {footerContent.metrics || `Founded ${agencyInfo.founded} | ${agencyInfo.identity?.revenueFormatted} Revenue | ${agencyInfo.identity?.clients} Clients | ${agencyInfo.identity?.projects} Projects`}
             </p>
             <div className="flex items-center space-x-4 pt-2">
               <a 
-                href={SOCIAL_LINKS.agency.twitter} 
+                href="#" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary theme-transition"
@@ -60,7 +67,7 @@ export function Footer() {
                 <Twitter size={20} />
               </a>
               <a 
-                href={SOCIAL_LINKS.agency.github} 
+                href="#" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary theme-transition"
@@ -70,7 +77,7 @@ export function Footer() {
                 <Github size={20} />
               </a>
               <a 
-                href={SOCIAL_LINKS.agency.fiverr} 
+                href="#" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary theme-transition"
@@ -80,7 +87,7 @@ export function Footer() {
                 <SiFiverr size={20} />
               </a>
               <a 
-                href={SOCIAL_LINKS.agency.upwork} 
+                href="#" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary theme-transition"
@@ -92,42 +99,120 @@ export function Footer() {
             </div>
           </div>
 
-          <div>
-            <h4 className="font-semibold mb-4 flex items-center space-x-2" data-testid="footer-ecosystem-title">
-              <Building2 size={16} />
-              <span>Nexus Ecosystem</span>
-            </h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <Link href="/nexus-studio">
-                  <button className="hover:text-primary theme-transition" data-testid="footer-nexus-studio">
-                    Nexus Creative Studio
-                  </button>
-                </Link>
-              </li>
-              <li>
-                <Link href="/crypto-nexus">
-                  <button className="hover:text-primary theme-transition" data-testid="footer-crypto-nexus">
-                    Crypto Nexus
-                  </button>
-                </Link>
-              </li>
-              <li>
-                <Link href="/byte-studio">
-                  <button className="hover:text-primary theme-transition" data-testid="footer-byte-studio">
-                    Byte Studio
-                  </button>
-                </Link>
-              </li>
-              <li>
-                <Link href="/founder">
-                  <button className="hover:text-primary theme-transition" data-testid="footer-founder">
-                    Jobayer Hoque Siddique
-                  </button>
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {footerContent.sections?.map((section: any, index: number) => (
+            <div key={index}>
+              <h4 className="font-semibold mb-4 flex items-center space-x-2" data-testid={`footer-${section.title.toLowerCase()}-title`}>
+                {section.title === 'Ecosystem' && <Building2 size={16} />}
+                <span>{section.title}</span>
+              </h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                {section.links?.map((link: any, linkIndex: number) => (
+                  <li key={linkIndex}>
+                    {link.href.startsWith('#') ? (
+                      <button 
+                        onClick={() => scrollToSection(link.href.slice(1))}
+                        className="hover:text-primary theme-transition" 
+                        data-testid={`footer-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
+                      >
+                        {link.label}
+                      </button>
+                    ) : (
+                      <Link href={link.href}>
+                        <button 
+                          className="hover:text-primary theme-transition" 
+                          data-testid={`footer-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
+                        >
+                          {link.label}
+                        </button>
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )) || (
+            // Fallback content
+            <>
+              <div>
+                <h4 className="font-semibold mb-4 flex items-center space-x-2" data-testid="footer-ecosystem-title">
+                  <Building2 size={16} />
+                  <span>Nexus Ecosystem</span>
+                </h4>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li>
+                    <Link href="/nexus-studio">
+                      <button className="hover:text-primary theme-transition" data-testid="footer-nexus-studio">
+                        Nexus Creative Studio
+                      </button>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/crypto-nexus">
+                      <button className="hover:text-primary theme-transition" data-testid="footer-crypto-nexus">
+                        Crypto Nexus
+                      </button>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/byte-studio">
+                      <button className="hover:text-primary theme-transition" data-testid="footer-byte-studio">
+                        Byte Studio
+                      </button>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/founder">
+                      <button className="hover:text-primary theme-transition" data-testid="footer-founder">
+                        Founder Hub
+                      </button>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-semibold mb-4" data-testid="footer-services-title">Services</h4>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li>
+                    <button 
+                      onClick={() => scrollToSection('services')} 
+                      className="hover:text-primary theme-transition"
+                      data-testid="footer-service-ai"
+                    >
+                      AI + Automation MVPs
+                    </button>
+                  </li>
+                  <li>
+                    <button 
+                      onClick={() => scrollToSection('services')} 
+                      className="hover:text-primary theme-transition"
+                      data-testid="footer-service-web"
+                    >
+                      Web Design & Development
+                    </button>
+                  </li>
+                  <li>
+                    <button 
+                      onClick={() => scrollToSection('services')} 
+                      className="hover:text-primary theme-transition"
+                      data-testid="footer-service-automation"
+                    >
+                      System Integration
+                    </button>
+                  </li>
+                  <li>
+                    <button 
+                      onClick={() => scrollToSection('services')} 
+                      className="hover:text-primary theme-transition"
+                      data-testid="footer-service-growth"
+                    >
+                      Growth Systems
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </>
+          )}
 
           <div>
             <h4 className="font-semibold mb-4" data-testid="footer-services-title">Services</h4>
@@ -197,16 +282,16 @@ export function Footer() {
             
             <div className="mt-6 space-y-2 text-sm text-muted-foreground">
               <a 
-                href={SOCIAL_LINKS.agency.portfolio}
+                href="#"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block hover:text-primary theme-transition"
-                data-testid="footer-link-notion"
+                data-testid="footer-link-portfolio"
               >
-                Notion Portfolio
+                Portfolio
               </a>
               <a 
-                href={SOCIAL_LINKS.agency.clientPortal}
+                href="#"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block hover:text-primary theme-transition"
@@ -220,7 +305,7 @@ export function Footer() {
 
         <div className="border-t border-border pt-8 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-muted-foreground text-sm" data-testid="footer-copyright">
-            © 2026-2027 Nexus Creative Studio. All rights reserved.
+            {footerContent.copyright || `© ${agencyInfo.founded} ${agencyInfo.name}. All rights reserved.`}
           </p>
           <div className="flex items-center space-x-6 mt-4 sm:mt-0">
             <button className="text-muted-foreground hover:text-primary text-sm theme-transition" data-testid="footer-privacy">

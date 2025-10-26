@@ -1,27 +1,27 @@
-// Early-Stage Agency Data Model - Unified across all Nexus Ecosystem brands
-// 2026-2027 Vision - Consistent metrics for emerging multi-brand ecosystem
+// Canonical Agency Data Model - Updated with new agency identity
+// Founded 2024 - Official metrics aligned with site content
 
-export const EARLY_STAGE_METRICS = {
-  // Core Business Metrics
+export const CANONICAL_METRICS = {
+  // Core Business Metrics - Updated with canonical values
   revenue: {
-    total: 22000,
-    formatted: "$22K+",
+    total: 13000,
+    formatted: "$13K+",
     description: "Revenue generated from client projects"
   },
   
-  // Project & Client Metrics  
+  // Project & Client Metrics - Updated with canonical values
   projects: {
-    total: 17,
-    perBrand: 6, // Average per brand (4 brands)
-    formatted: "17+",
+    total: 20,
+    perBrand: 5, // Average per brand (4 brands)
+    formatted: "20+",
     description: "Projects delivered across ecosystem"
   },
   
   clients: {
-    total: 14,
-    active: 8,
+    total: 13,
+    active: 10,
     repeat: 5,
-    formatted: "14+",
+    formatted: "13+",
     description: "Happy clients served"
   },
   
@@ -45,11 +45,11 @@ export const EARLY_STAGE_METRICS = {
     description: "Quality rating across all projects"
   },
   
-  // Timeline & Business Stage
+  // Timeline & Business Stage - Updated with canonical values
   timeline: {
-    range: "2026-2027",
-    stage: "Early Growth Stage",
-    description: "Emerging multi-brand ecosystem"
+    range: "Founded 2024",
+    stage: "Growing Digital Agency",
+    description: "Established multi-brand creative ecosystem"
   },
   
   // Geographic & Market Reach
@@ -69,7 +69,7 @@ export const EARLY_STAGE_METRICS = {
 export const BRAND_SPECIFIC_METRICS = {
   nexus: {
     name: "Nexus Creative Studio",
-    projects: 6,
+    projects: 8, // Updated to sum to 20 total
     specialization: "Full-stack digital solutions",
     clients: "Technology startups and SMBs",
     avgProjectValue: "$2K-$8K"
@@ -81,34 +81,34 @@ export const BRAND_SPECIFIC_METRICS = {
     specialization: "Web3 & blockchain development",
     clients: "DeFi protocols and Web3 startups",
     avgProjectValue: "$5K-$15K",
-    // Realistic early-stage Web3 metrics
-    totalValueLocked: "$125K", // Scaled down from $8.5M
-    contractsDeployed: 8, // Scaled down from 247
-    transactionVolume: "$450K" // Scaled down from $25.2M
+    // Updated metrics aligned with $13K total revenue
+    totalValueLocked: "$75K",
+    contractsDeployed: 6,
+    transactionVolume: "$250K"
   },
   
   byte: {
     name: "Byte Studio",
-    projects: 5,
+    projects: 6, // Updated to sum to 20 total
     specialization: "Design & MVP development", 
     clients: "Early-stage startups and product teams",
     avgProjectValue: "$3K-$10K",
-    // Realistic early-stage design metrics
-    mvpsLaunched: 8, // Scaled down from 50+
-    clientSatisfaction: 100, // Maintained high standard
-    avgDeliveryTime: "3-6 weeks" // Realistic timeline
+    // Updated design metrics
+    mvpsLaunched: 6,
+    clientSatisfaction: 100,
+    avgDeliveryTime: "3-6 weeks"
   },
   
   founder: {
     name: "Jobayer Hoque Siddique",
-    projects: 2, // Personal consulting projects
+    projects: 2,
     specialization: "Strategic consulting & technical leadership",
     clients: "Startup founders and tech teams", 
     avgProjectValue: "$2K-$8K",
-    // Realistic founder metrics
-    consultations: 12, // Scaled down from 50+
-    yearsExperience: 5, // Realistic for early-stage
-    clientSatisfaction: 100 // Maintained high standard
+    // Updated founder metrics
+    consultations: 8,
+    yearsExperience: 3, // Realistic for 2024 founding
+    clientSatisfaction: 100
   }
 };
 
@@ -160,13 +160,13 @@ export const PROJECT_OUTCOMES = {
   ecommerceIntegration: "25% increase in sales efficiency"
 };
 
-// Achievement Timeline (Consistent 2026-2027 focus)
+// Achievement Timeline (Updated with canonical values)
 export const ACHIEVEMENT_TIMELINE = [
-  { title: "Fiverr Pro Verified", year: "2026", category: "Platform" },
-  { title: "14 Happy Clients", year: "2026-2027", category: "Client Success" },
-  { title: "$22K+ Revenue", year: "2026-2027", category: "Milestone" },
-  { title: "Early Growth Stage", year: "2026-2027", category: "Business Stage" },
-  { title: "4-Brand Ecosystem", year: "2026-2027", category: "Expansion" }
+  { title: "Agency Founded", year: "2024", category: "Platform" },
+  { title: "13 Happy Clients", year: "2024", category: "Client Success" },
+  { title: "$13K+ Revenue", year: "2024", category: "Milestone" },  
+  { title: "Growing Digital Agency", year: "2024", category: "Business Stage" },
+  { title: "4-Brand Ecosystem", year: "2024", category: "Expansion" }
 ];
 
 // Social Proof Elements
@@ -185,16 +185,16 @@ export const SOCIAL_PROOF = {
   }
 };
 
-// Growth Trajectory (Early-stage realistic projections)
+// Growth Trajectory (Realistic projections from 2024 foundation)
 export const GROWTH_PROJECTIONS = {
-  q1_2026: { revenue: 8000, clients: 5, projects: 6 },
-  q2_2026: { revenue: 15000, clients: 9, projects: 11 },
-  q3_2026: { revenue: 22000, clients: 14, projects: 17 },
-  q4_2026: { revenue: 30000, clients: 18, projects: 22 }
+  q1_2024: { revenue: 3000, clients: 3, projects: 5 },
+  q2_2024: { revenue: 6000, clients: 7, projects: 12 },
+  q3_2024: { revenue: 10000, clients: 10, projects: 16 },
+  q4_2024: { revenue: 13000, clients: 13, projects: 20 }
 };
 
 export default {
-  EARLY_STAGE_METRICS,
+  CANONICAL_METRICS,
   BRAND_SPECIFIC_METRICS,
   CASE_STUDY_METRICS,
   PROJECT_OUTCOMES,

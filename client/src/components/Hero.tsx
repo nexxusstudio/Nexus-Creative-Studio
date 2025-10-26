@@ -3,20 +3,25 @@ import { ParticleBackground } from "./ParticleBackground";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { useSupabase } from "@/hooks/useSupabase";
-import { EARLY_STAGE_METRICS } from "@/data/unified-metrics";
+import { getAgencyInfo, getPageContent, getCanonicalMetrics } from "@/lib/content-manager";
 import founderHeroImage from "@assets/JH1_1756704209882.png";
 import nexusStudioCover from "@assets/NCS1_1756703260455.jpg";
 
 export function Hero() {
   const heroRef = useScrollAnimation();
   const { metrics } = useSupabase();
+  
+  // Get canonical content
+  const agencyInfo = getAgencyInfo();
+  const homeContent = getPageContent('home');
+  const canonicalMetrics = getCanonicalMetrics();
 
-  // Use unified metrics with database fallback
+  // Use canonical metrics with database fallback
   const displayMetrics = {
-    projects: metrics?.projects_total || EARLY_STAGE_METRICS.projects.total,
-    clients: metrics?.clients_total || EARLY_STAGE_METRICS.clients.total,
-    satisfaction: metrics?.satisfaction_pct || EARLY_STAGE_METRICS.satisfaction.percentage,
-    revenue: metrics?.revenue_total || EARLY_STAGE_METRICS.revenue.total
+    projects: metrics?.projects_total || canonicalMetrics.projects,
+    clients: metrics?.clients_total || canonicalMetrics.clients,
+    satisfaction: metrics?.satisfaction_pct || canonicalMetrics.satisfaction,
+    revenue: metrics?.revenue_total || canonicalMetrics.revenue
   };
 
   const scrollToSection = (sectionId: string) => {
@@ -49,22 +54,17 @@ export function Hero() {
             <div className="space-y-6">
               <div className="inline-flex items-center space-x-2 bg-card/80 backdrop-blur-sm px-4 py-2 rounded-full border border-border">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" data-testid="status-indicator"></div>
-                <span className="text-sm text-muted-foreground">{EARLY_STAGE_METRICS.timeline.stage} • {EARLY_STAGE_METRICS.timeline.range}</span>
+                <span className="text-sm text-muted-foreground">{homeContent.hero?.status || agencyInfo.tagline}</span>
               </div>
 
               <h1 className="text-5xl lg:text-8xl font-bold leading-tight" data-testid="hero-title">
-                Where{" "}
-                <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent animate-glow">
-                  Vision
-                </span>
+                {homeContent.hero?.headline || agencyInfo.tagline}
                 <br />
-                Meets Innovation
-                <br />
-                <span className="text-3xl lg:text-4xl text-muted-foreground">Building Digital Excellence</span>
+                <span className="text-3xl lg:text-4xl text-muted-foreground">{homeContent.hero?.subheading || agencyInfo.mission}</span>
               </h1>
 
               <p className="text-xl text-muted-foreground max-w-lg leading-relaxed" data-testid="hero-description">
-                <strong>Nexus Creative Studio</strong> - The creative technology agency for ambitious startups and forward-thinking businesses. We architect AI-powered solutions, conversion-optimized experiences, and scalable automation systems that drive real growth.
+                {homeContent.hero?.description || agencyInfo.description}
               </p>
             </div>
 
@@ -74,7 +74,7 @@ export function Hero() {
                   className="bg-primary text-primary-foreground px-8 py-4 text-lg font-semibold hover:opacity-90 theme-transition btn-ripple"
                   data-testid="button-meet-founder"
                 >
-                  Meet the Founder
+                  {homeContent.hero?.primaryCta || "Meet the Founder"}
                 </Button>
               </Link>
               <Button 
@@ -83,26 +83,26 @@ export function Hero() {
                 className="border border-border px-8 py-4 text-lg font-semibold hover:bg-secondary theme-transition"
                 data-testid="button-explore-about"
               >
-                About Our Agency
+                {homeContent.hero?.secondaryCta || "About Our Agency"}
               </Button>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-8">
               <div className="text-center" data-testid="stat-projects">
-                <div className="text-3xl font-bold text-primary">{displayMetrics.projects}+</div>
-                <div className="text-sm text-muted-foreground">Projects Delivered</div>
+                <div className="text-3xl font-bold text-primary">{homeContent.stats?.projects?.value || displayMetrics.projects}+</div>
+                <div className="text-sm text-muted-foreground">{homeContent.stats?.projects?.label || "Projects Delivered"}</div>
               </div>
               <div className="text-center" data-testid="stat-clients">
-                <div className="text-3xl font-bold text-primary">{displayMetrics.clients}+</div>
-                <div className="text-sm text-muted-foreground">Happy Clients</div>
+                <div className="text-3xl font-bold text-primary">{homeContent.stats?.clients?.value || displayMetrics.clients}+</div>
+                <div className="text-sm text-muted-foreground">{homeContent.stats?.clients?.label || "Happy Clients"}</div>
               </div>
               <div className="text-center" data-testid="stat-satisfaction">
-                <div className="text-3xl font-bold text-primary">{displayMetrics.satisfaction}%</div>
-                <div className="text-sm text-muted-foreground">Client Satisfaction</div>
+                <div className="text-3xl font-bold text-primary">{homeContent.stats?.satisfaction?.value || displayMetrics.satisfaction}%</div>
+                <div className="text-sm text-muted-foreground">{homeContent.stats?.satisfaction?.label || "Client Satisfaction"}</div>
               </div>
               <div className="text-center" data-testid="stat-revenue">
-                <div className="text-3xl font-bold text-primary">${displayMetrics.revenue.toLocaleString()}+</div>
-                <div className="text-sm text-muted-foreground">Revenue Generated</div>
+                <div className="text-3xl font-bold text-primary">{homeContent.stats?.revenue?.formatted || `$${displayMetrics.revenue.toLocaleString()}+`}</div>
+                <div className="text-sm text-muted-foreground">{homeContent.stats?.revenue?.label || "Revenue Generated"}</div>
               </div>
             </div>
           </div>

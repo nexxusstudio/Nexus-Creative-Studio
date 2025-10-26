@@ -66,7 +66,7 @@ export function InteractiveRoadmap() {
         <div className="text-center mb-16">
           <div className="inline-flex items-center space-x-2 bg-card px-4 py-2 rounded-full border border-border mb-6">
             <Calendar className="text-primary" size={20} />
-            <span className="text-sm font-semibold">Growth Strategy 2026-2027</span>
+            <span className="text-sm font-semibold">Growth Strategy 2024+</span>
           </div>
           <h2 className="text-4xl lg:text-5xl font-bold mb-6" data-testid="roadmap-title">
             Your Future Growth Path
